@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StateHouseProvider } from "./context/stateHouseContext";
+import { DataHouseProvider } from "./context/dataHouseContext";
+import { AuthProvider } from "./context/authContext";
+import { StatusBar } from "react-native";
+import { Provider } from "react-redux";
+import MainScreens from "./routes/main";
+import store from "./store/store";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <AuthProvider>
+        <DataHouseProvider>
+          <StateHouseProvider>
+            <MainScreens />
+          </StateHouseProvider>
+        </DataHouseProvider>
+      </AuthProvider>
+      <StatusBar
+        translucent={true}
+        backgroundColor={"transparent"}
+        barStyle="dark-content"
+      />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

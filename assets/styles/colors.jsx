@@ -1,0 +1,15 @@
+export const colors = {
+  black: "#1E1E1E",
+  white: "#fff",
+  blue: "#1B4DFC",
+  phon: "#F1F3F7",
+  gray1: "",
+  gray: "#9D9D9D",
+  darkGray: "",
+  red: "#FF0000",
+  orange: "#FFCC02",
+  house: "#CB2905",
+  green: "#0BBD47",
+  opacityRed: "",
+  opacityBlue: "",
+};
