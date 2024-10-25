@@ -23,6 +23,9 @@ export default function MainScreens() {
         <Stack.Screen name="HouseScreens" component={HouseScreens} />
         <Stack.Screen name="CarScreens" component={CarScreens} />
       </Stack.Navigator>
+      <Flex>
+        
+      </Flex>
     </NavigationContainer>
   );
 }
