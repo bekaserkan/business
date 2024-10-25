@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../auth/login";
+import Wervwr from "../pages/wervwr";
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,7 @@ export default function AuthScreens() {
       }}
       initialRouteName="Login"
     >
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Login" component={Wervwr} />
     </Stack.Navigator>
   );
 }
