@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AuthScreens from "./authScreens";
 import ProfileScreens from "./profileScreens";
-import HouseScreens from "./HouseScreens";
+import HouseScreens from "./houseScreens";
 import CarScreens from "./carsScreens";
 
 const Stack = createStackNavigator();
