@@ -14,7 +14,7 @@ export default function AuthScreens() {
       }}
       initialRouteName="Login"
     >
-      <Stack.Screen name="Login" component={Wervwr} />
+      <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
   );
 }
