@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bisness",
-    "slug": "bisness",
+    "name": "business",
+    "slug": "business",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app/icon.png",
@@ -18,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/app/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.bekaserkan.business"
     },
     "web": {
       "favicon": "./assets/app/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "efb9d309-32c5-4019-bff9-733175153a87"
+      }
     }
   }
 }

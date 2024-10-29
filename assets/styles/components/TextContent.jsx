@@ -12,9 +12,12 @@ const TextContent = ({
   children,
   color,
   center,
+  numberOfLines,
 }) => {
   return (
     <Text
+      numberOfLines={numberOfLines}
+      ellipsizeMode="tail"
       style={[
         {
           marginTop: top,

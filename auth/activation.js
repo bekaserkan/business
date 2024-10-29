@@ -2,12 +2,14 @@ import React from "react";
 import Container from "../assets/styles/components/Container";
 import Header from "../components/Header";
 
-const Login = () => {
+const activation = () => {
   return (
     <Container>
-      <Header back={true}>Вход</Header>
+      <Header handleBack={true} back={true}>
+        Код подтверждения
+      </Header>
     </Container>
   );
 };
 
-export default Login;
+export default activation;
