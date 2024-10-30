@@ -1,39 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import Container from "../../../assets/styles/components/Container";
+import Header from "../../../components/Header";
+import LayoutTab from "../../../layouts/tabs";
 import {
-  View,
-  Text,
-  TouchableOpacity,
   Animated,
-  StyleSheet,
   Dimensions,
-  Platform,
   Easing,
+  Platform,
+  Text,
+  View,
 } from "react-native";
-import {
-  PanGestureHandler,
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
 import { colors } from "../../../assets/styles/colors";
-import Business from "../svg/business";
-import { useСondition } from "../../../context/stateContext";
-import Bell from "../../../assets/svg/bell";
+import { StyleSheet } from "react-native";
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+} from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 
 const width = Dimensions.get("window").width - 32;
 const widthd = Dimensions.get("window").width + 80;
 
-const HeaderMain = ({ carContent, houseContent }) => {
-  const { condition, CarActive, HouseActive } = useСondition();
-  const [activeTab, setActiveTab] = useState(condition ? 1 : 0);
+const Slide = ({ data, searchData }) => {
+  const [activeTab, setActiveTab] = useState(0);
   const translateX = useRef(new Animated.Value(-activeTab * width)).current;
   const indicatorPosition = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (activeTab === 0) {
-      CarActive();
-    } else {
-      HouseActive();
-    }
-  }, [activeTab]);
 
   const handleTabPress = (index) => {
     if (activeTab === index) return;
@@ -93,32 +84,14 @@ const HeaderMain = ({ carContent, houseContent }) => {
     <GestureHandlerRootView
       style={{
         flex: 1,
-        paddingTop: Platform.OS === "ios" ? 70 : 52,
-        backgroundColor: activeTab === 0 ? colors.blue : colors.house,
+        backgroundColor: colors.white,
       }}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 16,
-        }}
-      >
-        <View style={{ width: 24, height: 24 }} />
-        <Business />
-        <TouchableOpacity>
-          <Bell />
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          paddingHorizontal: 16,
-        }}
-      >
+      <Container flex={true}>
+        <Header back={true}>Избранное</Header>
         <Animated.View
           style={{
-            marginTop: 28,
+            marginTop: 20,
             position: "relative",
           }}
         >
@@ -133,7 +106,7 @@ const HeaderMain = ({ carContent, houseContent }) => {
                   activeTab === 0 && styles.activeTabText,
                 ]}
               >
-                Машина
+                Объявления
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -146,7 +119,7 @@ const HeaderMain = ({ carContent, houseContent }) => {
                   activeTab === 1 && styles.activeTabText,
                 ]}
               >
-                Дом
+                Поиски
               </Text>
             </TouchableOpacity>
           </View>
@@ -154,7 +127,7 @@ const HeaderMain = ({ carContent, houseContent }) => {
             style={[styles.indicator, { left: indicatorPosition }]}
           />
         </Animated.View>
-      </View>
+      </Container>
       <PanGestureHandler
         onGestureEvent={handleGestureEvent}
         onHandlerStateChange={handleSwipeEnd}
@@ -162,8 +135,8 @@ const HeaderMain = ({ carContent, houseContent }) => {
         <Animated.View
           style={[styles.contentContainer, { transform: [{ translateX }] }]}
         >
-          <View style={styles.tabContent}>{carContent}</View>
-          <View style={styles.tabContent}>{houseContent}</View>
+          <View style={styles.tabContent}>{data}</View>
+          <View style={styles.tabContent}>{searchData}</View>
         </Animated.View>
       </PanGestureHandler>
     </GestureHandlerRootView>
@@ -175,21 +148,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     position: "relative",
-    borderBottomColor: "#FFFFFFB2",
+    borderBottomColor: colors.phon,
     borderBottomWidth: 1,
   },
   tab: {
     flex: 1,
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 12,
   },
   tabText: {
     fontSize: 16,
     fontWeight: "500",
-    color: "#FFFFFFB2",
+    color: colors.gray,
   },
   activeTabText: {
-    color: colors.white,
+    color: colors.black,
     fontWeight: "bold",
   },
   indicator: {
@@ -198,7 +171,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: width / 2,
     height: 4,
-    backgroundColor: colors.white,
+    backgroundColor: colors.blue,
     borderRadius: 10,
   },
   contentContainer: {
@@ -212,8 +185,8 @@ const styles = StyleSheet.create({
   tabContent: {
     width: widthd / 2,
     flex: 1,
-    paddingHorizontal: 40,
+    paddingHorizontal: 56,
   },
 });
 
-export default HeaderMain;
+export default Slide;

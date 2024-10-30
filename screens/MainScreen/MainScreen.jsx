@@ -10,9 +10,13 @@ import LayoutTab from "../../layouts/tabs";
 
 const MainScreen = () => {
   const scrollRef = useRef(null);
+  const scrollRefTwo = useRef(null);
+
   return (
     <LayoutTab>
       <HeaderMain
+        scrollRef={scrollRef}
+        scrollRefTwo={scrollRefTwo}
         carContent={
           <View style={styles.section}>
             <View style={styles.container}>
@@ -57,7 +61,7 @@ const MainScreen = () => {
               >
                 Рекомендации
               </TextContent>
-              <List scrollRef={scrollRef} />
+              <List scrollRef={scrollRefTwo} />
             </View>
           </View>
         }

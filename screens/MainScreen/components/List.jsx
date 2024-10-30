@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { useСondition } from "../../../context/stateContext";
 import Loading from "../../../ui/Loading";
 import Wave from "../../../customs/Wave";
@@ -7,6 +7,7 @@ import ImageCustom from "../../../customs/Image";
 import TextContent from "../../../assets/styles/components/TextContent";
 import { colors } from "../../../assets/styles/colors";
 import { useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
 
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 const fullWidth = Dimensions.get("window").width - 32;
@@ -34,12 +35,9 @@ const List = ({ scrollRef, car }) => {
 
   return (
     <ScrollView
+      ref={scrollRef}
+      style={{ flex: 1 }}
       showsVerticalScrollIndicator={false}
-      scrollRef={scrollRef}
-      nestedScrollEnabled
-      style={{
-        flex: 1,
-      }}
     >
       <View style={styles.map}>
         {Object.values(data)?.map((el, id) =>

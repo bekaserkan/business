@@ -81,11 +81,18 @@ const LayoutTab = ({ fanc, scroll, children }) => {
         />
         <View style={styles.floatingButtonContainer}>
           <Wave
-            handle={() =>
-              condition
-                ? navigation.navigate("HouseScreens", { screen: "AddHouse" })
-                : navigation.navigate("CarScreens", { screen: "AddCar" })
-            }
+            handle={async () => {
+              const token = await AsyncStorage.getItem("token");
+              if (token) {
+                if (condition) {
+                  navigation.navigate("HouseScreens", { screen: "AddHouse" });
+                } else {
+                  navigation.navigate("CarScreens", { screen: "AddCar" });
+                }
+              } else {
+                navigation.navigate("Login");
+              }
+            }}
             width={"100%"}
             height={"100%"}
           >

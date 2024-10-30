@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { SvgUri } from "react-native-svg";
 
 const ImageCustom = ({ uri, width, height, borderRadius }) => {

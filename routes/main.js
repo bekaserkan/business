@@ -10,6 +10,7 @@ import { View } from "react-native";
 import { colors } from "../assets/styles/colors";
 import Profile from "../screens/Profile/Profile";
 import Login from "../auth/login";
+import Activation from "../auth/activation";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ export default function MainScreens() {
           <Stack.Screen name="Favorites" component={Favorites} />
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Activation" component={Activation} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

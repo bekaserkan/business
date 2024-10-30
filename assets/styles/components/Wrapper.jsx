@@ -9,7 +9,7 @@ const Wrapper = ({ style, padding, flex, top, bottom, children }) => {
         {
           width: "100%",
           minHeight: 20,
-          backgroundColor: colors.black,
+          backgroundColor: colors.white,
           paddingHorizontal: 16,
           paddingBottom: padding?.length >= 1 ? padding[0] : 0,
           paddingTop: padding?.length == 2 ? padding[1] : 0,

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Animated, TouchableOpacity } from "react-native";
 
-const Wave = ({ style, handle, width, height, children }) => {
+const Wave = ({ disabled, style, handle, width, height, children }) => {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const phonValue = useRef(new Animated.Value(1)).current;
 
@@ -30,6 +30,7 @@ const Wave = ({ style, handle, width, height, children }) => {
 
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={() => (handle ? handle() : "")}
       style={[
         {

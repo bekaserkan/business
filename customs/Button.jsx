@@ -1,11 +1,22 @@
 import React from "react";
 import Wave from "./Wave";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import TextContent from "../assets/styles/components/TextContent";
 import { colors } from "../assets/styles/colors";
 import { useNavigation } from "@react-navigation/native";
 
-const Button = ({ pathMain, path, top, bottom, style, color, children }) => {
+const Button = ({
+  disabled,
+  loading,
+  handle,
+  pathMain,
+  path,
+  top,
+  bottom,
+  style,
+  color,
+  children,
+}) => {
   const navigation = useNavigation();
 
   const pathFunction = () => {
@@ -19,7 +30,10 @@ const Button = ({ pathMain, path, top, bottom, style, color, children }) => {
   };
 
   return (
-    <Wave handle={pathFunction}>
+    <Wave
+      disabled={loading ? loading : disabled}
+      handle={handle ? handle : pathFunction}
+    >
       <View
         style={[
           {
@@ -35,9 +49,13 @@ const Button = ({ pathMain, path, top, bottom, style, color, children }) => {
           style,
         ]}
       >
-        <TextContent fontSize={16} fontWeight={500} color={colors.white}>
-          {children}
-        </TextContent>
+        {loading ? (
+          <ActivityIndicator size="large" color="#fff" />
+        ) : (
+          <TextContent fontSize={16} fontWeight={500} color={colors.white}>
+            {children}
+          </TextContent>
+        )}
       </View>
     </Wave>
   );
