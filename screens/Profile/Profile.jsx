@@ -15,15 +15,23 @@ import Column from "../../assets/styles/components/Column";
 import Star from "../../assets/svg/star";
 import Reports from "../../assets/svg/reports";
 import Button from "../../customs/Button";
+import Adv from "../../assets/svg/adv";
 
 const Profile = () => {
+  const state = true;
+
   return (
     <LayoutTab>
       <Container phon={true} none={true}>
         <Header back={true} container={true}>
           Profile
         </Header>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={{
+            flex: 1,
+          }}
+          showsVerticalScrollIndicator={false}
+        >
           <Column gap={6}>
             <Wrapper padding={[16, 16]} top={true}>
               <Between center={"center"}>
@@ -178,8 +186,34 @@ const Profile = () => {
                 </View>
               </Column>
             </Wrapper>
-            <Wrapper flex={true}>
-              
+            <Wrapper padding={[200, 16]}>
+              <TextContent fontSize={20} fontWeight={600} color={colors.black}>
+                Мои объявления
+              </TextContent>
+              {state && (
+                <Column top={50} gap={20}>
+                  <View
+                    style={{
+                      alignItems: "center",
+                    }}
+                  >
+                    <Adv />
+                    <TextContent
+                      top={20}
+                      center={"center"}
+                      fontSize={16}
+                      fontWeight={400}
+                      color={colors.gray}
+                    >
+                      Превратите свой профиль в бизнес-аккаунт с расширенными
+                      возможностями
+                    </TextContent>
+                  </View>
+                  <Button top={10} color={colors.blue}>
+                    Добавить объявление
+                  </Button>
+                </Column>
+              )}
             </Wrapper>
           </Column>
         </ScrollView>

@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { colors } from "../colors";
 
-const Wrapper = ({ style, padding, flex, top, bottom, children }) => {
+const Wrapper = ({ style, padding, top, bottom, children }) => {
   return (
     <View
       style={[
@@ -17,9 +17,6 @@ const Wrapper = ({ style, padding, flex, top, bottom, children }) => {
           borderTopRightRadius: top ? 0 : 14,
           borderBottomLeftRadius: bottom ? 0 : 14,
           borderBottomRightRadius: bottom ? 0 : 14,
-        },
-        flex && {
-          flex: 1,
         },
         style,
       ]}
