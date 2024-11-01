@@ -13,10 +13,10 @@ const Slider = ({ img }) => {
             <Image key={item.id} source={item.image} style={styles.img} />
           </View>
         ))}
-        <Pressable style={styles.back_icons} onPress={() => navigate.goBack()}>
-          <Back />
-        </Pressable>
       </ScrollView>
+      <Pressable style={styles.back_icons} onPress={() => navigate.goBack()}>
+        <Back />
+      </Pressable>
     </View>
   );
 };
