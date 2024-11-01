@@ -7,7 +7,7 @@ import Back from "../assets/svg/back";
 import Wave from "../customs/Wave";
 import { useNavigation } from "@react-navigation/native";
 
-const Header = ({ back, homeBack, handleBack, container, children }) => {
+const Header = ({ back, homeBack, handleBack, container, children, style }) => {
   const navigation = useNavigation();
 
   const route = () => {
@@ -33,6 +33,7 @@ const Header = ({ back, homeBack, handleBack, container, children }) => {
         container && {
           paddingHorizontal: 16,
         },
+        style,
       ]}
     >
       <Flex gap={20}>
