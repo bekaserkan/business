@@ -19,6 +19,7 @@ import Button from "../../customs/Button";
 import Back from "../../assets/svg/backWhite.js";
 import { useNavigation } from "@react-navigation/native";
 import Phone from "../../assets/svg/phone.js";
+import Slider from "../../components/Slider.jsx";
 
 const profile = [
   {
@@ -109,19 +110,7 @@ const CarBusinessProfile = () => {
         contentContainerStyle={{ paddingBottom: 50 }}
       >
         <Container none={true}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {img.map((item) => (
-              <View style={styles.img_box}>
-                <Image key={item.id} source={item.image} style={styles.img} />
-              </View>
-            ))}
-            <Pressable
-              style={styles.back_icons}
-              onPress={() => navigate.goBack()}
-            >
-              <Back />
-            </Pressable>
-          </ScrollView>
+          <Slider img={img} />
           <View style={styles.block}>
             <Between style={styles.profileContent} gap={0}>
               <Flex gap={10} style={{ width: "70%", alignItems: "flex-start" }}>
@@ -223,22 +212,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.phon,
   },
-  img: {
-    height: "100%",
-    width: "100%",
-  },
-  img_box: {
-    width: 300,
-    height: 200,
-    position: "relative",
-  },
-  back_icons: {
-    width: 30,
-    height: 30,
-    position: "absolute",
-    top: 40,
-    left: 16,
-  },
+
   card_private_profile: {
     flex: 1,
     backgroundColor: colors.blue,

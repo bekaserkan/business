@@ -11,8 +11,6 @@ import LayoutTab from "../../layouts/tabs";
 const MainScreen = () => {
   const scrollRef = useRef(null);
   const scrollRefTwo = useRef(null);
-  
-
   return (
     <LayoutTab>
       <HeaderMain
