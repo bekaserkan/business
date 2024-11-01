@@ -10,6 +10,7 @@ export const colors = {
   orange: "#FFCC02",
   house: "#CB2905",
   green: "#0BBD47",
+  green2: "#05FF0026",
   opacityRed: "",
   opacityBlue: "",
 };
