@@ -29,9 +29,21 @@ const profile = [
     star: "4.8",
     recal: "23",
     img: [
-      { id: 1, image: require("../../assets/images/home_img.png") },
-      { id: 2, image: require("../../assets/images/car.png") },
-      { id: 3, image: require("../../assets/images/car.png") },
+      {
+        id: 1,
+        image:
+          "https://cdn.prod.website-files.com/63a02e61e7ffb565c30bcfc7/65fa5e6535ec537dc53bd0d1_modern%20house%20ideas.webp",
+      },
+      {
+        id: 2,
+        image:
+          "https://jennian-homes.b-cdn.net/assets/Uploads/ListingPages/Chianti-Modified-2_4-Bedroom-Home-Front-Facade_Jennian-Homes__FillMaxWzkwMCw2MDBd.jpg?auto=format",
+      },
+      {
+        id: 3,
+        image:
+          "https://img.etimg.com/thumb/width-420,height-315,imgsize-22382,resizemode-75,msid-111780228/news/international/world-news/india-has-the-worlds-second-most-expensive-house-check-the-of-the-top-10-costliest-homes/which-mansion-tops-the-list-of-the-worlds-most-expensive-houses.jpg",
+      },
     ],
   },
 ];

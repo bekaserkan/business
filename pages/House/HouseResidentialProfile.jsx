@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import AccountBlock from "../components/AccountBlock";
 import { ScrollView, View } from "react-native";
 import Button from "../../customs/Button";
+import Slider from "../../components/Slider";
 
 const HouseResidentialProfile = () => {
   const navigation = useNavigation();
@@ -21,20 +22,112 @@ const HouseResidentialProfile = () => {
     });
   };
 
+  const data = [
+    {
+      id: 1,
+      image:
+        "https://img.etimg.com/thumb/width-420,height-315,imgsize-22382,resizemode-75,msid-111780228/news/international/world-news/india-has-the-worlds-second-most-expensive-house-check-the-of-the-top-10-costliest-homes/which-mansion-tops-the-list-of-the-worlds-most-expensive-houses.jpg",
+    },
+    {
+      id: 2,
+      image:
+        "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_726,w_1290,f_auto,t_cg_base/v1/editorial/story/hero_image/Koenigsegg-Gemera-1001x565-3.jpg",
+    },
+    {
+      id: 3,
+      image:
+        "https://www.usnews.com/object/image/0000018b-fa28-dc80-a9ef-ffe9f8290001/01-2024-chevrolet-corvette-angular-front-jmv.JPG?update-time=1700709318771&size=responsiveGallery",
+    },
+    {
+      id: 1,
+      image:
+        "https://img.etimg.com/thumb/width-420,height-315,imgsize-22382,resizemode-75,msid-111780228/news/international/world-news/india-has-the-worlds-second-most-expensive-house-check-the-of-the-top-10-costliest-homes/which-mansion-tops-the-list-of-the-worlds-most-expensive-houses.jpg",
+    },
+    {
+      id: 2,
+      image:
+        "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_726,w_1290,f_auto,t_cg_base/v1/editorial/story/hero_image/Koenigsegg-Gemera-1001x565-3.jpg",
+    },
+    {
+      id: 3,
+      image:
+        "https://www.usnews.com/object/image/0000018b-fa28-dc80-a9ef-ffe9f8290001/01-2024-chevrolet-corvette-angular-front-jmv.JPG?update-time=1700709318771&size=responsiveGallery",
+    },
+    {
+      id: 1,
+      image:
+        "https://img.etimg.com/thumb/width-420,height-315,imgsize-22382,resizemode-75,msid-111780228/news/international/world-news/india-has-the-worlds-second-most-expensive-house-check-the-of-the-top-10-costliest-homes/which-mansion-tops-the-list-of-the-worlds-most-expensive-houses.jpg",
+    },
+    {
+      id: 2,
+      image:
+        "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_726,w_1290,f_auto,t_cg_base/v1/editorial/story/hero_image/Koenigsegg-Gemera-1001x565-3.jpg",
+    },
+    {
+      id: 3,
+      image:
+        "https://www.usnews.com/object/image/0000018b-fa28-dc80-a9ef-ffe9f8290001/01-2024-chevrolet-corvette-angular-front-jmv.JPG?update-time=1700709318771&size=responsiveGallery",
+    },
+    {
+      id: 1,
+      image:
+        "https://img.etimg.com/thumb/width-420,height-315,imgsize-22382,resizemode-75,msid-111780228/news/international/world-news/india-has-the-worlds-second-most-expensive-house-check-the-of-the-top-10-costliest-homes/which-mansion-tops-the-list-of-the-worlds-most-expensive-houses.jpg",
+    },
+    {
+      id: 2,
+      image:
+        "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_726,w_1290,f_auto,t_cg_base/v1/editorial/story/hero_image/Koenigsegg-Gemera-1001x565-3.jpg",
+    },
+    {
+      id: 3,
+      image:
+        "https://www.usnews.com/object/image/0000018b-fa28-dc80-a9ef-ffe9f8290001/01-2024-chevrolet-corvette-angular-front-jmv.JPG?update-time=1700709318771&size=responsiveGallery",
+    },
+    {
+      id: 1,
+      image:
+        "https://img.etimg.com/thumb/width-420,height-315,imgsize-22382,resizemode-75,msid-111780228/news/international/world-news/india-has-the-worlds-second-most-expensive-house-check-the-of-the-top-10-costliest-homes/which-mansion-tops-the-list-of-the-worlds-most-expensive-houses.jpg",
+    },
+    {
+      id: 2,
+      image:
+        "https://carsguide-res.cloudinary.com/image/upload/c_fit,h_726,w_1290,f_auto,t_cg_base/v1/editorial/story/hero_image/Koenigsegg-Gemera-1001x565-3.jpg",
+    },
+    {
+      id: 3,
+      image:
+        "https://www.usnews.com/object/image/0000018b-fa28-dc80-a9ef-ffe9f8290001/01-2024-chevrolet-corvette-angular-front-jmv.JPG?update-time=1700709318771&size=responsiveGallery",
+    },
+  ];
+
   return (
     <Container none={true} phon={true}>
       <Header back={true} container={true} />
       <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            backgroundColor: colors.white,
+          }}
+        >
+          <Slider height={200} img={data} back={true} detail={true} />
+        </View>
         <Column gap={6}>
           <Wrapper top={true} padding={[16]}>
-            <ProfileBox
-              gap={10}
-              name="ЖД «Москва»"
-              rates={"4.4"}
-              reviews={1}
-              reviewsColor={colors.blue}
-              more={true}
-            />
+            <View
+              style={{
+                marginTop: 10,
+              }}
+            >
+              <ProfileBox
+                none={true}
+                gap={10}
+                name="ЖД «Москва»"
+                rates={"4.4"}
+                reviews={1}
+                reviewsColor={colors.blue}
+                more={true}
+              />
+            </View>
             <TextContent
               top={30}
               fontSize={12}
