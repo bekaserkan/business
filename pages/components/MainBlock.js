@@ -11,6 +11,7 @@ const MainBlock = ({
   miniPriceUSD,
   priceSom,
   miniPriceSom,
+  house,
 }) => {
   return (
     <Wrapper top={true} padding={[16, 0]}>
@@ -33,6 +34,7 @@ const MainBlock = ({
           {miniPriceSom}
         </TextContent>
       </Flex>
+
       <Between></Between>
     </Wrapper>
   );
