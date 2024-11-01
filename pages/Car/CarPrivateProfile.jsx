@@ -9,6 +9,10 @@ import TextContent from "../../assets/styles/components/TextContent";
 import Flex from "../../assets/styles/components/Flex";
 import Card from "../../customs/Card";
 import Star from "../../assets/svg/star1.js";
+import Wave from "../../customs/Wave.jsx";
+import Back from "../../assets/svg/backWhite.js";
+import { useNavigation } from "@react-navigation/native";
+import ButtonLayouts from "../../layouts/buttonLayouts.js";
 
 const profile = [
   {
@@ -29,7 +33,7 @@ const about = [
         background: colors.green2,
         price: "100",
         priceDollars: "1000 000",
-        
+
         year: "2020",
         volume: "1.8",
         vip: true,
@@ -86,114 +90,113 @@ const about = [
 const CarPrivateProfile = () => {
   const { image, name, star, recal } = profile[0];
   const { text, advertisements } = about[0];
-
+  const navigation = useNavigation();
   return (
-    <View style={{ flex: 1, backgroundColor: colors.white }}>
-      <ScrollView
-        style={{ flex: 1 }}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 50 }}
-      >
-        <View style={styles.card_private_profile}>
-          <Header container={true} back={true} style={styles.header} />
-          <Between style={styles.profileContent} gap={0}>
-            <Flex gap={10}>
-              <Image source={image} style={styles.profileImage} />
-              <Column style={styles.profileDetails} gap={10}>
-                <TextContent
-                  fontSize={20}
-                  fontWeight={500}
-                  color={colors.white}
-                >
-                  {name}
-                </TextContent>
-                <Flex style={styles.rating} gap={5}>
-                  <Star />
+    <ButtonLayouts>
+      <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <ScrollView
+          style={{ flex: 1 }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 150 }}
+        >
+          <View style={styles.card_private_profile}>
+            <Wave
+              width={30}
+              height={24}
+              style={{
+                marginTop: Platform.OS === "ios" ? 60 : 42,
+                marginHorizontal: 16,
+                marginBottom: 16,
+              }}
+              handle={() => navigation.goBack()}
+            >
+              <Back />
+            </Wave>
+            <Between style={styles.profileContent} gap={0}>
+              <Flex gap={10}>
+                <Image source={image} style={styles.profileImage} />
+                <Column style={styles.profileDetails} gap={10}>
                   <TextContent
-                    fontSize={14}
-                    fontWeight={400}
+                    fontSize={20}
+                    fontWeight={500}
                     color={colors.white}
                   >
-                    {star}
+                    {name}
                   </TextContent>
-                  <TextContent
-                    left={15}
-                    fontSize={12}
-                    fontWeight={400}
-                    color={colors.white}
-                  >
-                    {recal} отзывов
-                  </TextContent>
-                </Flex>
-              </Column>
-            </Flex>
-            <Button color={colors.white} style={styles.privateButton}>
-              <TextContent fontSize={12} color={colors.blue} fontWeight={500}>
+                  <Flex style={styles.rating} gap={5}>
+                    <Star />
+                    <TextContent
+                      fontSize={14}
+                      fontWeight={400}
+                      color={colors.white}
+                    >
+                      {star}
+                    </TextContent>
+                    <TextContent
+                      left={15}
+                      fontSize={12}
+                      fontWeight={400}
+                      color={colors.white}
+                    >
+                      {recal} отзывов
+                    </TextContent>
+                  </Flex>
+                </Column>
+              </Flex>
+              <Button
+                color={colors.white}
+                style={styles.privateButton}
+                textColor={colors.blue}
+              >
                 Частное лицо
+              </Button>
+            </Between>
+            <View style={styles.block}>
+              <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
+                О себе:
               </TextContent>
-            </Button>
-          </Between>
-          <View style={styles.block}>
-            <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-              О себе:
-            </TextContent>
-            <TextContent
-              fontSize={16}
-              fontWeight={400}
-              color={colors.black}
-              top={6}
-              style={{ lineHeight: 19 }}
-            >
-              {text}
-            </TextContent>
-            <TextContent
-              fontSize={20}
-              fontWeight={600}
-              color={colors.black}
-              top={30}
-            >
-              {advertisements.length} объявлениz
-            </TextContent>
-            <View style={styles.list}>
-              {advertisements.map((ad) => (
-                <Card
-                  key={ad.id}
-                  title={ad.title}
-                  background={ad.background}
-                  priceDollars={ad.priceDollars}
-                  price={ad.price}
-                  year={ad.year}
-                  volume={ad.volume}
-                  urgently={ad.urgently}
-                  vip={ad.vip}
-                  starVip={ad.starVip}
-                />
-              ))}
+              <TextContent
+                fontSize={16}
+                fontWeight={400}
+                color={colors.black}
+                top={6}
+                style={{ lineHeight: 19 }}
+              >
+                {text}
+              </TextContent>
+              <TextContent
+                fontSize={20}
+                fontWeight={600}
+                color={colors.black}
+                top={30}
+              >
+                {advertisements.length} объявления
+              </TextContent>
+              <View style={styles.list}>
+                {advertisements.map((ad) => (
+                  <Card
+                    key={ad.id}
+                    title={ad.title}
+                    background={ad.background}
+                    priceDollars={ad.priceDollars}
+                    price={ad.price}
+                    year={ad.year}
+                    volume={ad.volume}
+                    urgently={ad.urgently}
+                    vip={ad.vip}
+                    starVip={ad.starVip}
+                  />
+                ))}
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-      <View style={styles.footer_bis_profile}>
-        <Button color={colors.green}>
-          <TextContent>Позвонить</TextContent>
-        </Button>
+        </ScrollView>
       </View>
-    </View>
+    </ButtonLayouts>
   );
 };
 
 const styles = StyleSheet.create({
-  footer_bis_profile: {
-    width: "100%",
-    position: "relative",
-    bottom: 0,
-    backgroundColor: colors.white,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: Platform.OS === "ios" ? 30 : 16,
-    borderTopWidth: 1,
-    borderTopColor: colors.phon,
-  },
   card_private_profile: {
     flex: 1,
     backgroundColor: colors.blue,

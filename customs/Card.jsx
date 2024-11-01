@@ -8,6 +8,7 @@ import Heard1 from "../assets/svg/heardFull.js";
 import Heard from "../assets/svg/heard.js";
 import Vip from "../assets/svg/vip.js";
 import VipStar from "../assets/svg/starVip.js";
+import Wave from "./Wave.jsx";
 
 const Card = ({
   title,
@@ -24,7 +25,7 @@ const Card = ({
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   return (
-    <Pressable style={stylesCard.card_block}>
+    <Wave style={stylesCard.card_block}>
       <Column
         gap={10}
         style={[stylesCard.card_box, { backgroundColor: background }]}
@@ -73,7 +74,7 @@ const Card = ({
           </TextContent>
         </Flex>
       </Column>
-    </Pressable>
+    </Wave>
   );
 };
 

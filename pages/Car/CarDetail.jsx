@@ -1,8 +1,6 @@
 import React from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
-import { colors } from "../../assets/styles/colors";
-import AccountBlock from "../components/AccountBlock";
 import { useNavigation } from "@react-navigation/native";
 import Characteristic from "../components/Characteristic";
 import Column from "../../assets/styles/components/Column";
@@ -15,14 +13,29 @@ import ContactsBlock from "../components/ContactsBlock";
 import Additionally from "../components/Additionally";
 import Footer from "../components/Footer";
 import MainBlock from "../components/MainBlock";
-import Button from "../../customs/Button";
+import Imm from "../../assets/images/home_img.png";
+import Imm2 from "../../assets/images/car.png";
+
+const image = [
+  {
+    id: 1,
+    image: Imm,
+  },
+  {
+    id: 2,
+    image: Imm2,
+  },
+  {
+    id: 3,
+    image: Imm,
+  },
+];
 
 const CarDetail = () => {
   const navigation = useNavigation();
-
   const routeTo = () => {
-    navigation.navigate("HouseScreens", {
-      screen: "HouseResidentialProfile",
+    navigation.navigate("CarScreens", {
+      screen: "CarPrivateProfile",
     });
   };
   return (
@@ -32,11 +45,18 @@ const CarDetail = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Column gap={4}>
             <MainBlock
-              title={"Продажа квартира 3-комн.,90 м², 9-этаж из 17"}
+              img={image}
+              title={"CHERY Tiggo 7 Pro Max, 2024"}
               priceUSD={"$72 000"}
               priceSom={"2 720 000 сом"}
-              miniPriceUSD={"$1 565/м²"}
-              miniPriceSom={"132 871 сом/м²"}
+              car={true}
+              address={"Бишкек"}
+              time={"5 мин назад"}
+              vip={true}
+              addHours={"Добавлено 2 часа назад"}
+              eye={"191"}
+              heart={"50"}
+              comment={"8"}
             />
             <Characteristic
               data={[
@@ -130,14 +150,6 @@ const CarDetail = () => {
               ]}
               comments={8}
             />
-            <Button
-              top={20}
-              pathMain="CarScreens"
-              path="CarBusinessProfile"
-              color={colors.blue}
-            >
-              CarBusinessProfile
-            </Button>
             <ContactsBlock
               data={[
                 {
