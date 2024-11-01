@@ -5,6 +5,7 @@ import Phone from "../assets/svg/phoneWhite";
 import { colors } from "../assets/styles/colors";
 
 const ButtonLayouts = ({ loading, handle, children }) => {
+  
   return (
     <View
       style={{

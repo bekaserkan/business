@@ -10,6 +10,7 @@ import Characteristic from "../components/Characteristic";
 import { useNavigation } from "@react-navigation/native";
 import AccountBlock from "../components/AccountBlock";
 import { ScrollView, View } from "react-native";
+import Button from "../../customs/Button";
 
 const HouseResidentialProfile = () => {
   const navigation = useNavigation();
@@ -59,6 +60,14 @@ const HouseResidentialProfile = () => {
               возможность быстро и легко добраться до основных магистралей
               города.
             </TextContent>
+            <Button
+              top={16}
+              handle={() => ""}
+              color={colors.phon}
+              textColor={colors.black}
+            >
+              Посмотреть на карте
+            </Button>
           </Wrapper>
           <Characteristic
             data={[
@@ -90,24 +99,23 @@ const HouseResidentialProfile = () => {
             keyOne={"name"}
             keyTwo={"value"}
           />
+          <AccountBlock
+            title="Компания"
+            name="Авангард Стиль"
+            nameColor={colors.blue}
+            stars={1}
+            rates="4.4"
+            reviews={1}
+            description="ул. Токтогула 125/1, Бизнес Центр «Avangard», Tower A, 2-этаж"
+            ava="https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg"
+            handle={routeTo}
+          />
           <View
             style={{
-              backgroundColor: colors.white,
+              // backgroundColor: colors.white,
               paddingBottom: 150,
             }}
-          >
-            <AccountBlock
-              title="Компания"
-              name="Авангард Стиль"
-              nameColor={colors.blue}
-              stars={1}
-              rates="4.4"
-              reviews={1}
-              description="ул. Токтогула 125/1, Бизнес Центр «Avangard», Tower A, 2-этаж"
-              ava="https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg"
-              handle={routeTo}
-            />
-          </View>
+          ></View>
         </Column>
       </ScrollView>
     </Container>

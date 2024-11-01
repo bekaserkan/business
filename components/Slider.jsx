@@ -2,6 +2,7 @@ import React from "react";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import Back from "../assets/svg/backWhite.js";
 import { useNavigation } from "@react-navigation/native";
+import Wave from "../customs/Wave.jsx";
 
 const Slider = ({ img }) => {
   const navigate = useNavigation();
@@ -14,9 +15,9 @@ const Slider = ({ img }) => {
           </View>
         ))}
       </ScrollView>
-      <Pressable style={styles.back_icons} onPress={() => navigate.goBack()}>
+      <Wave style={styles.back_icons} handle={() => navigate.goBack()}>
         <Back />
-      </Pressable>
+      </Wave>
     </View>
   );
 };
@@ -28,15 +29,15 @@ const styles = StyleSheet.create({
   },
   img_box: {
     width: 300,
-    height: 200,
+    height: 250,
     position: "relative",
   },
   back_icons: {
+    top: 50,
+    left: 16,
     width: 30,
     height: 30,
     position: "absolute",
-    top: 40,
-    left: 16,
   },
 });
 

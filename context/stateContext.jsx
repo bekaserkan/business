@@ -32,8 +32,6 @@ export const СonditionProvider = ({ children }) => {
   const getDataListCars = async () => {
     try {
       const response = await url.get("api/hottours");
-      console.log(response.data);
-
       setDataListCars(response.data.hottours.tour);
     } catch (error) {
       console.log(error);

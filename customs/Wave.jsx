@@ -26,8 +26,6 @@ const Wave = ({
     }).start();
   };
 
-  console.log(phonValue, "beka");
-
   const handlePressOut = () => {
     Animated.spring(scaleValue, {
       toValue: 1,
