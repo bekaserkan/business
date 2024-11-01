@@ -20,11 +20,18 @@ const ProfileBox = ({
   reviewsColor,
   description,
   handle,
+  gap,
+  more,
 }) => {
   return (
     <Wave handle={handle}>
       <Between center={"center"}>
-        <Flex gap={10}>
+        <Flex
+          style={{
+            flex: 1,
+          }}
+          gap={10}
+        >
           {ava && (
             <View
               style={{
@@ -35,7 +42,12 @@ const ProfileBox = ({
               <ImageCustom uri={ava} width={60} height={60} borderRadius={50} />
             </View>
           )}
-          <Column gap={4}>
+          <Column
+            style={{
+              flex: 1,
+            }}
+            gap={gap ? gap : 4}
+          >
             <TextContent
               fontSize={16}
               fontWeight={500}
@@ -62,12 +74,18 @@ const ProfileBox = ({
                 {reviews} {reviews == 1 ? "отзыв" : "отзывов"}
               </TextContent>
             </Flex>
-            <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-              {description}
-            </TextContent>
+            {description && (
+              <TextContent
+                fontSize={12}
+                fontWeight={400}
+                color={colors.gray}
+              >
+                {description}
+              </TextContent>
+            )}
           </Column>
         </Flex>
-        <More />
+        {!more && <More />}
       </Between>
     </Wave>
   );

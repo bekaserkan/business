@@ -39,6 +39,7 @@ const HouseDetail = () => {
               miniPriceSom={"132 871 сом/м²"}
             />
             <AccountBlock
+              title="Жилой комплекс"
               name="ЖД «Москва»"
               nameColor={colors.blue}
               stars={1}

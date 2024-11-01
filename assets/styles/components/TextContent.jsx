@@ -2,6 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 
 const TextContent = ({
+  flex,
   style,
   top,
   left,
@@ -28,6 +29,9 @@ const TextContent = ({
           fontWeight: `${fontWeight}`,
           color: color,
           textAlign: center,
+        },
+        flex && {
+          flex: 1,
         },
         style,
       ]}

@@ -133,7 +133,7 @@ const HeaderMain = ({ carContent, houseContent }) => {
                   activeTab === 0 && styles.activeTabText,
                 ]}
               >
-                Машина
+                Машины
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -146,7 +146,7 @@ const HeaderMain = ({ carContent, houseContent }) => {
                   activeTab === 1 && styles.activeTabText,
                 ]}
               >
-                Дом
+                Дома
               </Text>
             </TouchableOpacity>
           </View>

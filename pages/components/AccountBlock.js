@@ -3,6 +3,7 @@ import TitleBlock from "../ui/TitleBlock";
 import ProfileBox from "../../components/ProfileBox";
 
 const AccountBlock = ({
+  title,
   name,
   nameColor,
   stars,
@@ -13,7 +14,7 @@ const AccountBlock = ({
   handle,
 }) => {
   return (
-    <TitleBlock title="Жилой комплекс">
+    <TitleBlock title={title}>
       <ProfileBox
         name={name}
         nameColor={nameColor}
