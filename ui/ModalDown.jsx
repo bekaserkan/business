@@ -3,7 +3,13 @@ import { View, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../assets/styles/colors";
 
-export default function ModalDown({ black, modal, setModal, children }) {
+export default function ModalDown({
+  paddingNone,
+  dark,
+  modal,
+  setModal,
+  children,
+}) {
   if (modal) {
     const toggleModal = () => {
       setModal(false);
@@ -15,13 +21,11 @@ export default function ModalDown({ black, modal, setModal, children }) {
       },
       content: {
         width: "100%",
-        backgroundColor: black ? colors.phon : colors.white,
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundColor: dark ? colors.phon : colors.white,
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
-        paddingHorizontal: 16,
-        paddingBottom: 60,
+        paddingHorizontal: !paddingNone && 16,
+        paddingBottom: 30,
       },
       clip: {
         alignSelf: "center",
@@ -30,7 +34,6 @@ export default function ModalDown({ black, modal, setModal, children }) {
         height: 4,
         borderRadius: 10,
         backgroundColor: colors.gray,
-        marginBottom: 10,
       },
     });
     return (

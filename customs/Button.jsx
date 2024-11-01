@@ -4,8 +4,10 @@ import { ActivityIndicator, View } from "react-native";
 import TextContent from "../assets/styles/components/TextContent";
 import { colors } from "../assets/styles/colors";
 import { useNavigation } from "@react-navigation/native";
+import Flex from "../assets/styles/components/Flex";
 
 const Button = ({
+  icon,
   disabled,
   loading,
   handle,
@@ -15,6 +17,7 @@ const Button = ({
   bottom,
   style,
   color,
+  textColor,
   children,
 }) => {
   const navigation = useNavigation();
@@ -51,8 +54,23 @@ const Button = ({
       >
         {loading ? (
           <ActivityIndicator size="large" color="#fff" />
+        ) : icon ? (
+          <Flex gap={10}>
+            {icon}
+            <TextContent
+              fontSize={16}
+              fontWeight={500}
+              color={textColor ? textColor : colors.white}
+            >
+              {children}
+            </TextContent>
+          </Flex>
         ) : (
-          <TextContent fontSize={16} fontWeight={500} color={colors.white}>
+          <TextContent
+            fontSize={16}
+            fontWeight={500}
+            color={textColor ? textColor : colors.white}
+          >
             {children}
           </TextContent>
         )}

@@ -20,6 +20,7 @@ export const СonditionProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await url.get("api/hottours");
+
       setDataListHouses(response.data.hottours.tour);
     } catch (error) {
       console.log(error);
@@ -31,6 +32,8 @@ export const СonditionProvider = ({ children }) => {
   const getDataListCars = async () => {
     try {
       const response = await url.get("api/hottours");
+      console.log(response.data);
+
       setDataListCars(response.data.hottours.tour);
     } catch (error) {
       console.log(error);

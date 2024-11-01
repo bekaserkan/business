@@ -1,32 +1,48 @@
 import React, { useRef } from "react";
 import { Animated, TouchableOpacity } from "react-native";
+import { colors } from "../assets/styles/colors";
 
-const Wave = ({ disabled, style, handle, width, height, children }) => {
+const Wave = ({
+  disabled,
+  background,
+  style,
+  handle,
+  width,
+  height,
+  children,
+}) => {
   const scaleValue = useRef(new Animated.Value(1)).current;
-  const phonValue = useRef(new Animated.Value(1)).current;
+  const phonValue = useRef(new Animated.Value(0)).current;
 
   const handlePressIn = () => {
     Animated.spring(scaleValue, {
       toValue: 0.95,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start();
 
     Animated.spring(phonValue, {
       toValue: 1,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start();
   };
+
+  console.log(phonValue, "beka");
 
   const handlePressOut = () => {
     Animated.spring(scaleValue, {
       toValue: 1,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start();
     Animated.spring(phonValue, {
       toValue: 0,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start();
   };
+
+  const backgroundColor = phonValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [colors.white, colors.phon],
+  });
 
   return (
     <TouchableOpacity
@@ -43,7 +59,16 @@ const Wave = ({ disabled, style, handle, width, height, children }) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
     >
-      <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+      <Animated.View
+        style={[
+          {
+            transform: [{ scale: scaleValue }],
+          },
+          background && {
+            backgroundColor: background ? backgroundColor : undefined,
+          },
+        ]}
+      >
         {children}
       </Animated.View>
     </TouchableOpacity>

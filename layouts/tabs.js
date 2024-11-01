@@ -90,7 +90,7 @@ const LayoutTab = ({ fanc, scroll, children }) => {
                   navigation.navigate("CarScreens", { screen: "AddCar" });
                 }
               } else {
-                navigation.navigate("Login");
+                navigation.navigate("HouseScreens", { screen: "HouseDetail" });
               }
             }}
             width={"100%"}
