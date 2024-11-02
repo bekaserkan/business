@@ -19,6 +19,7 @@ const Button = ({
   color,
   textColor,
   children,
+  fontSize,
 }) => {
   const navigation = useNavigation();
 
@@ -67,7 +68,7 @@ const Button = ({
           </Flex>
         ) : (
           <TextContent
-            fontSize={16}
+            fontSize={fontSize ? fontSize : {} ? fontSize : 16}
             fontWeight={500}
             color={textColor ? textColor : colors.white}
           >

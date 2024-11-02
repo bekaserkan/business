@@ -22,7 +22,7 @@ const Slider = ({ img, height, back, detail }) => {
       width: width,
       height: height || 250,
       position: "relative",
-      marginHorizontal: 8, // Space between images
+      marginHorizontal: 8,
     },
     back_icons: {
       top: 50,

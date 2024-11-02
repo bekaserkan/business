@@ -147,6 +147,7 @@ const CarPrivateProfile = () => {
                 color={colors.white}
                 style={styles.privateButton}
                 textColor={colors.blue}
+                fontSize={12}
               >
                 Частное лицо
               </Button>
@@ -185,6 +186,7 @@ const CarPrivateProfile = () => {
                     urgently={ad.urgently}
                     vip={ad.vip}
                     starVip={ad.starVip}
+                    home={true}
                   />
                 ))}
               </View>

@@ -9,6 +9,7 @@ import Heard from "../assets/svg/heard.js";
 import Vip from "../assets/svg/vip.js";
 import VipStar from "../assets/svg/starVip.js";
 import Wave from "./Wave.jsx";
+import Between from "../assets/styles/components/Between.jsx";
 
 const Card = ({
   title,
@@ -22,6 +23,9 @@ const Card = ({
   home,
   vip,
   starVip,
+  avto_user,
+  dollarsSquare,
+  summSquare,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   return (
@@ -34,31 +38,76 @@ const Card = ({
           <Pressable onPress={() => setIsFavorite(!isFavorite)}>
             {isFavorite ? (
               <Heard1
-                style={{ position: "absolute", top: 8, right: 8, zIndex: 1 }}
+                style={{ position: "absolute", top: 5, right: 5, zIndex: 1 }}
               />
             ) : (
-              <Heard style={{ position: "absolute", top: 8, right: 8 }} />
+              <Heard style={{ position: "absolute", top: 5, right: 5 }} />
             )}
           </Pressable>
+          {urgently && (
+            <View style={stylesCard.urgently}>
+              <TextContent color={colors.white} fontSize={8} fontWeight={500}>
+                срочно
+              </TextContent>
+            </View>
+          )}
+          {avto_user && (
+            <View style={stylesCard.avto_user}>
+              <TextContent color={colors.white} fontSize={8} fontWeight={500}>
+                Flagman_auto_salon
+              </TextContent>
+            </View>
+          )}
         </View>
-        {urgently && (
-          <View style={stylesCard.urgently}>
-            <TextContent color={colors.white} fontSize={8} fontWeight={500}>
-              срочно
+        {car && (
+          <>
+            <TextContent color={colors.black} fontSize={14} fontWeight={500}>
+              {title}
             </TextContent>
-          </View>
+            <Column gap={2}>
+              <TextContent color={colors.black} fontSize={18} fontWeight={600}>
+                ${priceDollars}
+              </TextContent>
+              <TextContent color={colors.black} fontSize={14} fontWeight={500}>
+                {price} сом
+              </TextContent>
+            </Column>
+          </>
         )}
-        <TextContent color={colors.black} fontSize={14} fontWeight={500}>
-          {title}
-        </TextContent>
-        <Column gap={2}>
-          <TextContent color={colors.black} fontSize={18} fontWeight={600}>
-            ${priceDollars}
-          </TextContent>
-          <TextContent color={colors.black} fontSize={14} fontWeight={500}>
-            {price} сом
-          </TextContent>
-        </Column>
+        {home && (
+          <>
+            <TextContent>Продажа</TextContent>
+            <TextContent color={colors.black} fontSize={14} fontWeight={500}>
+              {title}
+            </TextContent>
+            <Column gap={2}>
+              <Between>
+                <TextContent
+                  color={colors.black}
+                  fontSize={14}
+                  fontWeight={600}
+                >
+                  ${priceDollars}
+                </TextContent>
+                <TextContent color={colors.gray} fontSize={12} fontWeight={400}>
+                  {price} сом
+                </TextContent>
+              </Between>
+              <Between>
+                <TextContent
+                  color={colors.black}
+                  fontSize={14}
+                  fontWeight={600}
+                >
+                  ${dollarsSquare}/м²
+                </TextContent>
+                <TextContent color={colors.gray} fontSize={12} fontWeight={400}>
+                  {summSquare}/м²
+                </TextContent>
+              </Between>
+            </Column>
+          </>
+        )}
         <Flex style={{ flexDirection: "row" }} gap={5}>
           {vip ? (
             <Vip style={{ width: 14, height: 14 }} />
@@ -79,6 +128,16 @@ const Card = ({
 };
 
 const stylesCard = StyleSheet.create({
+  avto_user: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    backgroundColor: colors.red,
+    position: "absolute",
+    left: 3,
+    zIndex: 1,
+    bottom: 3,
+    borderRadius: 4,
+  },
   card_block: {
     width: "49%",
     overflow: "hidden",
@@ -96,8 +155,8 @@ const stylesCard = StyleSheet.create({
   },
   urgently: {
     position: "absolute",
-    top: 8,
-    left: 8,
+    top: 3,
+    left: 3,
     paddingHorizontal: 12,
     paddingVertical: 4,
     backgroundColor: colors.red,
