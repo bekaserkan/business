@@ -35,7 +35,11 @@ const Category = ({ house, car }) => {
         <Wave>
           <View style={styles.box}></View>
         </Wave>
-        <Wave>
+        <Wave
+          handle={() =>
+            navigation.navigate("CarScreens", { screen: "CarChek" })
+          }
+        >
           <View style={styles.box}></View>
         </Wave>
         <Wave>
