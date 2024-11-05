@@ -33,7 +33,6 @@ const about = [
         background: colors.green2,
         price: "100",
         priceDollars: "1000 000",
-
         year: "2020",
         volume: "1.8",
         vip: true,

@@ -8,13 +8,68 @@ import TextContent from "../../../assets/styles/components/TextContent";
 import { colors } from "../../../assets/styles/colors";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
+import Card from "../../../customs/Card";
 
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 const fullWidth = Dimensions.get("window").width - 32;
 
 const List = ({ scrollRef, car }) => {
   const { loading, dataListCars, dataListHouses } = useСondition();
-  const data = car ? dataListCars : dataListHouses;
+  const data = [
+    {
+      id: 1,
+      title: "CHERY Tiggo 7 Pro Max, 2024",
+      background: colors.green2,
+      price: "100000",
+      priceDollars: "1000",
+      summSquare: "1240",
+      dollarsSquare: "120",
+      year: "2020",
+      volume: "1.8",
+      vip: true,
+      urgently: true,
+    },
+    {
+      id: 2,
+      title: "CHERY Tiggo 7 Pro Max, 2024",
+      background: colors.white,
+      price: "100000",
+      priceDollars: "1000",
+      summSquare: "1240",
+      dollarsSquare: "120",
+      year: "2020",
+      volume: "1.8",
+      vip: false,
+      starVip: true,
+    },
+    {
+      id: 3,
+      title: "CHERY Tiggo 7 Pro Max, 2024",
+      background: colors.white,
+      price: "100000",
+      priceDollars: "1000",
+      summSquare: "1240",
+      dollarsSquare: "120",
+      year: "2020",
+      volume: "1.8",
+      vip: false,
+      starVip: true,
+    },
+    {
+      id: 4,
+      title: "CHERY Tiggo 7 Pro Max, 2024",
+      background: colors.green2,
+      price: "100000",
+      priceDollars: "1000",
+      summSquare: "1240",
+      dollarsSquare: "120",
+      year: "2020",
+      volume: "1.8",
+      vip: true,
+      urgently: true,
+    },
+  ];
+
   const navigation = useNavigation();
 
   const handleFunction = () => {
@@ -55,24 +110,22 @@ const List = ({ scrollRef, car }) => {
               </View>
             </Wave>
           ) : (
-            <Wave handle={handleFunction} key={id}>
-              <View style={styles.box}>
-                <ImageCustom
-                  uri={"http:" + el.hotelpicture}
-                  width={"100%"}
-                  height={120}
-                  borderRadius={6}
-                />
-                <TextContent
-                  top={10}
-                  fontSize={16}
-                  fontWeight={500}
-                  color={colors.black}
-                >
-                  {el.countryname}
-                </TextContent>
-              </View>
-            </Wave>
+            <Card
+              width={containerWidth}
+              key={id}
+              title={el.title}
+              background={el.background}
+              priceDollars={el.priceDollars}
+              price={el.price}
+              year={el.year}
+              summSquare={el.summSquare}
+              dollarsSquare={el.dollarsSquare}
+              volume={el.volume}
+              urgently={el.urgently}
+              vip={el.vip}
+              starVip={el.starVip}
+              home={car ? false : true}
+            />
           )
         )}
       </View>

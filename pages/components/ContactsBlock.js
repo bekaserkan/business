@@ -39,8 +39,8 @@ const ContactsBlock = ({ data, keyValue }) => {
     <View>
       <TitleBlock title="Контакты">
         {data?.map((el, id) => (
-          <Wave handle={() => openModal({ number: el[keyValue] })}>
-            <Flex gap={10} key={id}>
+          <Wave key={id} handle={() => openModal({ number: el[keyValue] })}>
+            <Flex gap={10}>
               <Phone />
               <TextContent
                 fontSize={16}

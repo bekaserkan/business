@@ -13,21 +13,22 @@ import ContactsBlock from "../components/ContactsBlock";
 import Additionally from "../components/Additionally";
 import Footer from "../components/Footer";
 import MainBlock from "../components/MainBlock";
-import Imm from "../../assets/images/home_img.png";
-import Imm2 from "../../assets/images/car.png";
 
 const image = [
   {
     id: 1,
-    image: Imm,
+    image:
+      "https://www.properties.market/in/blog/wp-content/uploads/2024/01/5-Most-Lavish-And-Expensive-Celebrity-Owned-Houses-In-Hyderabad-1200x675.png",
   },
   {
     id: 2,
-    image: Imm2,
+    image:
+      "https://landmark.imgix.net/NGA-ROTO-3D-Render-High-res.jpg?w=1200&dpr=1.75&q=60&fm=webp",
   },
   {
     id: 3,
-    image: Imm,
+    image:
+      "https://hips.hearstapps.com/hmg-prod/images/edc100123egan-002-6500742f5feb7.jpg?crop=0.688xw:1.00xh;0.157xw,0&resize=1120:*",
   },
 ];
 

@@ -27,8 +27,6 @@ const Header = ({ back, homeBack, handleBack, container, children, style }) => {
           paddingTop: Platform.OS === "ios" ? 60 : 42,
           backgroundColor: colors.white,
           paddingBottom: 16,
-          // borderBottomColor: colors.phon,
-          // borderBottomWidth: 1,
         },
         container && {
           paddingHorizontal: 16,

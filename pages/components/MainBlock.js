@@ -5,7 +5,7 @@ import Flex from "../../assets/styles/components/Flex";
 import Wrapper from "../../assets/styles/components/Wrapper";
 import { colors } from "../../assets/styles/colors";
 import Button from "../../customs/Button";
-import { Image, StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Column from "../../assets/styles/components/Column";
 import Vip from "../../assets/svg/vip.js";
 import Eye from "../../assets/svg/eye.js";
@@ -31,39 +31,51 @@ const MainBlock = ({
   img,
 }) => {
   return (
-    <Wrapper top={true} padding={[16, 0]}>
-      <Slider img={img} />
-      <Column gap={16}>
-        <TextContent
-          top={10}
-          fontSize={18}
-          fontWeight={500}
-          color={colors.black}
-        >
-          {title}
-        </TextContent>
-        {(house && (
-          <>
-            <Flex top={16} gap={20}>
-              <TextContent fontSize={22} fontWeight={600} color={colors.black}>
-                {priceUSD}
-              </TextContent>
-              <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
-                {priceSom}
-              </TextContent>
-            </Flex>
-            <Flex top={4} gap={20}>
-              <TextContent fontSize={16} fontWeight={500} color={colors.black}>
-                {miniPriceUSD}
-              </TextContent>
-              <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-                {miniPriceSom}
-              </TextContent>
-            </Flex>
-          </>
-        )) ||
-          (car && (
-            <>
+    <View
+      style={{
+        backgroundColor: colors.white,
+      }}
+    >
+      <Slider fast={true} height={200} detail={true} back={true} img={img} />
+      <Wrapper top={true} padding={[16, 0]}>
+        <Column gap={16}>
+          <TextContent
+            top={10}
+            fontSize={18}
+            fontWeight={500}
+            color={colors.black}
+          >
+            {title}
+          </TextContent>
+          {house ? (
+            <View>
+              <Flex top={16} gap={20}>
+                <TextContent
+                  fontSize={22}
+                  fontWeight={600}
+                  color={colors.black}
+                >
+                  {priceUSD}
+                </TextContent>
+                <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
+                  {priceSom}
+                </TextContent>
+              </Flex>
+              <Flex top={4} gap={20}>
+                <TextContent
+                  fontSize={16}
+                  fontWeight={500}
+                  color={colors.black}
+                >
+                  {miniPriceUSD}
+                </TextContent>
+                <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
+                  {miniPriceSom}
+                </TextContent>
+              </Flex>
+            </View>
+          ) : (
+            <View>
               <Column gap={2}>
                 <Between>
                   <TextContent
@@ -89,58 +101,70 @@ const MainBlock = ({
                   {priceSom}
                 </TextContent>
               </Column>
-            </>
-          ))}
-        <Column gap={6}>
-          <Between>
-            <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-              {address}
-            </TextContent>
-
-            <Flex gap={6}>
+            </View>
+          )}
+          <Column gap={6}>
+            <Between>
               <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-                {time}
+                {address}
               </TextContent>
-              {vip && (
-                <View
-                  style={{
-                    width: 16,
-                    height: 16,
-                  }}
-                >
-                  <Vip />
-                </View>
-              )}
-            </Flex>
-          </Between>
-          <Between>
-            <Flex gap={14}>
+
               <Flex gap={6}>
-                <Eye />
-                <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
-                  {eye}
+                <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
+                  {time}
                 </TextContent>
+                {vip && (
+                  <View
+                    style={{
+                      width: 16,
+                      height: 16,
+                    }}
+                  >
+                    <Vip />
+                  </View>
+                )}
               </Flex>
-              <Flex gap={6}>
-                <Heart />
-                <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
-                  {heart}
-                </TextContent>
+            </Between>
+            <Between>
+              <Flex gap={14}>
+                <Flex gap={6}>
+                  <Eye />
+                  <TextContent
+                    fontSize={14}
+                    fontWeight={400}
+                    color={colors.gray}
+                  >
+                    {eye}
+                  </TextContent>
+                </Flex>
+                <Flex gap={6}>
+                  <Heart />
+                  <TextContent
+                    fontSize={14}
+                    fontWeight={400}
+                    color={colors.gray}
+                  >
+                    {heart}
+                  </TextContent>
+                </Flex>
+                <Flex gap={6}>
+                  <Comment />
+                  <TextContent
+                    fontSize={14}
+                    fontWeight={400}
+                    color={colors.gray}
+                  >
+                    {comment}
+                  </TextContent>
+                </Flex>
               </Flex>
-              <Flex gap={6}>
-                <Comment />
-                <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
-                  {comment}
-                </TextContent>
-              </Flex>
-            </Flex>
-            <TextContent>{addHours}</TextContent>
-          </Between>
+              <TextContent>{addHours}</TextContent>
+            </Between>
+          </Column>
         </Column>
-      </Column>
-    </Wrapper>
+      </Wrapper>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({});
 export default MainBlock;

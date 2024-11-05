@@ -220,12 +220,18 @@ const HouseCompanyProfile = () => {
                   }
                 />
               </TitleBlock>
+              <HouseCard
+                business={true}
+                construction={true}
+                floors={true}
+                title="Объекты компании"
+                img={data[0].img}
+              />
               {data.map((el, id) => (
                 <HouseCard
                   business={true}
                   construction={true}
                   floors={true}
-                  title="Объекты компании"
                   img={el.img}
                 />
               ))}

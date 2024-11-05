@@ -16,6 +16,24 @@ import Additionally from "../components/Additionally";
 import Footer from "../components/Footer";
 import MainBlock from "../components/MainBlock";
 
+const image = [
+  {
+    id: 1,
+    image:
+      "https://www.houseplans.net/uploads/plans/32005/elevations/88909-768.jpg?v=091024132147",
+  },
+  {
+    id: 2,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9V8SIML7hBXkSPqfy7ZjZPcX3mi2K3DNW9Q&s",
+  },
+  {
+    id: 3,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTb_7eMmVpQnoLbF-dry5_c5msX_Fq8tB1rbSL1LBCNRdiCpI_ft3RS2jteqFd8nupd2Q&usqp=CAU",
+  },
+];
+
 const HouseDetail = () => {
   const navigation = useNavigation();
 
@@ -32,11 +50,20 @@ const HouseDetail = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Column gap={4}>
             <MainBlock
+              img={image}
               title={"Продажа квартира 3-комн.,90 м², 9-этаж из 17"}
               priceUSD={"$72 000"}
               priceSom={"2 720 000 сом"}
               miniPriceUSD={"$1 565/м²"}
               miniPriceSom={"132 871 сом/м²"}
+              house={true}
+              address={"Бишкек"}
+              time={"5 мин назад"}
+              vip={true}
+              addHours={"Добавлено 2 часа назад"}
+              eye={"191"}
+              heart={"50"}
+              comment={"8"}
             />
             <AccountBlock
               title="Жилой комплекс"

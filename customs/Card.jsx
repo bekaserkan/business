@@ -10,8 +10,10 @@ import Vip from "../assets/svg/vip.js";
 import VipStar from "../assets/svg/starVip.js";
 import Wave from "./Wave.jsx";
 import Between from "../assets/styles/components/Between.jsx";
+import { useNavigation } from "@react-navigation/native";
 
 const Card = ({
+  width,
   title,
   background,
   priceDollars,
@@ -19,7 +21,6 @@ const Card = ({
   year,
   volume,
   urgently,
-  car,
   home,
   vip,
   starVip,
@@ -28,8 +29,25 @@ const Card = ({
   summSquare,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const navigation = useNavigation();
+
+  const goDetail = () => {
+    if (home) {
+      navigation.navigate("HouseScreens", {
+        screen: "HouseDetail",
+      });
+    } else {
+      navigation.navigate("CarScreens", {
+        screen: "CarDetail",
+      });
+    }
+  };
+
   return (
-    <Wave style={stylesCard.card_block}>
+    <Wave
+      handle={() => goDetail()}
+      style={[stylesCard.card_block, { width: width }]}
+    >
       <Column
         gap={10}
         style={[stylesCard.card_box, { backgroundColor: background }]}
@@ -59,7 +77,7 @@ const Card = ({
             </View>
           )}
         </View>
-        {car && (
+        {!home && (
           <>
             <TextContent color={colors.black} fontSize={14} fontWeight={500}>
               {title}
