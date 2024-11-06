@@ -42,7 +42,7 @@ const CommentBox = ({ data, handleAnswer, handleReport }) => {
   const [showAllReplies, setShowAllReplies] = useState(false);
   const visibleReplies = showAllReplies
     ? data?.replies
-    : data?.replies?.slice(0, 3);
+    : data?.replies?.slice(0, 1);
   const remainingRepliesCount = data?.replies?.length - visibleReplies?.length;
 
   return (
