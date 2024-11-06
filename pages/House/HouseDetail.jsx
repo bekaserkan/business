@@ -144,18 +144,30 @@ const HouseDetail = () => {
             <CommentsBlock
               data={[
                 {
+                  id: 1,
                   ava: "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg",
                   name: "Санжар",
                   text: "Здравствуйте, а есть черного цвета?😁",
-                  date: "2 дн.",
-                  answer: false,
-                },
-                {
-                  ava: "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg",
-                  name: "Нурзида",
-                  text: "Ради вас покрасим на черный🗿",
-                  date: "2 дн.",
+                  date: "2024-10-05T19:51:41.363Z",
                   answer: true,
+                  replies: [
+                    {
+                      id: 1,
+                      ava: "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg",
+                      name: "Нурзида",
+                      text: "Ради вас покрасим на черный🗿",
+                      date: "2024-11-01T19:51:41.363Z",
+                      answer: true,
+                    },
+                    {
+                      id: 2,
+                      ava: "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg",
+                      name: "Нурзида",
+                      text: "Ради вас покрасим на черный🗿",
+                      date: "2024-11-01T19:51:41.363Z",
+                      answer: true,
+                    },
+                  ],
                 },
               ]}
               comments={8}

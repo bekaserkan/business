@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { TextInput, StyleSheet, View } from "react-native";
 import { colors } from "../assets/styles/colors";
 import TextContent from "../assets/styles/components/TextContent";
+import Wave from "./Wave";
+import SendIcon from "../assets/svg/send";
 
 const InputCustom = ({
   phone,
@@ -13,19 +15,37 @@ const InputCustom = ({
   placeholder,
   numeric,
   error,
+  validate,
+  send,
+  handle,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
+  const textInputRef = useRef(null);
+
+  const handleSendComment = () => {
+    if (!value.trim()) return;
+
+    if (send && handle) {
+      handle();
+    }
+  };
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        position: "relative",
+      }}
+    >
       <TextInput
+        ref={textInputRef}
         style={[
-          style,
           stylesInput.basa,
-          isFocused && stylesInput.inputContainerFocused,
+          !send && isFocused && stylesInput.inputContainerFocused,
           value ? stylesInput.textEntered : stylesInput.placeholderText,
+          style,
         ]}
         value={value}
         onChangeText={onChangeText}
@@ -33,27 +53,44 @@ const InputCustom = ({
         onBlur={handleBlur}
         placeholder={placeholder}
         placeholderTextColor={colors.gray}
-        editable={disabled}
+        editable={!disabled}
         maxLength={phone && 17}
-        keyboardType={email ? "email-address" : numeric ? "numeric" : ""}
-        autoCapitalize={email ? "none" : ""}
+        keyboardType={email ? "email-address" : numeric ? "numeric" : "default"}
+        autoCapitalize={email ? "none" : "sentences"}
+        blurOnSubmit={false}
+        onSubmitEditing={handleSendComment}
       />
-      <View
-        style={{
-          width: "100%",
-          height: 30,
-        }}
-      >
-        <TextContent
-          top={4}
-          color={colors.red}
-          fontSize={13}
-          fontWeight={500}
-          center={"right"}
+      {!validate && (
+        <View
+          style={{
+            width: "100%",
+            height: 30,
+          }}
         >
-          {error}
-        </TextContent>
-      </View>
+          <TextContent
+            top={4}
+            color={colors.red}
+            fontSize={13}
+            fontWeight={500}
+            center={"right"}
+          >
+            {error}
+          </TextContent>
+        </View>
+      )}
+      {send && (
+        <View
+          style={{
+            position: "absolute",
+            top: 13,
+            right: 16,
+          }}
+        >
+          <Wave handle={handleSendComment}>
+            <SendIcon />
+          </Wave>
+        </View>
+      )}
     </View>
   );
 };
