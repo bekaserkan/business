@@ -37,7 +37,6 @@ export const СonditionProvider = ({ children }) => {
       console.log(error);
     }
   };
-
   useEffect(() => {
     getDataListHouses();
     getDataListCars();

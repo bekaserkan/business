@@ -19,13 +19,11 @@ const Wave = ({
       toValue: 0.95,
       useNativeDriver: false,
     }).start();
-
     Animated.spring(phonValue, {
       toValue: 1,
       useNativeDriver: false,
     }).start();
   };
-
   const handlePressOut = () => {
     Animated.spring(scaleValue, {
       toValue: 1,
@@ -41,7 +39,6 @@ const Wave = ({
     inputRange: [0, 1],
     outputRange: [colors.white, colors.phon],
   });
-
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -72,5 +69,4 @@ const Wave = ({
     </TouchableOpacity>
   );
 };
-
 export default Wave;
