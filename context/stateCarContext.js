@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { api } from "../api/api";
-import { Alert } from "react-native";
+import { url } from "../api/api";
 
-const StateHouseContext = createContext();
+const StateCarContext = createContext();
 
-export const StateHouseProvider = ({ children }) => {
+export const StateCarProvider = ({ children }) => {
   const [recomention, setRecomention] = useState([]);
   const [reLoading, setReLoading] = useState(true);
   const [param, setParam] = useState([]);
@@ -23,15 +22,8 @@ export const StateHouseProvider = ({ children }) => {
 
   const postProduct = async () => {
     setProLoading(true);
-    const newData = {
-      value: "",
-    };
     try {
-      const response = await api.post(
-        "house/ads/set",
-        { headers: {} },
-        newData
-      );
+      const response = await url.post("");
       Alert.alert("Successful", response.data);
     } catch (error) {
       console.log(error);
@@ -43,8 +35,8 @@ export const StateHouseProvider = ({ children }) => {
   const getRecomention = async () => {
     setReLoading(true);
     try {
-      const response = await api.get("v1.0/house/ads");
-      setRecomention(response.data.results);
+      const response = await url.get("cars/cars-posts/");
+      setRecomention(response.data.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -55,7 +47,7 @@ export const StateHouseProvider = ({ children }) => {
   const getParam = async () => {
     setPaLoading(true);
     try {
-      const response = await api.get("");
+      const response = await url.get("");
       setParam(response.data);
     } catch (error) {
       console.log(error);
@@ -67,7 +59,7 @@ export const StateHouseProvider = ({ children }) => {
   const getResult = async () => {
     setLoading(true);
     try {
-      const response = await api.get("");
+      const response = await url.get("");
       setResult(response.data);
     } catch (error) {
       console.log(error);
@@ -79,7 +71,7 @@ export const StateHouseProvider = ({ children }) => {
   const getDetail = async ({ id }) => {
     setDeLoading(true);
     try {
-      const response = await api.get(`v1.0/house/ads/${id}`);
+      const response = await url.get(`${id}`);
       setDetail(response.data);
     } catch (error) {
       console.log(error);
@@ -94,7 +86,7 @@ export const StateHouseProvider = ({ children }) => {
   }, []);
 
   return (
-    <StateHouseContext.Provider
+    <StateCarContext.Provider
       value={{
         // AddProduct
         postProduct,
@@ -122,8 +114,8 @@ export const StateHouseProvider = ({ children }) => {
       }}
     >
       {children}
-    </StateHouseContext.Provider>
+    </StateCarContext.Provider>
   );
 };
 
-export const useStateHouse = () => useContext(StateHouseContext);
+export const useStateCar = () => useContext(StateCarContext);

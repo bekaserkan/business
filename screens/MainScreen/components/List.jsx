@@ -9,66 +9,14 @@ import { colors } from "../../../assets/styles/colors";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import Card from "../../../customs/Card";
+import { useStateHouse } from "../../../context/stateHouseContext";
+import { useStateCar } from "../../../context/stateCarContext";
 
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 const fullWidth = Dimensions.get("window").width - 32;
 
 const List = ({ scrollRef, car }) => {
-  const { loading, dataListCars, dataListHouses } = useСondition();
-  const data = [
-    {
-      id: 1,
-      title: "CHERY Tiggo 7 Pro Max, 2024",
-      background: colors.green2,
-      price: "100000",
-      priceDollars: "1000",
-      summSquare: "1240",
-      dollarsSquare: "120",
-      year: "2020",
-      volume: "1.8",
-      vip: true,
-      urgently: true,
-    },
-    {
-      id: 2,
-      title: "CHERY Tiggo 7 Pro Max, 2024",
-      background: colors.white,
-      price: "100000",
-      priceDollars: "1000",
-      summSquare: "1240",
-      dollarsSquare: "120",
-      year: "2020",
-      volume: "1.8",
-      vip: false,
-      starVip: true,
-    },
-    {
-      id: 3,
-      title: "CHERY Tiggo 7 Pro Max, 2024",
-      background: colors.white,
-      price: "100000",
-      priceDollars: "1000",
-      summSquare: "1240",
-      dollarsSquare: "120",
-      year: "2020",
-      volume: "1.8",
-      vip: false,
-      starVip: true,
-    },
-    {
-      id: 4,
-      title: "CHERY Tiggo 7 Pro Max, 2024",
-      background: colors.green2,
-      price: "100000",
-      priceDollars: "1000",
-      summSquare: "1240",
-      dollarsSquare: "120",
-      year: "2020",
-      volume: "1.8",
-      vip: true,
-      urgently: true,
-    },
-  ];
+  const { reLoading, recomention } = car ? useStateCar() : useStateHouse();
 
   const navigation = useNavigation();
 
@@ -84,7 +32,7 @@ const List = ({ scrollRef, car }) => {
     }
   };
 
-  if (loading) {
+  if (reLoading) {
     return <Loading />;
   }
 
@@ -95,9 +43,9 @@ const List = ({ scrollRef, car }) => {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.map}>
-        {Object.values(data)?.map((el, id) =>
-          id % 5 === 4 || el.advertising ? (
-            <Wave handle={handleFunction} key={id}>
+        {Object.values(recomention)?.map((el, id) =>
+          el.advertising ? (
+            <Wave handle={() => handleFunction()} key={id}>
               <View style={[styles.box, styles.advertisement]}>
                 <TextContent
                   fontSize={24}
@@ -112,14 +60,15 @@ const List = ({ scrollRef, car }) => {
           ) : (
             <Card
               width={containerWidth}
+              id={el.id}
               key={id}
               title={el.title}
               background={el.background}
-              priceDollars={el.priceDollars}
-              price={el.price}
+              price={el.prices[0].price}
+              priceDollars={el.prices[1].price}
               year={el.year}
-              summSquare={el.summSquare}
-              dollarsSquare={el.dollarsSquare}
+              summSquare={el.prices[0].m2_price}
+              dollarsSquare={el.prices[1].m2_price}
               volume={el.volume}
               urgently={el.urgently}
               vip={el.vip}

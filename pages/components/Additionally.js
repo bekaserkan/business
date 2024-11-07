@@ -29,7 +29,7 @@ const Additionally = ({ title, data }) => {
               </TextContent>
               <Flex>
                 <TextContent fontSize={16} fontWeight={400} color={colors.gray}>
-                  {el.data.length}
+                  {/* {el.data.length} */}
                 </TextContent>
                 <More />
               </Flex>

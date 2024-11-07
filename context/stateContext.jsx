@@ -1,13 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { url } from "../api/api";
+import React, { createContext, useContext, useState } from "react";
 
 const СonditionContext = createContext();
 
 export const СonditionProvider = ({ children }) => {
   const [condition, setСondition] = useState(false);
-  const [dataListHouses, setDataListHouses] = useState([]);
-  const [dataListCars, setDataListCars] = useState([]);
-  const [loading, setLoading] = useState();
 
   const CarActive = () => {
     setСondition(false);
@@ -16,6 +12,7 @@ export const СonditionProvider = ({ children }) => {
   const HouseActive = () => {
     setСondition(true);
   };
+<<<<<<< HEAD
   const getDataListHouses = async () => {
     setLoading(true);
     try {
@@ -41,13 +38,12 @@ export const СonditionProvider = ({ children }) => {
     getDataListHouses();
     getDataListCars();
   }, []);
+=======
+>>>>>>> 098ad11db7af04a148660c0ed8e6a9282295f6b7
 
   return (
     <СonditionContext.Provider
       value={{
-        loading,
-        dataListCars,
-        dataListHouses,
         condition,
         CarActive,
         HouseActive,

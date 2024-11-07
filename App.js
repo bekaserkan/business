@@ -1,8 +1,8 @@
 import React from "react";
 import { StateHouseProvider } from "./context/stateHouseContext";
-import { DataHouseProvider } from "./context/dataHouseContext";
-import { AuthProvider } from "./context/authContext";
+import { StateCarProvider } from "./context/stateCarContext";
 import { СonditionProvider } from "./context/stateContext";
+import { AuthProvider } from "./context/authContext";
 import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
 import MainScreens from "./routes/main";
@@ -13,11 +13,11 @@ export default function App() {
     <Provider store={store}>
       <СonditionProvider>
         <AuthProvider>
-          <DataHouseProvider>
-            <StateHouseProvider>
+          <StateHouseProvider>
+            <StateCarProvider>
               <MainScreens />
-            </StateHouseProvider>
-          </DataHouseProvider>
+            </StateCarProvider>
+          </StateHouseProvider>
         </AuthProvider>
       </СonditionProvider>
       <StatusBar

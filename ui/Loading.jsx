@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
+import { colors } from "../assets/styles/colors";
 
 const Loading = () => {
   return (
@@ -10,7 +11,7 @@ const Loading = () => {
         justifyContent: "center",
       }}
     >
-      <Text>Loading...</Text>
+      <ActivityIndicator size="large" color={colors.blue} />
     </View>
   );
 };
