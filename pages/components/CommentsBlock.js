@@ -18,7 +18,6 @@ import TextContent from "../../assets/styles/components/TextContent";
 import { colors } from "../../assets/styles/colors";
 import Column from "../../assets/styles/components/Column";
 import ImageCustom from "../../customs/Image";
-import ModalDown from "../../ui/ModalDown";
 import Close from "../../assets/svg/clode";
 import InputCustom from "../../customs/Input";
 
@@ -160,7 +159,8 @@ const CommentsBlock = ({ data }) => {
   };
 
   const totalCommentsCount = commentsData.reduce(
-    (count, comment) => count + 1 + comment.replies.length,
+    (count, comment) =>
+      count + 1 + comment.replies ? comment.replies.length : 0,
     0
   );
 
