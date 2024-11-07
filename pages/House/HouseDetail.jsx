@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
 import { colors } from "../../assets/styles/colors";
@@ -15,33 +15,37 @@ import ContactsBlock from "../components/ContactsBlock";
 import Additionally from "../components/Additionally";
 import Footer from "../components/Footer";
 import MainBlock from "../components/MainBlock";
+import { useStateHouse } from "../../context/stateHouseContext";
+import Loading from "../../ui/Loading";
 
-const image = [
-  {
-    id: 1,
-    image:
-      "https://www.houseplans.net/uploads/plans/32005/elevations/88909-768.jpg?v=091024132147",
-  },
-  {
-    id: 2,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9V8SIML7hBXkSPqfy7ZjZPcX3mi2K3DNW9Q&s",
-  },
-  {
-    id: 3,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTb_7eMmVpQnoLbF-dry5_c5msX_Fq8tB1rbSL1LBCNRdiCpI_ft3RS2jteqFd8nupd2Q&usqp=CAU",
-  },
-];
-
-const HouseDetail = () => {
+const HouseDetail = ({ route }) => {
+  const { deLoading, detail, getDetail } = useStateHouse();
+  const { id } = route.params;
   const navigation = useNavigation();
+
+  useEffect(() => {
+    getDetail({ id: id });
+  }, []);
+
+  console.log(detail);
+
+  const dataImage =
+    !deLoading &&
+    detail.properties_pictures.map((el) => {
+      return {
+        image: el.pictures.big,
+      };
+    });
 
   const routeTo = () => {
     navigation.navigate("HouseScreens", {
       screen: "HouseResidentialProfile",
     });
   };
+
+  if (deLoading) {
+    return <Loading />;
+  }
 
   return (
     <ButtonLayouts>
@@ -50,7 +54,7 @@ const HouseDetail = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Column gap={4}>
             <MainBlock
-              img={image}
+              img={dataImage}
               title={"Продажа квартира 3-комн.,90 м², 9-этаж из 17"}
               priceUSD={"$72 000"}
               priceSom={"2 720 000 сом"}

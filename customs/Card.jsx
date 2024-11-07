@@ -13,6 +13,7 @@ import Between from "../assets/styles/components/Between.jsx";
 import { useNavigation } from "@react-navigation/native";
 
 const Card = ({
+  id,
   width,
   title,
   background,
@@ -31,23 +32,24 @@ const Card = ({
   const [isFavorite, setIsFavorite] = useState(false);
   const navigation = useNavigation();
 
+  console.log(id);
+
   const goDetail = () => {
     if (home) {
       navigation.navigate("HouseScreens", {
         screen: "HouseDetail",
+        params: { id: id },
       });
     } else {
       navigation.navigate("CarScreens", {
         screen: "CarDetail",
+        params: { id: id },
       });
     }
   };
 
   return (
-    <Wave
-      handle={() => goDetail()}
-      style={[stylesCard.card_block, { width: width }]}
-    >
+    <Wave handle={goDetail} style={[stylesCard.card_block, { width: width }]}>
       <Column
         gap={10}
         style={[stylesCard.card_box, { backgroundColor: background }]}

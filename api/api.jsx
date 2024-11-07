@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const url = axios.create({
-  baseURL: "https://hit-travel.org/",
+  baseURL: "http://217.18.62.110/",
 });
 
 export const api = axios.create({

@@ -21,17 +21,17 @@ export const StateHouseProvider = ({ children }) => {
   });
   const [proLoading, setProLoading] = useState(false);
 
-  const headers = {};
-
   const postProduct = async () => {
     setProLoading(true);
     const newData = {
       value: "",
     };
     try {
-      const response = await api.post("house/ads/set", { headers: {
-        
-      } } , newData);
+      const response = await api.post(
+        "house/ads/set",
+        { headers: {} },
+        newData
+      );
       Alert.alert("Successful", response.data);
     } catch (error) {
       console.log(error);
@@ -43,8 +43,8 @@ export const StateHouseProvider = ({ children }) => {
   const getRecomention = async () => {
     setReLoading(true);
     try {
-      const response = await api.get("");
-      setRecomention(response.data);
+      const response = await api.get("v1.0/house/ads");
+      setRecomention(response.data.results);
     } catch (error) {
       console.log(error);
     } finally {
@@ -79,7 +79,7 @@ export const StateHouseProvider = ({ children }) => {
   const getDetail = async ({ id }) => {
     setDeLoading(true);
     try {
-      const response = await api.get(`${id}`);
+      const response = await api.get(`v1.0/house/ads/${id}`);
       setDetail(response.data);
     } catch (error) {
       console.log(error);

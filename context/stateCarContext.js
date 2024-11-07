@@ -35,8 +35,8 @@ export const StateCarProvider = ({ children }) => {
   const getRecomention = async () => {
     setReLoading(true);
     try {
-      const response = await url.get("");
-      setRecomention(response.data);
+      const response = await url.get("cars/cars-posts/");
+      setRecomention(response.data.data);
     } catch (error) {
       console.log(error);
     } finally {
