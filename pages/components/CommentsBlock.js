@@ -81,7 +81,7 @@ const CommentBox = ({ data, handleAnswer, handleReport }) => {
                 handleReport={handleReport}
               />
             ))}
-            {data.replies.length > 3 && (
+            {data.replies.length > 1 && (
               <View
                 style={{
                   width: "100%",
