@@ -17,7 +17,6 @@ const fullWidth = Dimensions.get("window").width - 32;
 
 const List = ({ scrollRef, car }) => {
   const { reLoading, recomention } = car ? useStateCar() : useStateHouse();
-
   const navigation = useNavigation();
 
   const handleFunction = () => {
@@ -60,6 +59,7 @@ const List = ({ scrollRef, car }) => {
           ) : (
             <Card
               width={containerWidth}
+              image={el.properties_pictures[0].pictures.big}
               id={el.id}
               key={id}
               title={el.title}
@@ -73,6 +73,7 @@ const List = ({ scrollRef, car }) => {
               urgently={el.urgently}
               vip={el.vip}
               starVip={el.starVip}
+              adress={el.street}
               home={car ? false : true}
             />
           )

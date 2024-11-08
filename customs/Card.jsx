@@ -11,9 +11,11 @@ import VipStar from "../assets/svg/starVip.js";
 import Wave from "./Wave.jsx";
 import Between from "../assets/styles/components/Between.jsx";
 import { useNavigation } from "@react-navigation/native";
+import ImageCustom from "./Image.jsx";
 
 const Card = ({
   id,
+  image,
   width,
   title,
   background,
@@ -28,11 +30,10 @@ const Card = ({
   avto_user,
   dollarsSquare,
   summSquare,
+  adress,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const navigation = useNavigation();
-
-  console.log(id);
 
   const goDetail = () => {
     if (home) {
@@ -55,6 +56,22 @@ const Card = ({
         style={[stylesCard.card_box, { backgroundColor: background }]}
       >
         <View style={stylesCard.card_box_img}>
+          <View
+            style={{
+              top: 0,
+              left: 0,
+              position: "absolute",
+              width: "100%",
+              height: 120,
+            }}
+          >
+            <ImageCustom
+              uri={image}
+              width={"100%"}
+              height={120}
+              borderRadius={6}
+            />
+          </View>
           <Pressable onPress={() => setIsFavorite(!isFavorite)}>
             {isFavorite ? (
               <Heard1
@@ -128,20 +145,38 @@ const Card = ({
             </Column>
           </>
         )}
-        <Flex style={{ flexDirection: "row" }} gap={5}>
-          {vip ? (
-            <Vip style={{ width: 14, height: 14 }} />
-          ) : starVip ? (
-            <VipStar style={{ width: 14, height: 14 }} />
-          ) : null}
-          <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-            {year}
-          </TextContent>
-          <TextContent color={colors.gray}>/</TextContent>
-          <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-            {volume}
-          </TextContent>
-        </Flex>
+        {home ? (
+          <Flex style={{ flexDirection: "row" }} gap={5}>
+            {vip ? (
+              <Vip style={{ width: 14, height: 14 }} />
+            ) : starVip ? (
+              <VipStar style={{ width: 14, height: 14 }} />
+            ) : null}
+            <TextContent
+              numberOfLines={1}
+              fontSize={12}
+              fontWeight={400}
+              color={colors.gray}
+            >
+              {adress}
+            </TextContent>
+          </Flex>
+        ) : (
+          <Flex style={{ flexDirection: "row" }} gap={5}>
+            {vip ? (
+              <Vip style={{ width: 14, height: 14 }} />
+            ) : starVip ? (
+              <VipStar style={{ width: 14, height: 14 }} />
+            ) : null}
+            <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
+              {year}
+            </TextContent>
+            <TextContent color={colors.gray}>/</TextContent>
+            <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
+              {volume}
+            </TextContent>
+          </Flex>
+        )}
       </Column>
     </Wave>
   );
@@ -170,7 +205,6 @@ const stylesCard = StyleSheet.create({
   card_box_img: {
     height: 120,
     borderRadius: 6,
-    backgroundColor: "blue",
     position: "relative",
   },
   urgently: {

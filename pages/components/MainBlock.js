@@ -20,7 +20,6 @@ const MainBlock = ({
   priceSom,
   miniPriceSom,
   house,
-  car,
   address,
   time,
   vip,
@@ -29,6 +28,7 @@ const MainBlock = ({
   heart,
   comment,
   img,
+  street,
 }) => {
   return (
     <View
@@ -36,7 +36,7 @@ const MainBlock = ({
         backgroundColor: colors.white,
       }}
     >
-      <Slider fast={true} height={200} detail={true} back={true} img={img} />
+      <Slider height={200} detail={true} back={true} img={img} />
       <Wrapper top={true} padding={[16, 0]}>
         <Column gap={16}>
           <TextContent
@@ -49,16 +49,16 @@ const MainBlock = ({
           </TextContent>
           {house ? (
             <View>
-              <Flex top={16} gap={20}>
+              <Flex gap={20}>
                 <TextContent
                   fontSize={22}
                   fontWeight={600}
                   color={colors.black}
                 >
-                  {priceUSD}
+                  ${priceUSD}
                 </TextContent>
                 <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
-                  {priceSom}
+                  {priceSom} сом
                 </TextContent>
               </Flex>
               <Flex top={4} gap={20}>
@@ -67,47 +67,56 @@ const MainBlock = ({
                   fontWeight={500}
                   color={colors.black}
                 >
-                  {miniPriceUSD}
+                  ${miniPriceUSD}
                 </TextContent>
                 <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-                  {miniPriceSom}
+                  {miniPriceSom} сом/м²
                 </TextContent>
               </Flex>
             </View>
           ) : (
-            <View>
-              <Column gap={2}>
-                <Between>
-                  <TextContent
-                    fontSize={22}
-                    fontWeight={600}
-                    color={colors.black}
-                  >
-                    {priceUSD}
-                  </TextContent>
-                  <Button
-                    color={colors.phon}
-                    style={{ height: 27, paddingHorizontal: 10 }}
-                    textColor={colors.blue}
-                  >
-                    Отчет по госномеру
-                  </Button>
-                </Between>
+            <Column gap={2}>
+              <Between>
                 <TextContent
-                  fontSize={14}
-                  fontWeight={400}
+                  fontSize={22}
+                  fontWeight={600}
                   color={colors.black}
                 >
-                  {priceSom}
+                  {priceUSD}
                 </TextContent>
-              </Column>
-            </View>
-          )}
-          <Column gap={6}>
-            <Between>
-              <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-                {address}
+                <Button
+                  color={colors.phon}
+                  style={{ height: 27, paddingHorizontal: 10 }}
+                  textColor={colors.blue}
+                >
+                  Отчет по госномеру
+                </Button>
+              </Between>
+              <TextContent fontSize={14} fontWeight={400} color={colors.black}>
+                {priceSom}
               </TextContent>
+            </Column>
+          )}
+          <Column gap={10}>
+            <Between
+              style={{
+                alignItems: "flex-end",
+              }}
+            >
+              <Column gap={2}>
+                <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
+                  {address}
+                </TextContent>
+                {street && (
+                  <TextContent
+                    fontSize={12}
+                    fontWeight={400}
+                    color={colors.gray}
+                  >
+                    {street}
+                  </TextContent>
+                )}
+              </Column>
 
               <Flex gap={6}>
                 <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
@@ -158,7 +167,9 @@ const MainBlock = ({
                   </TextContent>
                 </Flex>
               </Flex>
-              <TextContent>{addHours}</TextContent>
+              <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
+                {addHours}
+              </TextContent>
             </Between>
           </Column>
         </Column>

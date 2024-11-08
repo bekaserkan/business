@@ -27,8 +27,6 @@ const HouseDetail = ({ route }) => {
     getDetail({ id: id });
   }, []);
 
-  console.log(detail);
-
   const dataImage =
     !deLoading &&
     detail.properties_pictures.map((el) => {
@@ -56,18 +54,21 @@ const HouseDetail = ({ route }) => {
             <MainBlock
               img={dataImage}
               title={"Продажа квартира 3-комн.,90 м², 9-этаж из 17"}
-              priceUSD={"$72 000"}
-              priceSom={"2 720 000 сом"}
-              miniPriceUSD={"$1 565/м²"}
-              miniPriceSom={"132 871 сом/м²"}
+              priceUSD={detail.prices[1].price}
+              priceSom={detail.prices[0].price}
+              miniPriceUSD={detail.prices[1].m2_price}
+              miniPriceSom={detail.prices[0].m2_price}
               house={true}
-              address={"Бишкек"}
-              time={"5 мин назад"}
+              address={`Бишкек`}
+              street={`${detail.street ? detail.street : ""} ${
+                detail.crossing ? detail.crossing : ""
+              }`}
+              time={""}
               vip={true}
-              addHours={"Добавлено 2 часа назад"}
-              eye={"191"}
-              heart={"50"}
-              comment={"8"}
+              addHours={`Добавлено ${detail.added_at} назад`}
+              eye={detail.views}
+              heart={"0000"}
+              comment={"0000"}
             />
             <AccountBlock
               title="Жилой комплекс"
@@ -80,69 +81,72 @@ const HouseDetail = ({ route }) => {
               ava="https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg"
               handle={routeTo}
             />
-            <Characteristic
-              data={[
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
-              ]}
-              keyOne={"name"}
-              keyTwo={"value"}
-            />
-            <Additionally
-              title={"Дополнительно"}
-              data={[
-                {
-                  name: "Мультимедиа",
-                  data: [
-                    { text: "Android Auto" },
-                    { text: "CarPlay" },
-                    { text: "Аудиоподготовка" },
-                  ],
-                },
-                {
-                  name: "Интерьер",
-                  data: [{ text: "Android Auto" }, { text: "CarPlay" }],
-                },
-                {
-                  name: "Безопасность",
-                  data: [{ text: "CarPlay" }, { text: "Аудиоподготовка" }],
-                },
-              ]}
-            />
+            {detail.safety.length > 0 && (
+              <Characteristic
+                data={[
+                  {
+                    name: "one",
+                    value: "two",
+                  },
+                  {
+                    name: "one",
+                    value: "two",
+                  },
+                  {
+                    name: "one",
+                    value: "two",
+                  },
+                  {
+                    name: "one",
+                    value: "two",
+                  },
+                  {
+                    name: "one",
+                    value: "two",
+                  },
+                  {
+                    name: "one",
+                    value: "two",
+                  },
+                ]}
+                keyOne={"name"}
+                keyTwo={"value"}
+              />
+            )}
+            {detail.safety.length > 0 && (
+              <Additionally
+                title={"Дополнительно"}
+                data={[
+                  {
+                    name: "Мультимедиа",
+                    data: [
+                      { text: "Android Auto" },
+                      { text: "CarPlay" },
+                      { text: "Аудиоподготовка" },
+                    ],
+                  },
+                  {
+                    name: "Интерьер",
+                    data: [{ text: "Android Auto" }, { text: "CarPlay" }],
+                  },
+                  {
+                    name: "Безопасность",
+                    data: [{ text: "CarPlay" }, { text: "Аудиоподготовка" }],
+                  },
+                ]}
+              />
+            )}
             <Description
-              text={
-                "Продается 3 комнатная квартира в спальном районе со свежим ремонтом. Кирпичный дом, центральное отопление и центральная горячая вода. Трехфазовое электричество. 2 просторных двора. Самые лучшие виды на горы и город благодаря лоджиям по периметру и высокому этажу. Рядом больницы, школа #62 (через забор), другие школы, детсады. Цена ниже чем на другие квартиры в этом комплексе. Унитаз подвесной (инсталляция). Утепленные лоджии. Пятикамерные окна. Быстрый бесшумный лифт от Hyundai. На первом этаже магазин «Азия»."
-              }
+              text={detail.description}
+              point={detail.point.coordinates}
             />
             <ProfileBlock
-              name="Нурзида"
+              name={detail.user.name}
               stars={1}
-              rates="4.4"
-              reviews={23}
-              description="2 объявления"
-              ava="https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg"
+              rates={detail.user.avarage_rating}
+              reviews={detail.user.review_count}
+              description={`${detail.user.accommodation_count} объявления`}
+              ava={detail.user._avatar}
               handle={routeTo}
             />
             <CommentsBlock
@@ -156,7 +160,7 @@ const HouseDetail = ({ route }) => {
                   answer: true,
                   replies: [
                     {
-                      id: 1,
+                      id: 2,
                       ava: "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg",
                       name: "Нурзида",
                       text: "Ради вас покрасим на черный🗿",
@@ -164,7 +168,15 @@ const HouseDetail = ({ route }) => {
                       answer: true,
                     },
                     {
-                      id: 2,
+                      id: 3,
+                      ava: "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg",
+                      name: "Нурзида",
+                      text: "Ради вас покрасим на черный🗿",
+                      date: "2024-11-01T19:51:41.363Z",
+                      answer: true,
+                    },
+                    {
+                      id: 3,
                       ava: "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg",
                       name: "Нурзида",
                       text: "Ради вас покрасим на черный🗿",
@@ -174,7 +186,6 @@ const HouseDetail = ({ route }) => {
                   ],
                 },
               ]}
-              comments={8}
             />
             <ContactsBlock
               data={[

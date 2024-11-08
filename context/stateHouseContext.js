@@ -21,6 +21,8 @@ export const StateHouseProvider = ({ children }) => {
   });
   const [proLoading, setProLoading] = useState(false);
 
+  console.log(param);
+
   const postProduct = async () => {
     setProLoading(true);
     const newData = {
@@ -55,7 +57,7 @@ export const StateHouseProvider = ({ children }) => {
   const getParam = async () => {
     setPaLoading(true);
     try {
-      const response = await api.get("");
+      const response = await api.get("v1.0/house/public/data");
       setParam(response.data);
     } catch (error) {
       console.log(error);
