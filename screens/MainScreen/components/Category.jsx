@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import Between from "../../../assets/styles/components/Between";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../../assets/styles/colors";
@@ -12,16 +12,48 @@ const Category = ({ house, car }) => {
     return (
       <Between center={"center"}>
         <Wave>
-          <View style={styles.box}></View>
+          <View style={styles.box}>
+            <Image
+              style={{
+                width: 74,
+                height: 74,
+              }}
+              source={require("../../../assets/images/1-8.png")}
+            />
+          </View>
         </Wave>
         <Wave>
-          <View style={styles.box}></View>
+          <View style={styles.box}>
+            <Image
+              style={{
+                width: 74,
+                height: 74,
+              }}
+              source={require("../../../assets/images/1-9.png")}
+            />
+          </View>
         </Wave>
         <Wave>
-          <View style={styles.box}></View>
+          <View style={styles.box}>
+            <Image
+              style={{
+                width: 74,
+                height: 74,
+              }}
+              source={require("../../../assets/images/1-5.png")}
+            />
+          </View>
         </Wave>
         <Wave>
-          <View style={styles.box}></View>
+          <View style={styles.box}>
+            <Image
+              style={{
+                width: 74,
+                height: 74,
+              }}
+              source={require("../../../assets/images/1-6.png")}
+            />
+          </View>
         </Wave>
       </Between>
     );

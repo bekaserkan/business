@@ -98,7 +98,12 @@ const Card = ({
         </View>
         {!home && (
           <>
-            <TextContent color={colors.black} fontSize={14} fontWeight={500}>
+            <TextContent
+              numberOfLines={2}
+              color={colors.black}
+              fontSize={14}
+              fontWeight={500}
+            >
               {title}
             </TextContent>
             <Column gap={2}>
@@ -112,9 +117,13 @@ const Card = ({
           </>
         )}
         {home && (
-          <>
-            <TextContent>Продажа</TextContent>
-            <TextContent color={colors.black} fontSize={14} fontWeight={500}>
+          <Column gap={10}>
+            <TextContent
+              numberOfLines={2}
+              color={colors.black}
+              fontSize={14}
+              fontWeight={500}
+            >
               {title}
             </TextContent>
             <Column gap={2}>
@@ -143,7 +152,7 @@ const Card = ({
                 </TextContent>
               </Between>
             </Column>
-          </>
+          </Column>
         )}
         {home ? (
           <Flex style={{ flexDirection: "row" }} gap={5}>

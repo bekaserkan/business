@@ -13,6 +13,7 @@ export const StateHouseProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState([]);
   const [deLoading, setDeLoading] = useState(true);
+  const [resident, setResident] = useState([]);
   const [addHouse, setAddHouse] = useState({
     value: "",
   });
@@ -29,11 +30,7 @@ export const StateHouseProvider = ({ children }) => {
       value: "",
     };
     try {
-      const response = await api.post(
-        "house/ads/set",
-        { headers: {} },
-        newData
-      );
+      const response = await api.post("house/ads/set", newData);
       Alert.alert("Successful", response.data);
     } catch (error) {
       console.log(error);
@@ -83,6 +80,8 @@ export const StateHouseProvider = ({ children }) => {
     try {
       const response = await api.get(`v1.0/house/ads/${id}`);
       setDetail(response.data);
+      const responseTwo = await api.get(`v1.0/house/${id}/buildings`);
+      setResident(responseTwo.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -112,6 +111,7 @@ export const StateHouseProvider = ({ children }) => {
         result,
         loading,
         // Detail
+        resident,
         getDetail,
         detail,
         deLoading,

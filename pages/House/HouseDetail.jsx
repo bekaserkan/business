@@ -19,13 +19,42 @@ import { useStateHouse } from "../../context/stateHouseContext";
 import Loading from "../../ui/Loading";
 
 const HouseDetail = ({ route }) => {
-  const { deLoading, detail, getDetail } = useStateHouse();
+  const { deLoading, param, resident, detail, getDetail } = useStateHouse();
   const { id } = route.params;
   const navigation = useNavigation();
+
+  const type = param?.type?.filter((obj) => {
+    return obj.id == detail.type_id;
+  })[0];
+  const category = param?.category?.filter((obj) => {
+    return obj.id == detail.category;
+  })[0];
+  const rooms = param?.rooms?.filter((obj) => {
+    return obj.id == detail.rooms;
+  })[0];
+  const title = `${type?.name ? `${type.name}` : ""}${
+    category?.name ? ` • ${category.name}` : ""
+  }${
+    rooms?.name
+      ? rooms?.id >= 6
+        ? ` • ${rooms?.name}`
+        : ` • ${rooms?.name}-комн.,`
+      : ""
+  } ${detail.square}м²${
+    detail.floor == -1
+      ? ", цоколь"
+      : detail.floor == -2
+      ? ", подвал"
+      : detail.floor > 1
+      ? `, ${detail.floor}-этаж из ${detail.floors}`
+      : ""
+  }`;
 
   useEffect(() => {
     getDetail({ id: id });
   }, []);
+
+  console.log(resident);
 
   const dataImage =
     !deLoading &&
@@ -53,7 +82,7 @@ const HouseDetail = ({ route }) => {
           <Column gap={4}>
             <MainBlock
               img={dataImage}
-              title={"Продажа квартира 3-комн.,90 м², 9-этаж из 17"}
+              title={title}
               priceUSD={detail.prices[1].price}
               priceSom={detail.prices[0].price}
               miniPriceUSD={detail.prices[1].m2_price}
@@ -72,13 +101,13 @@ const HouseDetail = ({ route }) => {
             />
             <AccountBlock
               title="Жилой комплекс"
-              name="ЖД «Москва»"
+              name={resident.complex_name}
               nameColor={colors.blue}
               stars={1}
-              rates="4.4"
-              reviews={1}
-              description="Бишкек, пр. Манаса/ул.Рыскулова"
-              ava="https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg"
+              rates="0000"
+              reviews="0000"
+              description={resident.address}
+              ava={resident.images[0].image_url}
               handle={routeTo}
             />
             {detail.safety.length > 0 && (
