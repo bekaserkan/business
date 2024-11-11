@@ -18,11 +18,36 @@ export const StateHouseProvider = ({ children }) => {
     value: "",
   });
   const [filter, setFilter] = useState({
-    value: "",
+    region: {
+      id: 0,
+      name: "любой",
+    },
+    category: {
+      id: 0,
+      name: "любой",
+    },
+    rooms: {
+      id: 0,
+      name: "любой",
+    },
+    floorsFor: {
+      id: 0,
+      name: "любой",
+    },
+    floorsUp: {
+      id: 0,
+      name: "любой",
+    },
+    floorsHouseFor: {
+      id: 0,
+      name: "любой",
+    },
+    floorsHouseUp: {
+      id: 0,
+      name: "любой",
+    },
   });
   const [proLoading, setProLoading] = useState(false);
-
-  console.log(param);
 
   const postProduct = async () => {
     setProLoading(true);

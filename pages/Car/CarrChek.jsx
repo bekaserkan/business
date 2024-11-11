@@ -65,7 +65,7 @@ const CarrChek = () => {
               <Photo />
             </Wave>
           </Between>
-          <Button color={colors.blue} textColor={colors.white} fontSize={16}>
+          <Button color={colors.blue} textColor={colors.white}>
             Найти
           </Button>
         </Column>

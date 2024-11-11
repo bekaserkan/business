@@ -284,8 +284,10 @@ const CommentsBlock = ({ data }) => {
                   height={40}
                   borderRadius={50}
                 />
-
                 <InputCustom
+                  styleContainer={{
+                    flex: 1,
+                  }}
                   send={true}
                   style={{ paddingHorizontal: 16, borderRadius: 50 }}
                   handle={handleSendComment}

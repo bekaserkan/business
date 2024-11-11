@@ -2,7 +2,7 @@ import React from "react";
 import { ActivityIndicator, View } from "react-native";
 import { colors } from "../assets/styles/colors";
 
-const Loading = () => {
+const Loading = ({ color }) => {
   return (
     <View
       style={{
@@ -11,7 +11,7 @@ const Loading = () => {
         justifyContent: "center",
       }}
     >
-      <ActivityIndicator size="large" color={colors.blue} />
+      <ActivityIndicator size="large" color={color ? color : colors.black} />
     </View>
   );
 };

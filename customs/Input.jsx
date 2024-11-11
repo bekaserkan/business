@@ -6,6 +6,7 @@ import Wave from "./Wave";
 import SendIcon from "../assets/svg/send";
 
 const InputCustom = ({
+  styleContainer,
   phone,
   email,
   disabled,
@@ -34,10 +35,12 @@ const InputCustom = ({
 
   return (
     <View
-      style={{
-        flex: 1,
-        position: "relative",
-      }}
+      style={[
+        {
+          position: "relative",
+        },
+        styleContainer,
+      ]}
     >
       <TextInput
         ref={textInputRef}

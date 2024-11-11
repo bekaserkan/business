@@ -19,8 +19,6 @@ const List = ({ scrollRef, car }) => {
     : useStateHouse();
   const navigation = useNavigation();
 
-  console.log(param);
-
   const handleFunction = () => {
     if (car) {
       navigation.navigate("CarScreens", {
@@ -34,7 +32,7 @@ const List = ({ scrollRef, car }) => {
   };
 
   if (reLoading) {
-    return <Loading />;
+    return <Loading color={car ? colors.blue : colors.house} />;
   }
 
   return (

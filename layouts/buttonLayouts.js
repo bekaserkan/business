@@ -4,14 +4,25 @@ import Button from "../customs/Button";
 import Phone from "../assets/svg/phoneWhite";
 import { colors } from "../assets/styles/colors";
 
-const ButtonLayouts = ({ loading, handle, children }) => {
-  
+const ButtonLayouts = ({
+  container,
+  color,
+  title,
+  loading,
+  handle,
+  children,
+}) => {
   return (
     <View
-      style={{
-        flex: 1,
-        position: "relative",
-      }}
+      style={[
+        {
+          flex: 1,
+          position: "relative",
+        },
+        container && {
+          paddingHorizontal: 16,
+        },
+      ]}
     >
       {children}
       <View
@@ -35,10 +46,10 @@ const ButtonLayouts = ({ loading, handle, children }) => {
         <Button
           handle={handle}
           loading={loading}
-          icon={<Phone />}
-          color={colors.green}
+          icon={!title && <Phone />}
+          color={color ? color : colors.green}
         >
-          Позвонить
+          {title ? title : "Позвонить"}
         </Button>
       </View>
     </View>

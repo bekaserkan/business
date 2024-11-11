@@ -6,8 +6,19 @@ import Flex from "../assets/styles/components/Flex";
 import Back from "../assets/svg/back";
 import Wave from "../customs/Wave";
 import { useNavigation } from "@react-navigation/native";
+import Between from "../assets/styles/components/Between";
 
-const Header = ({ back, homeBack, handleBack, container, children, style }) => {
+const Header = ({
+  iks,
+  back,
+  homeBack,
+  handleBack,
+  container,
+  handle,
+  children,
+  style,
+  reset,
+}) => {
   const navigation = useNavigation();
 
   const route = () => {
@@ -34,16 +45,21 @@ const Header = ({ back, homeBack, handleBack, container, children, style }) => {
         style,
       ]}
     >
-      <Flex gap={20}>
-        {back && (
-          <Wave handle={route}>
-            <Back />
+      <Between center="center">
+        <Flex gap={20}>
+          {back && <Wave handle={route}>{iks ? <Back /> : <Back />}</Wave>}
+          <TextContent fontSize={22} fontWeight={600} color={colors.black}>
+            {children}
+          </TextContent>
+        </Flex>
+        {iks && (
+          <Wave handle={reset}>
+            <TextContent fontSize={14} fontWeight={500} color={colors.black}>
+              Сбросить
+            </TextContent>
           </Wave>
         )}
-        <TextContent fontSize={22} fontWeight={600} color={colors.black}>
-          {children}
-        </TextContent>
-      </Flex>
+      </Between>
     </View>
   );
 };
