@@ -1,8 +1,45 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { api } from "../api/api";
 import { Alert } from "react-native";
 
 const StateHouseContext = createContext();
+
+const initialFilterState = {
+  region: { id: 1, name: "Чуйская область / Бишкек" },
+  town: { id: 0, name: "Любой" },
+  category: { id: 0, name: "Любой" },
+  rooms: { id: 0, name: "Любой" },
+  currency: { id: 0, name: "Любой" },
+  floor: { id: 0, name: "Любой" },
+  floors: { id: 0, name: "Любой" },
+  floors_not_end: false,
+  floors_last: false,
+  serie: { id: 0, name: "Любой" },
+  condition: { id: 0, name: "Любой" },
+  heating: { id: 0, name: "Любой" },
+  furniture: { id: 0, name: "Любой" },
+  building_type: { id: 0, name: "Любой" },
+  ceiling_height: "",
+  square: "",
+  land_square: "",
+  living_square: "",
+  kitchen_square: "",
+  is_urgent: false,
+  picture_exists: false,
+  video_exists: false,
+  exchange: false,
+  installment: false,
+  mortgage: false,
+  owner_type: { id: 0, name: "Любой" },
+  document: { id: 0, name: "Любой" },
+  price: "",
+};
 
 export const StateHouseProvider = ({ children }) => {
   const [recomention, setRecomention] = useState([]);
@@ -17,40 +54,48 @@ export const StateHouseProvider = ({ children }) => {
   const [addHouse, setAddHouse] = useState({
     value: "",
   });
-  const [filter, setFilter] = useState({
-    region: {
-      id: 0,
-      name: "Любой",
-    },
-    category: {
-      id: 0,
-      name: "Любой",
-    },
-    rooms: {
-      id: 0,
-      name: "Любой",
-    },
-    floorsFor: {
-      id: 0,
-      name: "Любой",
-    },
-    floorsUp: {
-      id: 0,
-      name: "Любой",
-    },
-    floorsHouseFor: {
-      id: 0,
-      name: "Любой",
-    },
-    floorsHouseUp: {
-      id: 0,
-      name: "Любой",
-    },
-    notEndFloor: false,
-    endFloor: false,
-    livingAreaFrom: "",
-  });
+  const [filter, setFilter] = useState(initialFilterState);
   const [proLoading, setProLoading] = useState(false);
+
+  console.log(param);
+
+  useEffect(() => {
+    getResult();
+  }, [filter, getResult]);
+
+  const getResult = useCallback(async () => {
+    const queryParams = new URLSearchParams();
+
+    Object.entries(filter).forEach(([key, value]) => {
+      if (typeof value === "object" && value.name !== "Любой") {
+        queryParams.append(key, value.id);
+      } else if (typeof value === "boolean") {
+        queryParams.append(key, value);
+      } else if (typeof value === "string" && value !== "") {
+        queryParams.append(key, value);
+      }
+    });
+
+    console.log(queryParams.toString());
+
+    setLoading(true);
+
+    try {
+      const response = await api.get(
+        `v1.0/house/ads/?${queryParams.toString()}`
+      );
+      setResult(response.data.results);
+    } catch (error) {
+      console.error("Error fetching results:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [filter]);
+
+  useEffect(() => {
+    getParam();
+    getRecomention();
+  }, []);
 
   const postProduct = async () => {
     setProLoading(true);
@@ -82,7 +127,7 @@ export const StateHouseProvider = ({ children }) => {
   const getParam = async () => {
     setPaLoading(true);
     try {
-      const response = await api.get("v1.0/house/public/data");
+      const response = await api.get("v1.0/house/public/data/?region=3");
       setParam(response.data);
     } catch (error) {
       console.log(error);
@@ -91,24 +136,12 @@ export const StateHouseProvider = ({ children }) => {
     }
   };
 
-  const getResult = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get("");
-      setResult(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getDetail = async ({ id }) => {
+  const getDetail = async ({ id, complex_id }) => {
     setDeLoading(true);
     try {
       const response = await api.get(`v1.0/house/ads/${id}`);
       setDetail(response.data);
-      const responseTwo = await api.get(`v1.0/house/${id}/buildings`);
+      const responseTwo = await api.get(`v1.0/house/${complex_id}/buildings`);
       setResident(responseTwo.data);
     } catch (error) {
       console.log(error);
@@ -116,11 +149,6 @@ export const StateHouseProvider = ({ children }) => {
       setDeLoading(false);
     }
   };
-
-  useEffect(() => {
-    getParam();
-    getRecomention();
-  }, []);
 
   return (
     <StateHouseContext.Provider

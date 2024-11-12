@@ -9,10 +9,16 @@ import TextContent from "../../../assets/styles/components/TextContent";
 const Category = ({ house, car }) => {
   const navigation = useNavigation();
 
+  const Sybmit = () => {
+    navigation.navigate("HouseScreens", {
+      screen: "HouseResult",
+    });
+  };
+
   if (house) {
     return (
       <Between center={"center"}>
-        <Wave>
+        <Wave handle={Sybmit}>
           <View style={styles.box}>
             <Image
               style={{
@@ -26,7 +32,7 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave>
+        <Wave handle={Sybmit}>
           <View style={styles.box}>
             <Image
               style={{
@@ -40,7 +46,7 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave>
+        <Wave handle={Sybmit}>
           <View style={styles.box}>
             <Image
               style={{
@@ -54,7 +60,7 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave>
+        <Wave handle={Sybmit}>
           <View style={styles.box}>
             <Image
               style={{

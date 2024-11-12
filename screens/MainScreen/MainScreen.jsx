@@ -7,6 +7,7 @@ import Category from "./components/Category";
 import TextContent from "../../assets/styles/components/TextContent";
 import List from "./components/List";
 import LayoutTab from "../../layouts/tabs";
+import { ScrollView } from "react-native-gesture-handler";
 
 const MainScreen = () => {
   const scrollRef = useRef(null);
@@ -26,17 +27,23 @@ const MainScreen = () => {
               />
             </View>
             <View style={styles.wrapper}>
-              <Category car={true} />
-              <TextContent
-                top={30}
-                fontSize={20}
-                fontWeight={600}
-                color={colors.black}
-                bottom={6}
+              <ScrollView
+                ref={scrollRef}
+                style={{ flex: 1 }}
+                showsVerticalScrollIndicator={false}
               >
-                Рекомендации
-              </TextContent>
-              <List scrollRef={scrollRef} car={true} />
+                <Category car={true} />
+                <TextContent
+                  top={30}
+                  fontSize={20}
+                  fontWeight={600}
+                  color={colors.black}
+                  bottom={6}
+                >
+                  Рекомендации
+                </TextContent>
+                <List car={true} />
+              </ScrollView>
             </View>
           </View>
         }
@@ -49,18 +56,25 @@ const MainScreen = () => {
                 link={"HouseFilter"}
               />
             </View>
+
             <View style={styles.wrapper}>
-              <Category house={true} />
-              <TextContent
-                top={30}
-                fontSize={20}
-                fontWeight={600}
-                color={colors.black}
-                bottom={6}
+              <ScrollView
+                ref={scrollRefTwo}
+                style={{ flex: 1 }}
+                showsVerticalScrollIndicator={false}
               >
-                Рекомендации
-              </TextContent>
-              <List scrollRef={scrollRefTwo} />
+                <Category house={true} />
+                <TextContent
+                  top={30}
+                  fontSize={20}
+                  fontWeight={600}
+                  color={colors.black}
+                  bottom={6}
+                >
+                  Рекомендации
+                </TextContent>
+                <List />
+              </ScrollView>
             </View>
           </View>
         }

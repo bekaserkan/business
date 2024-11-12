@@ -5,7 +5,6 @@ import Wave from "../../../customs/Wave";
 import TextContent from "../../../assets/styles/components/TextContent";
 import { colors } from "../../../assets/styles/colors";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView } from "react-native-gesture-handler";
 import Card from "../../../customs/Card";
 import { useStateHouse } from "../../../context/stateHouseContext";
 import { useStateCar } from "../../../context/stateCarContext";
@@ -13,7 +12,7 @@ import { useStateCar } from "../../../context/stateCarContext";
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 const fullWidth = Dimensions.get("window").width - 32;
 
-const List = ({ scrollRef, car }) => {
+const List = ({ car }) => {
   const { reLoading, recomention, param } = car
     ? useStateCar()
     : useStateHouse();
@@ -36,80 +35,75 @@ const List = ({ scrollRef, car }) => {
   }
 
   return (
-    <ScrollView
-      ref={scrollRef}
-      style={{ flex: 1 }}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.map}>
-        {Object.values(recomention)?.map((el, id) => {
-          const type = param?.type?.filter((obj) => {
-            return obj.id == el.type_id;
-          })[0];
-          const category = param?.category?.filter((obj) => {
-            return obj.id == el.category;
-          })[0];
-          const rooms = param?.rooms?.filter((obj) => {
-            return obj.id == el.rooms;
-          })[0];
-          const title = `${type?.name ? `${type.name}` : ""}${
-            category?.name ? ` • ${category.name}` : ""
-          }${
-            rooms?.name
-              ? rooms?.id >= 6
-                ? ` • ${rooms?.name}`
-                : ` • ${rooms?.name}-комн.,`
-              : ""
-          } ${el.square}м²${
-            el.floor == -1
-              ? ", цоколь"
-              : el.floor == -2
-              ? ", подвал"
-              : el.floor > 1
-              ? `, ${el.floor}-этаж из ${el.floors}`
-              : ""
-          }`;
-          if (el.advertising) {
-            return (
-              <Wave handle={() => handleFunction()} key={id}>
-                <View style={[styles.box, styles.advertisement]}>
-                  <TextContent
-                    fontSize={24}
-                    fontWeight="bold"
-                    color={colors.black}
-                    style={{ textAlign: "center", padding: 20 }}
-                  >
-                    Рекламный Блок
-                  </TextContent>
-                </View>
-              </Wave>
-            );
-          } else {
-            return (
-              <Card
-                width={containerWidth}
-                image={el.properties_pictures[0].pictures.big}
-                id={el.id}
-                key={id}
-                title={title}
-                background={el.background}
-                price={el.prices[0].price}
-                priceDollars={el.prices[1].price}
-                year={el.year}
-                summSquare={el.prices[0].m2_price}
-                dollarsSquare={el.prices[1].m2_price}
-                volume={el.volume}
-                urgently={el.urgently}
-                vip={el.vip}
-                starVip={el.starVip}
-                adress={el.street}
-                home={car ? false : true}
-              />
-            );
-          }
-        })}
-      </View>
-    </ScrollView>
+    <View style={styles.map}>
+      {Object.values(recomention)?.map((el, id) => {
+        const type = param?.type?.filter((obj) => {
+          return obj.id == el.type_id;
+        })[0];
+        const category = param?.category?.filter((obj) => {
+          return obj.id == el.category;
+        })[0];
+        const rooms = param?.rooms?.filter((obj) => {
+          return obj.id == el.rooms;
+        })[0];
+        const title = `${type?.name ? `${type.name}` : ""}${
+          category?.name ? ` • ${category.name}` : ""
+        }${
+          rooms?.name
+            ? rooms?.id >= 6
+              ? ` • ${rooms?.name}`
+              : ` • ${rooms?.name}-комн.,`
+            : ""
+        } ${el.square}м²${
+          el.floor == -1
+            ? ", цоколь"
+            : el.floor == -2
+            ? ", подвал"
+            : el.floor > 1
+            ? `, ${el.floor}-этаж из ${el.floors}`
+            : ""
+        }`;
+        if (el.advertising) {
+          return (
+            <Wave handle={() => handleFunction()} key={id}>
+              <View style={[styles.box, styles.advertisement]}>
+                <TextContent
+                  fontSize={24}
+                  fontWeight="bold"
+                  color={colors.black}
+                  style={{ textAlign: "center", padding: 20 }}
+                >
+                  Рекламный Блок
+                </TextContent>
+              </View>
+            </Wave>
+          );
+        } else {
+          return (
+            <Card
+              width={containerWidth}
+              image={el.properties_pictures[0].pictures.big}
+              id={el.id}
+              complex_id={el.complex_id}
+              key={id}
+              title={title}
+              background={el.background}
+              price={el.prices[0].price}
+              priceDollars={el.prices[1].price}
+              year={el.year}
+              summSquare={el.prices[0].m2_price}
+              dollarsSquare={el.prices[1].m2_price}
+              volume={el.volume}
+              urgently={el.urgently}
+              vip={el.vip}
+              starVip={el.starVip}
+              adress={el.street}
+              home={car ? false : true}
+            />
+          );
+        }
+      })}
+    </View>
   );
 };
 

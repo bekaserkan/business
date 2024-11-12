@@ -7,6 +7,7 @@ const Loading = ({ color }) => {
     <View
       style={{
         flex: 1,
+        minHeight: 300,
         alignItems: "center",
         justifyContent: "center",
       }}

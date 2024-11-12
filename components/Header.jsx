@@ -14,7 +14,6 @@ const Header = ({
   homeBack,
   handleBack,
   container,
-  handle,
   children,
   style,
   reset,
@@ -48,7 +47,15 @@ const Header = ({
       <Between center="center">
         <Flex gap={20}>
           {back && <Wave handle={route}>{iks ? <Back /> : <Back />}</Wave>}
-          <TextContent fontSize={22} fontWeight={600} color={colors.black}>
+          <TextContent
+            style={{
+              flex: 1,
+            }}
+            numberOfLines={1}
+            fontSize={22}
+            fontWeight={600}
+            color={colors.black}
+          >
             {children}
           </TextContent>
         </Flex>

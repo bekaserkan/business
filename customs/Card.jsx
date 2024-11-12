@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import ImageCustom from "./Image.jsx";
 
 const Card = ({
+  complex_id,
   id,
   image,
   width,
@@ -39,7 +40,7 @@ const Card = ({
     if (home) {
       navigation.navigate("HouseScreens", {
         screen: "HouseDetail",
-        params: { id: id },
+        params: { id: id, complex_id: complex_id },
       });
     } else {
       navigation.navigate("CarScreens", {

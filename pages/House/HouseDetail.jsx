@@ -20,8 +20,30 @@ import Loading from "../../ui/Loading";
 
 const HouseDetail = ({ route }) => {
   const { deLoading, param, resident, detail, getDetail } = useStateHouse();
-  const { id } = route.params;
+  const { id, complex_id } = route.params;
   const navigation = useNavigation();
+
+  useEffect(() => {
+    getDetail({ id: id, complex_id });
+  }, []);
+
+  if (deLoading) {
+    return <Loading />;
+  }
+
+  const dataImage =
+    !deLoading &&
+    detail.properties_pictures.map((el) => {
+      return {
+        image: el.pictures.big,
+      };
+    });
+
+  const routeTo = () => {
+    navigation.navigate("HouseScreens", {
+      screen: "HouseResidentialProfile",
+    });
+  };
 
   const type = param?.type?.filter((obj) => {
     return obj.id == detail.type_id;
@@ -50,30 +72,6 @@ const HouseDetail = ({ route }) => {
       : ""
   }`;
 
-  useEffect(() => {
-    getDetail({ id: id });
-  }, []);
-
-  console.log(resident);
-
-  const dataImage =
-    !deLoading &&
-    detail.properties_pictures.map((el) => {
-      return {
-        image: el.pictures.big,
-      };
-    });
-
-  const routeTo = () => {
-    navigation.navigate("HouseScreens", {
-      screen: "HouseResidentialProfile",
-    });
-  };
-
-  if (deLoading) {
-    return <Loading />;
-  }
-
   return (
     <ButtonLayouts>
       <Container none={true} phon={true}>
@@ -99,17 +97,19 @@ const HouseDetail = ({ route }) => {
               heart={"0000"}
               comment={"0000"}
             />
-            <AccountBlock
-              title="Жилой комплекс"
-              name={resident.complex_name}
-              nameColor={colors.blue}
-              stars={1}
-              rates="0000"
-              reviews="0000"
-              description={resident.address}
-              ava={resident.images[0].image_url}
-              handle={routeTo}
-            />
+            {!resident.length == 0 && (
+              <AccountBlock
+                title="Жилой комплекс"
+                name={resident.complex_name}
+                nameColor={colors.blue}
+                stars={1}
+                rates="0000"
+                reviews="0000"
+                description={resident.address}
+                ava={resident.images[0].image_url}
+                handle={routeTo}
+              />
+            )}
             {detail.safety.length > 0 && (
               <Characteristic
                 data={[

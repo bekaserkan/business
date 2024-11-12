@@ -6,16 +6,23 @@ import Category from "../svg/category";
 import { colors } from "../../../assets/styles/colors";
 import { useNavigation } from "@react-navigation/native";
 
-const InputCate = ({ text, navLink, link }) => {
+const InputCate = ({ text, navLink, link, color, param }) => {
   const navigation = useNavigation();
 
   return (
     <Wave
-      handle={() =>
-        navigation.navigate(navLink, {
-          screen: link,
-        })
-      }
+      handle={() => {
+        if (param) {
+          navigation.navigate(navLink, {
+            screen: link,
+            params: { id: 1 },
+          });
+        } else {
+          navigation.navigate(navLink, {
+            screen: link,
+          });
+        }
+      }}
     >
       <View
         style={{
@@ -24,7 +31,7 @@ const InputCate = ({ text, navLink, link }) => {
           borderRadius: 10,
           paddingVertical: 8,
           paddingHorizontal: 16,
-          backgroundColor: colors.white,
+          backgroundColor: color ? color : colors.white,
           flexDirection: "row",
           alignItems: "center",
         }}
