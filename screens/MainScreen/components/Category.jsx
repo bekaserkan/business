@@ -4,6 +4,7 @@ import Between from "../../../assets/styles/components/Between";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../../assets/styles/colors";
 import Wave from "../../../customs/Wave";
+import TextContent from "../../../assets/styles/components/TextContent";
 
 const Category = ({ house, car }) => {
   const navigation = useNavigation();
@@ -20,6 +21,9 @@ const Category = ({ house, car }) => {
               }}
               source={require("../../../assets/images/1-8.png")}
             />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+              Срочно
+            </TextContent>
           </View>
         </Wave>
         <Wave>
@@ -31,6 +35,9 @@ const Category = ({ house, car }) => {
               }}
               source={require("../../../assets/images/1-9.png")}
             />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+              Компании
+            </TextContent>
           </View>
         </Wave>
         <Wave>
@@ -42,6 +49,9 @@ const Category = ({ house, car }) => {
               }}
               source={require("../../../assets/images/1-5.png")}
             />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+              Продажа
+            </TextContent>
           </View>
         </Wave>
         <Wave>
@@ -53,6 +63,9 @@ const Category = ({ house, car }) => {
               }}
               source={require("../../../assets/images/1-6.png")}
             />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+              Аренда
+            </TextContent>
           </View>
         </Wave>
       </Between>
@@ -85,9 +98,9 @@ const Category = ({ house, car }) => {
 const styles = StyleSheet.create({
   box: {
     width: 75,
-    height: 75,
-    borderRadius: 14,
-    backgroundColor: colors.phon,
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 6,
   },
 });
 

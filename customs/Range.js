@@ -3,10 +3,11 @@ import Between from "../assets/styles/components/Between";
 import TextContent from "../assets/styles/components/TextContent";
 import { View } from "react-native";
 import { colors } from "../assets/styles/colors";
-import Check from "../assets/svg/check";
+import Range from "../assets/svg/range";
+import RangeActive from "../assets/svg/rangeActive";
 import Wave from "./Wave";
 
-const Check = ({ active, text, handle }) => {
+const RangeCustom = ({ active, text, handle }) => {
   return (
     <Wave handle={handle}>
       <Between center={"center"}>
@@ -19,11 +20,11 @@ const Check = ({ active, text, handle }) => {
             height: 24,
           }}
         >
-          {active && <Check />}
+          {active ? <RangeActive /> : <Range />}
         </View>
       </Between>
     </Wave>
   );
 };
 
-export default Check;
+export default RangeCustom;

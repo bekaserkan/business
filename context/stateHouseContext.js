@@ -20,32 +20,35 @@ export const StateHouseProvider = ({ children }) => {
   const [filter, setFilter] = useState({
     region: {
       id: 0,
-      name: "любой",
+      name: "Любой",
     },
     category: {
       id: 0,
-      name: "любой",
+      name: "Любой",
     },
     rooms: {
       id: 0,
-      name: "любой",
+      name: "Любой",
     },
     floorsFor: {
       id: 0,
-      name: "любой",
+      name: "Любой",
     },
     floorsUp: {
       id: 0,
-      name: "любой",
+      name: "Любой",
     },
     floorsHouseFor: {
       id: 0,
-      name: "любой",
+      name: "Любой",
     },
     floorsHouseUp: {
       id: 0,
-      name: "любой",
+      name: "Любой",
     },
+    notEndFloor: false,
+    endFloor: false,
+    livingAreaFrom: "",
   });
   const [proLoading, setProLoading] = useState(false);
 

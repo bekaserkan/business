@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Container from "../assets/styles/components/Container";
 import Column from "../assets/styles/components/Column";
 import { useStateHouse } from "../context/stateHouseContext";
+import RangeCustom from "./Range";
 
 const InputSelect = ({
   styleContainer,
@@ -36,7 +37,7 @@ const InputSelect = ({
               {
                 height: 50,
               },
-              border && {
+              !border && {
                 borderBottomWidth: 1,
                 borderBottomColor: colors.gray,
               },
@@ -79,26 +80,34 @@ const InputSelect = ({
                   }}
                   gap={16}
                 >
+                  <RangeCustom
+                    handle={() => {
+                      closeModal();
+                      setFilter({
+                        ...filter,
+                        [keys ? keys : value]: { id: 0, name: "Любой" },
+                      });
+                    }}
+                    active={filter[keys ? keys : value].name == "Любой"}
+                    text="Любой"
+                  />
                   {param.region &&
                     param[value].map((el, id) => (
-                      <Wave
+                      <RangeCustom
                         key={id}
                         handle={() => {
                           closeModal();
                           setFilter({
                             ...filter,
-                            [keys ? keys : value]: { id: el.id, name: el.name },
+                            [keys ? keys : value]: {
+                              id: el.id,
+                              name: el.name,
+                            },
                           });
                         }}
-                      >
-                        <TextContent
-                          fontSize={14}
-                          fontWeight={500}
-                          color={colors.black}
-                        >
-                          {el.name}
-                        </TextContent>
-                      </Wave>
+                        active={filter[keys ? keys : value].name == el.name}
+                        text={el.name}
+                      />
                     ))}
                 </Column>
               </ScrollView>
@@ -109,42 +118,28 @@ const InputSelect = ({
     );
   } else {
     return (
-      <View
+      <TextInput
         style={[
-          {
-            height: 50,
-          },
-          border && {
+          stylesInput.basa,
+          !border && {
             borderBottomWidth: 1,
             borderBottomColor: colors.gray,
           },
-          styleContainer,
+          style,
         ]}
-      >
-        <TextContent top={2} fontSize={12} fontWeight={400} color={colors.gray}>
-          {label}
-        </TextContent>
-        <TextInput
-          style={[stylesInput.basa, style]}
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          placeholderTextColor={colors.gray}
-        />
-      </View>
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor={colors.gray}
+      />
     );
   }
 };
 
 const stylesInput = StyleSheet.create({
-  inputContainerFocused: {
-    borderColor: colors.blue,
-    borderWidth: 1,
-    backgroundColor: "#1856CD1A",
-  },
   basa: {
-    marginTop: 6,
     width: "100%",
+    height: 50,
     fontSize: 16,
     fontWeight: "400",
     color: colors.black,
