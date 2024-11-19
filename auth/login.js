@@ -25,6 +25,9 @@ import { TouchableOpacity } from "react-native";
 import InputCustom from "../customs/Input";
 import { handleTermsPress } from "../utils/handleTermsPress";
 import { handlePrivacyPress } from "../utils/handlePrivacyPress";
+import TextContent from "../assets/styles/components/TextContent";
+import Wave from "../customs/Wave";
+import Flex from "../assets/styles/components/Flex";
 
 const width = Dimensions.get("window").width - 32;
 const widthd = Dimensions.get("window").width + 80;
@@ -39,6 +42,19 @@ const Login = () => {
     value: "+996 ",
     error: "",
   });
+  const [password, setPassword] = useState({
+    value: "",
+    error: "",
+  });
+  const [name, setName] = useState({
+    value: "",
+    error: "",
+  });
+  const [passwordConfirm, setPasswordConfirm] = useState({
+    value: "",
+    error: "",
+  });
+  const [register, setRegister] = useState(false);
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState(0);
   const translateX = useRef(new Animated.Value(-activeTab * width)).current;
@@ -103,42 +119,93 @@ const Login = () => {
       setPhone({ ...phone, error: "Введите корректный телефонный номер" });
     } else {
       setLoading(true);
+      const registerData = {
+        username: activeTab === 0 ? phone.value : email.value,
+        password: password,
+        confirm_password: passwordConfirm,
+      };
+      console.log(password.value, passwordConfirm.value);
+
+      const loginData = {
+        username: activeTab === 0 ? phone.value : email.value,
+        password: password,
+      };
       try {
-        const response = await url.post(
-          "/auth/login",
-          activeTab === 0
-            ? {
-                phone: phone.value,
-              }
-            : {
-                email: email.value,
-              }
-        );
-        if (response.data.response === true) {
-          setPhone({ ...phone, error: "" });
-          setEmail({ ...email, error: "" });
-          navigation.navigate("Profile");
-          await AsyncStorage.setItem(
-            "profileData",
-            activeTab === 0 ? email.value : phone.value
+        if (register) {
+          const response = await url.post(
+            "auth/accounts/register/",
+            registerData
           );
+          console.log(response.data);
+
+          if (response.data.response === true) {
+            setPhone({ ...phone, error: "" });
+            setEmail({ ...email, error: "" });
+            setName({ ...name, error: "" });
+            setPassword({ ...password, error: "" });
+            setPasswordConfirm({ ...passwordConfirm, error: "" });
+            navigation.navigate("Profile");
+            await AsyncStorage.setItem(
+              "profileData",
+              activeTab === 0 ? email.value : phone.value
+            );
+          } else {
+            setName({
+              ...name,
+              error: response.data?.name,
+            });
+            setEmail({
+              ...email,
+              error: response.data?.email,
+            });
+            setPhone({
+              ...phone,
+              error: response.data?.phone,
+            });
+            setPassword({
+              ...password,
+              error: response.data?.password,
+            });
+            setPasswordConfirm({
+              ...passwordConfirm,
+              error: response.data.confirm_password,
+            });
+            if (response.data.message) {
+              Alert.alert("Ошибка", response.data.message);
+            }
+          }
         } else {
-          setEmail({
-            ...email,
-            error: response.data.email,
-          });
-          setPhone({
-            ...phone,
-            error: response.data.phone,
-          });
-          if (response.data.message) {
-            Alert.alert("Ошибка", response.data.message);
+          const response = await url.post("auth/accounts/login", loginData);
+          if (response.data.response === true) {
+            setPhone({ ...phone, error: "" });
+            setEmail({ ...email, error: "" });
+            setPassword({ ...password, error: "" });
+            navigation.navigate("Profile");
+            await AsyncStorage.setItem(
+              "profileData",
+              activeTab === 0 ? email.value : phone.value
+            );
+          } else {
+            setEmail({
+              ...email,
+              error: response.data?.email,
+            });
+            setPhone({
+              ...phone,
+              error: response.data?.phone,
+            });
+            setPassword({
+              ...password,
+              error: response.data?.password,
+            });
+            if (response.data.message) {
+              Alert.alert("Ошибка", response.data.message);
+            }
           }
         }
       } catch (error) {
         console.log(error);
       } finally {
-        navigation.navigate("Activation");
         setLoading(false);
       }
     }
@@ -224,6 +291,16 @@ const Login = () => {
           style={[styles.contentContainer, { transform: [{ translateX }] }]}
         >
           <View style={styles.tabContent}>
+            {register && (
+              <InputCustom
+                error={name.error}
+                value={name.value}
+                onChangeText={(text) =>
+                  setName({ ...name, value: text, error: "" })
+                }
+                placeholder="Введите имя"
+              />
+            )}
             <InputCustom
               error={phone.error}
               value={phone.value}
@@ -231,11 +308,59 @@ const Login = () => {
               numeric={true}
               onChangeText={formatPhoneNumber}
             />
+            <InputCustom
+              error={password.error}
+              value={password.value}
+              onChangeText={(text) =>
+                setPassword({ ...password, value: text, error: "" })
+              }
+              placeholder="Введите пороль"
+            />
+            {register && (
+              <InputCustom
+                error={passwordConfirm.error}
+                value={passwordConfirm.value}
+                onChangeText={(text) =>
+                  setPasswordConfirm({
+                    ...passwordConfirm,
+                    value: text,
+                    error: "",
+                  })
+                }
+                placeholder="Повторите пороль"
+              />
+            )}
             <Button color={colors.blue} handle={handleSubmit} loading={loading}>
               Продолжить
             </Button>
+            <Flex
+              top={12}
+              style={{
+                justifyContent: "center",
+              }}
+              gap={6}
+            >
+              <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
+                {register ? "Уже есть аккаунт?" : "Ещё нет аккаунта?"}
+              </TextContent>
+              <Wave handle={() => setRegister(!register)}>
+                <TextContent fontSize={15} fontWeight={500} color={colors.blue}>
+                  {register ? "Войти" : "Зарегистрироваться"}
+                </TextContent>
+              </Wave>
+            </Flex>
           </View>
           <View style={styles.tabContent}>
+            {register && (
+              <InputCustom
+                error={name.error}
+                value={name.value}
+                onChangeText={(text) =>
+                  setName({ ...name, value: text, error: "" })
+                }
+                placeholder="Введите имя"
+              />
+            )}
             <InputCustom
               error={email.error}
               email={true}
@@ -243,11 +368,49 @@ const Login = () => {
               onChangeText={(text) =>
                 setEmail({ ...email, value: text, error: "" })
               }
-              placeholder={"Введите электронную почту"}
+              placeholder="Введите электронную почту"
             />
+            <InputCustom
+              error={password.error}
+              value={password.value}
+              onChangeText={(text) =>
+                setPassword({ ...password, value: text, error: "" })
+              }
+              placeholder="Введите пороль"
+            />
+            {register && (
+              <InputCustom
+                error={passwordConfirm.error}
+                value={passwordConfirm.value}
+                onChangeText={(text) =>
+                  setPasswordConfirm({
+                    ...passwordConfirm,
+                    value: text,
+                    error: "",
+                  })
+                }
+                placeholder="Повторите пороль"
+              />
+            )}
             <Button color={colors.blue} handle={handleSubmit} loading={loading}>
               Продолжить
             </Button>
+            <Flex
+              top={12}
+              style={{
+                justifyContent: "center",
+              }}
+              gap={6}
+            >
+              <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
+                {register ? "Уже есть аккаунт?" : "Ещё нет аккаунта?"}
+              </TextContent>
+              <Wave handle={() => setRegister(!register)}>
+                <TextContent fontSize={15} fontWeight={500} color={colors.blue}>
+                  {register ? "Войти" : "Зарегистрироваться"}
+                </TextContent>
+              </Wave>
+            </Flex>
           </View>
         </Animated.View>
       </PanGestureHandler>

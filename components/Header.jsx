@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Platform, View } from "react-native";
 import TextContent from "../assets/styles/components/TextContent";
 import { colors } from "../assets/styles/colors";
@@ -7,8 +7,13 @@ import Back from "../assets/svg/back";
 import Wave from "../customs/Wave";
 import { useNavigation } from "@react-navigation/native";
 import Between from "../assets/styles/components/Between";
+import Heard1 from "../assets/svg/loveFull.js";
+import Heard from "../assets/svg/love.js";
+import { AddFavorite } from "../services/favorite.js";
 
 const Header = ({
+  id,
+  love,
   iks,
   back,
   homeBack,
@@ -19,6 +24,11 @@ const Header = ({
   reset,
 }) => {
   const navigation = useNavigation();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    AddFavorite({ id: id });
+  }, [isFavorite]);
 
   const route = () => {
     if (handleBack) {
@@ -45,8 +55,17 @@ const Header = ({
       ]}
     >
       <Between center="center">
-        <Flex gap={20}>
-          {back && <Wave handle={route}>{iks ? <Back /> : <Back />}</Wave>}
+        <Flex
+          style={{
+            flex: 1,
+          }}
+          gap={20}
+        >
+          {back && (
+            <Wave handle={route}>
+              <Back />
+            </Wave>
+          )}
           <TextContent
             style={{
               flex: 1,
@@ -59,6 +78,11 @@ const Header = ({
             {children}
           </TextContent>
         </Flex>
+        {love && (
+          <Wave handle={() => setIsFavorite(!isFavorite)}>
+            {isFavorite ? <Heard1 /> : <Heard />}
+          </Wave>
+        )}
         {iks && (
           <Wave handle={reset}>
             <TextContent fontSize={14} fontWeight={500} color={colors.black}>

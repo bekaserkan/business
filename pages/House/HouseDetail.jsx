@@ -75,7 +75,7 @@ const HouseDetail = ({ route }) => {
   return (
     <ButtonLayouts>
       <Container none={true} phon={true}>
-        <Header back={true} container={true} />
+        <Header id={detail.id} love={true} back={true} container={true} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Column gap={4}>
             <MainBlock

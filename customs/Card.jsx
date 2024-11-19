@@ -36,6 +36,8 @@ const Card = ({
   const [isFavorite, setIsFavorite] = useState(false);
   const navigation = useNavigation();
 
+  
+
   const goDetail = () => {
     if (home) {
       navigation.navigate("HouseScreens", {
