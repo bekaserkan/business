@@ -30,6 +30,8 @@ const List = ({ car }) => {
     }
   };
 
+  console.log(recomention);
+
   if (reLoading) {
     return <Loading color={car ? colors.blue : colors.house} />;
   }
@@ -84,11 +86,7 @@ const List = ({ car }) => {
               return (
                 <Card
                   width={containerWidth}
-                  image={
-                    el?.properties_pictures
-                      ? el?.properties_pictures[0]?.pictures?.big
-                      : ""
-                  }
+                  image={el?.pictures[0]?.pictures?.big}
                   id={el.id}
                   key={id}
                   title={el.model_name}

@@ -13,7 +13,7 @@ import Between from "../assets/styles/components/Between.jsx";
 import { useNavigation } from "@react-navigation/native";
 import ImageCustom from "./Image.jsx";
 import { url } from "../api/api.jsx";
-import { CustomAlert } from "../App.js";
+import { CustomAlert } from "../ui/Alert.jsx";
 
 const Card = ({
   complex_id,
@@ -44,6 +44,7 @@ const Card = ({
         `main/like/${id}/${home ? "home" : "car"}/set_like/`
       );
       console.log(response.data);
+      setIsFavorite(true);
       CustomAlert({
         type: "success",
         title: "Успешн!",
@@ -54,7 +55,22 @@ const Card = ({
     }
   };
 
-  const remove = () => {};
+  const removHandle = async () => {
+    try {
+      const response = await url(
+        `main/like/${id}/${home ? "home" : "car"}/set_like/`
+      );
+      console.log(response.data);
+      setIsFavorite(false);
+      CustomAlert({
+        type: "success",
+        title: "Успешн!",
+        text: "Добавлено в изрбанные",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const goDetail = () => {
     if (home) {
@@ -93,7 +109,7 @@ const Card = ({
               borderRadius={6}
             />
           </View>
-          <Pressable onPress={() => setIsFavorite(!isFavorite)}>
+          <Pressable onPress={isFavorite ? likeHandle : removHandle}>
             {isFavorite ? (
               <Heard1
                 style={{ position: "absolute", top: 5, right: 5, zIndex: 1 }}

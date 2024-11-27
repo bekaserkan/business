@@ -9,17 +9,6 @@ import MainScreens from "./routes/main";
 import store from "./store/store";
 import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
 
-export const CustomAlert = ({ type, title, text }) => {
-  Toast.show({
-    type: type,
-    text1: title,
-    text2: text,
-    position: "bottom",
-    visibilityTime: 3000,
-    onPress: () => Toast.hide(),
-  });
-};
-
 export default function App() {
   const toastConfig = {
     success: (props) => (
@@ -62,7 +51,7 @@ export default function App() {
       </View>
     ),
   };
-  
+
   return (
     <Provider store={store}>
       <СonditionProvider>
