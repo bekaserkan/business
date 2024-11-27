@@ -9,6 +9,10 @@ import { useStateHouse } from "../../context/stateHouseContext";
 import Column from "../../assets/styles/components/Column";
 import CheckBoxCustom from "../../customs/CheckBox";
 import { useNavigation } from "@react-navigation/native";
+import AddHouseInputSelect from "../../customs/inputSelectAdd";
+// import AddHouseInputSelect from "./AddHouseInputSelect";
+
+
 
 const HouseFilter = ({ route }) => {
   const { filter, loading, result, setFilter } = useStateHouse();
@@ -57,6 +61,11 @@ const HouseFilter = ({ route }) => {
                 value="region"
                 placeholder="Выберите регион"
               />
+                <AddHouseInputSelect
+      label="Выберите регион"
+      valueKey="region" // Контексттеги ачкыч
+      select={true}
+    />
               <InputSelect
                 select={true}
                 label="Город"

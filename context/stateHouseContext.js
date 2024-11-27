@@ -41,6 +41,11 @@ const initialFilterState = {
   price: "",
 };
 
+const initialFilterStateHouse = {
+  region: { id: 1, name: "Чуйская область / Бишкек" },
+  town: { id: 0, name: "Любой" },
+  category: { id: 0, name: "Любой" },
+};
 export const StateHouseProvider = ({ children }) => {
   const [recomention, setRecomention] = useState([]);
   const [reLoading, setReLoading] = useState(true);
@@ -56,16 +61,13 @@ export const StateHouseProvider = ({ children }) => {
   });
   const [filter, setFilter] = useState(initialFilterState);
   const [proLoading, setProLoading] = useState(false);
-
   console.log(param);
-
   useEffect(() => {
     getResult();
   }, [filter, getResult]);
 
   const getResult = useCallback(async () => {
     const queryParams = new URLSearchParams();
-
     Object.entries(filter).forEach(([key, value]) => {
       if (typeof value === "object" && value.name !== "Любой") {
         queryParams.append(key, value.id);
@@ -75,11 +77,8 @@ export const StateHouseProvider = ({ children }) => {
         queryParams.append(key, value);
       }
     });
-
     console.log(queryParams.toString());
-
     setLoading(true);
-
     try {
       const response = await api.get(
         `v1.0/house/ads/?${queryParams.toString()}`
@@ -102,6 +101,7 @@ export const StateHouseProvider = ({ children }) => {
     const newData = {
       value: "",
     };
+
     try {
       const response = await api.post("house/ads/set", newData);
       Alert.alert("Successful", response.data);
@@ -123,7 +123,6 @@ export const StateHouseProvider = ({ children }) => {
       setReLoading(false);
     }
   };
-
   const getParam = async () => {
     setPaLoading(true);
     try {
@@ -135,7 +134,6 @@ export const StateHouseProvider = ({ children }) => {
       setPaLoading(false);
     }
   };
-
   const getDetail = async ({ id, complex_id }) => {
     setDeLoading(true);
     try {
@@ -149,6 +147,37 @@ export const StateHouseProvider = ({ children }) => {
       setDeLoading(false);
     }
   };
+
+
+  const getAddHouse = async () => {
+    setPaLoading(true);
+    const queryParams = new URLSearchParams();
+    Object.entries(initialFilterStateHouse).forEach(([key, value]) => {
+      if (typeof value === "object" && value.id !== 0) {
+        queryParams.append(key, value.id);
+      } else if (typeof value === "boolean" && value) {
+        queryParams.append(key, value);
+      } else if (typeof value === "string" && value !== "") {
+        queryParams.append(key, value); 
+      }
+    });
+  
+    try {
+      const response = await api.get(
+        `v1.0/house/param/?${queryParams.toString()}`
+      );
+      setAddHouse(response.data); 
+    } catch (error) {
+      console.log("Error fetching add house data:", error);
+    } finally {
+      setPaLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAddHouse(); 
+  }, []); 
+  
 
   return (
     <StateHouseContext.Provider

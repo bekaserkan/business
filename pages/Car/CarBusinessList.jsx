@@ -74,7 +74,7 @@ const CarBusinessList = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Column gap={6}>
           {data.map((category, index) => (
-            <Wrapper top={index === 0} key={category.key} padding={[16, 16]}>
+            <Wrapper top={index === 0} key={category.key}  padding={[16, 16]}  style={index === 1 ? { paddingBottom: 200 } : null} >
               <TextContent fontSize={20} fontWeight={600} color={colors.black}>
                 {category.key}
               </TextContent>

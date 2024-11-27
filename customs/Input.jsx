@@ -42,27 +42,27 @@ const InputCustom = ({
         styleContainer,
       ]}
     >
-      <TextInput
-        ref={textInputRef}
-        style={[
-          stylesInput.basa,
-          !send && isFocused && stylesInput.inputContainerFocused,
-          value ? stylesInput.textEntered : stylesInput.placeholderText,
-          style,
-        ]}
-        value={value}
-        onChangeText={onChangeText}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        placeholder={placeholder}
-        placeholderTextColor={colors.gray}
-        editable={!disabled}
-        maxLength={phone && 17}
-        keyboardType={email ? "email-address" : numeric ? "numeric" : "default"}
-        autoCapitalize={email ? "none" : "sentences"}
-        blurOnSubmit={false}
-        onSubmitEditing={handleSendComment}
-      />
+   <TextInput
+  ref={textInputRef}
+  style={[
+    stylesInput.basa,
+    isFocused && stylesInput.inputContainerFocused,
+    value ? stylesInput.textEntered : stylesInput.placeholderText,
+    style,
+  ]}
+  value={value}
+  onChangeText={onChangeText}
+  onFocus={handleFocus}
+  onBlur={handleBlur}
+  placeholder={placeholder}
+  placeholderTextColor={colors.gray}
+  editable={!disabled}
+  maxLength={phone ? 17 : undefined}
+  keyboardType={email ? "email-address" : numeric ? "numeric" : "default"}
+  autoCapitalize={email ? "none" : "sentences"}
+  blurOnSubmit={false}
+  onSubmitEditing={handleSendComment}
+/>
       {!validate && (
         <View
           style={{

@@ -117,7 +117,6 @@ const MainBlock = ({
                   </TextContent>
                 )}
               </Column>
-
               <Flex gap={6}>
                 <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
                   {time}

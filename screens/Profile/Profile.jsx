@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
 import LayoutTab from "../../layouts/tabs";
@@ -16,15 +16,63 @@ import Star from "../../assets/svg/star";
 import Reports from "../../assets/svg/reports";
 import Button from "../../customs/Button";
 import Adv from "../../assets/svg/adv";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { url } from "../../api/api";
 
 const Profile = () => {
   const state = true;
+  const [userData, setUserData] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const token = await AsyncStorage.getItem("token"); 
+        if (!token) {
+          throw new Error("Токен не найден.");
+        }
+        const response = await url.get("auth/accounts/me/", {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        setUserData(response.data); 
+      } catch (error) {
+        console.error("Ошибка:", error.response ? error.response.data : error.message);
+        Alert.alert("Ошибка", "Не удалось загрузить данные. Попробуйте еще раз.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <TextContent fontSize={16} color={colors.gray}>
+          Загрузка...
+        </TextContent>
+      </View>
+    );
+  }
+
+  if (!userData) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <TextContent fontSize={16} color={colors.gray}>
+          Не удалось загрузить данные.
+        </TextContent>
+      </View>
+    );
+  }
 
   return (
     <LayoutTab>
       <Container phon={true} none={true}>
         <Header back={true} container={true}>
-          Profile
+          Профиль
         </Header>
         <ScrollView
           style={{
@@ -44,9 +92,7 @@ const Profile = () => {
                       }}
                     >
                       <ImageCustom
-                        uri={
-                          "https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg"
-                        }
+                      uri={userData._avatar || "https://via.placeholder.com/60"}
                         width={60}
                         height={60}
                         borderRadius={50}
@@ -65,7 +111,7 @@ const Profile = () => {
                         fontWeight={400}
                         color={colors.gray}
                       >
-                        +996 (502) 80-02-02
+                         {userData.name || "Имя не указано"}
                       </TextContent>
                     </Column>
                   </Flex>
@@ -111,7 +157,7 @@ const Profile = () => {
                         fontWeight={600}
                         color={colors.black}
                       >
-                        500 сом
+                       {userData.balance} сом
                       </TextContent>
                     </Between>
                     <Button color={colors.black}>Пополнить баланс</Button>

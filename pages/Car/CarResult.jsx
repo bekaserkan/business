@@ -8,7 +8,7 @@ const CarResult = () => {
   return (
     <Container>
       <Header homeBack={true} back={true}>
-        CarResult
+      предложений
       </Header>
       <Button pathMain="CarScreens" path="CarDetail" color={colors.blue}>
         CarDetail

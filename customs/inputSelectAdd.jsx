@@ -10,7 +10,7 @@ import { useStateHouse } from "../context/stateHouseContext";
 import RangeCustom from "./Range";
 import Arrow from "../assets/svg/arrowRight";
 
-const InputSelect = ({
+const InputSelectAdd = ({
   styleContainer,
   style,
   value,
@@ -24,7 +24,7 @@ const InputSelect = ({
   arrow,
 }) => {
   const [modal, setModal] = useState(false);
-  const { param, filter, setFilter } = useStateHouse();
+  const { param, addHouse, setAddHouse } = useStateHouse();
 
   const closeModal = () => {
     setModal(false);
@@ -69,7 +69,6 @@ const InputSelect = ({
             {
    arrow &&     <Arrow/>
             }
-      
           </View>
         </Wave>
         {modal && (
@@ -156,4 +155,4 @@ const stylesInput = StyleSheet.create({
   },
 });
 
-export default InputSelect;
+export default InputSelectAdd;
