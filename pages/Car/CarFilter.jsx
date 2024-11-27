@@ -58,7 +58,7 @@ const CarFilter = ({ route }) => {
                 border={true}
               />
             </Wrapper>
-            <Wrapper top={true} bottom={true} style={styles.wrapper}> 
+            {/* <Wrapper top={true} bottom={true} style={styles.wrapper}> 
             <InputSelect
                 select={true}
                 value="category"
@@ -179,7 +179,7 @@ const CarFilter = ({ route }) => {
                 }}
                 text="Возможна ипотека"
               />
-            </Wrapper>
+            </Wrapper> */}
          <Wrapper top={true} style={{paddingTop:8,paddingBottom:200}}>
           <Column gap={6}>
           <InputSelect
