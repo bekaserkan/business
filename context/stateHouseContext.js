@@ -109,7 +109,7 @@ export const StateHouseProvider = ({ children }) => {
     setReLoading(true);
     try {
       const response = await url.get("house/ads");
-      setRecomention(response.data.results);
+      setRecomention(response.data.data);
     } catch (error) {
       console.log(error);
     } finally {
