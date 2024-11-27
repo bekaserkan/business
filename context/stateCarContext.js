@@ -62,12 +62,12 @@ export const StateCarProvider = ({ children }) => {
         queryParams.append(key, value);
       }
     });
-    
+
     console.log(queryParams.toString());
     setLoading(true);
     try {
       const response = await api.get(
-        `v1.0/house/ads/?${queryParams.toString()}`
+        `cars/cars-posts/?${queryParams.toString()}`
       );
       setResult(response.data.results);
     } catch (error) {
@@ -80,7 +80,7 @@ export const StateCarProvider = ({ children }) => {
   const postProduct = async () => {
     setProLoading(true);
     try {
-      const response = await url.post("/cars-cars-posts/");
+      const response = await url.post("cars/cars-posts/");
       Alert.alert("Successful", response.data);
     } catch (error) {
       console.log(error);
@@ -92,7 +92,7 @@ export const StateCarProvider = ({ children }) => {
   const getRecomention = async () => {
     setReLoading(true);
     try {
-      const response = await url.get("/cars/cars-posts/");
+      const response = await url.get("cars/cars-posts/");
       setRecomention(response.data.data);
     } catch (error) {
       console.log(error);
@@ -104,7 +104,7 @@ export const StateCarProvider = ({ children }) => {
   const getParam = async () => {
     setPaLoading(true);
     try {
-      const response = await url.get("");
+      const response = await url.get("cars-data/public/data/");
       setParam(response.data);
     } catch (error) {
       console.log(error);
@@ -116,7 +116,7 @@ export const StateCarProvider = ({ children }) => {
   const getDetail = async ({ id }) => {
     setDeLoading(true);
     try {
-      const response = await url.get(`/cars/cars-posts/${id}`);
+      const response = await url.get(`cars/cars-posts/${id}`);
       setDetail(response.data);
     } catch (error) {
       console.log(error);
