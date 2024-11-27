@@ -11,10 +11,12 @@ import { useStateCar } from "../../../context/stateCarContext";
 
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 const fullWidth = Dimensions.get("window").width - 32;
+
 const List = ({ car }) => {
   const { reLoading, recomention, param } = car
     ? useStateCar()
     : useStateHouse();
+
   const navigation = useNavigation();
   const handleFunction = () => {
     if (car) {
@@ -28,16 +30,14 @@ const List = ({ car }) => {
     }
   };
 
-  console.log(car && recomention);
-
   if (reLoading) {
     return <Loading color={car ? colors.blue : colors.house} />;
   }
 
-  if (!car) {
-    return (
-      <View style={styles.map}>
-        {Object.values(recomention)?.map((el, id) => {
+  return (
+    <View style={styles.map}>
+      {recomention &&
+        Object.values(recomention)?.map((el, id) => {
           const type = param?.type?.filter((obj) => {
             return obj.id == el.type_id;
           })[0];
@@ -80,33 +80,51 @@ const List = ({ car }) => {
               </Wave>
             );
           } else {
-            return (
-              <Card
-                width={containerWidth}
-                image={el?.properties_pictures[0]?.pictures?.big}
-                id={el.id}
-                complex_id={el.complex_id}
-                key={id}
-                title={title}
-                background={el.background}
-                price={el.prices[0].price}
-                priceDollars={el.prices[1].price}
-                year={el.year}
-                summSquare={el.prices[0].m2_price}
-                dollarsSquare={el.prices[1].m2_price}
-                volume={el.volume}
-                urgently={el.urgently}
-                vip={el.vip}
-                starVip={el.starVip}
-                adress={el.street}
-                home={car ? false : true}
-              />
-            );
+            if (car) {
+              return (
+                <Card
+                  width={containerWidth}
+                  image={
+                    el?.properties_pictures
+                      ? el?.properties_pictures[0]?.pictures?.big
+                      : ""
+                  }
+                  id={el.id}
+                  key={id}
+                  title={el.model_name}
+                  price={el.prices[0]?.price}
+                  priceDollars={el.prices[1]?.price}
+                  year={el.year}
+                />
+              );
+            } else {
+              return (
+                <Card
+                  width={containerWidth}
+                  image={el?.properties_pictures[0]?.pictures?.big}
+                  id={el.id}
+                  complex_id={el.complex_id}
+                  key={id}
+                  title={title}
+                  background={el.background}
+                  price={el.prices[0]?.price}
+                  priceDollars={el.prices[1]?.price}
+                  year={el.year}
+                  summSquare={el.prices[0]?.m2_price}
+                  dollarsSquare={el.prices[1]?.m2_price}
+                  volume={el.volume}
+                  urgently={el.urgently}
+                  vip={el.vip}
+                  starVip={el.starVip}
+                  adress={el.street}
+                  home={car ? false : true}
+                />
+              );
+            }
           }
         })}
-      </View>
-    );
-  }
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

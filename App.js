@@ -7,8 +7,62 @@ import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
 import MainScreens from "./routes/main";
 import store from "./store/store";
+import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+
+export const CustomAlert = ({ type, title, text }) => {
+  Toast.show({
+    type: type,
+    text1: title,
+    text2: text,
+    position: "bottom",
+    visibilityTime: 3000,
+    onPress: () => Toast.hide(),
+  });
+};
 
 export default function App() {
+  const toastConfig = {
+    success: (props) => (
+      <BaseToast
+        {...props}
+        style={{ borderLeftColor: "green" }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{
+          fontSize: 18,
+          fontWeight: "bold",
+        }}
+      />
+    ),
+
+    error: (props) => (
+      <ErrorToast
+        {...props}
+        text1Style={{
+          fontSize: 16,
+          fontWeight: "bold",
+        }}
+        text2Style={{
+          fontSize: 14,
+          color: "red",
+        }}
+      />
+    ),
+
+    my_custom_type: ({ text1, props }) => (
+      <View
+        style={{
+          height: 60,
+          width: "100%",
+          backgroundColor: "#ffbf00",
+          padding: 10,
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 16 }}>{text1}</Text>
+        <Text>{props.subtitle}</Text>
+      </View>
+    ),
+  };
+  
   return (
     <Provider store={store}>
       <СonditionProvider>
@@ -16,6 +70,7 @@ export default function App() {
           <StateHouseProvider>
             <StateCarProvider>
               <MainScreens />
+              <Toast config={toastConfig} />
             </StateCarProvider>
           </StateHouseProvider>
         </AuthProvider>

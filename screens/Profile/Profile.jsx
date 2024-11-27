@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
 import LayoutTab from "../../layouts/tabs";
 import Wrapper from "../../assets/styles/components/Wrapper";
 import ImageCustom from "../../customs/Image";
-import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import TextContent from "../../assets/styles/components/TextContent";
 import { colors } from "../../assets/styles/colors";
 import Flex from "../../assets/styles/components/Flex";
@@ -16,40 +16,13 @@ import Star from "../../assets/svg/star";
 import Reports from "../../assets/svg/reports";
 import Button from "../../customs/Button";
 import Adv from "../../assets/svg/adv";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { url } from "../../api/api";
+import { useСondition } from "../../context/stateContext";
 
 const Profile = () => {
   const state = true;
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { loading, userData } = useСondition();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const token = await AsyncStorage.getItem("token");
-        const response = await url.get("auth/accounts/me/", {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        });
-        setUserData(response.data);
-      } catch (error) {
-        console.error(
-          "Ошибка:",
-          error.response ? error.response.data : error.message
-        );
-        Alert.alert(
-          "Ошибка",
-          "Не удалось загрузить данные. Попробуйте еще раз."
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  console.log(userData, "beka");
 
   if (loading) {
     return (

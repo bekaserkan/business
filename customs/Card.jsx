@@ -12,6 +12,8 @@ import Wave from "./Wave.jsx";
 import Between from "../assets/styles/components/Between.jsx";
 import { useNavigation } from "@react-navigation/native";
 import ImageCustom from "./Image.jsx";
+import { url } from "../api/api.jsx";
+import { CustomAlert } from "../App.js";
 
 const Card = ({
   complex_id,
@@ -36,7 +38,23 @@ const Card = ({
   const [isFavorite, setIsFavorite] = useState(false);
   const navigation = useNavigation();
 
-  
+  const likeHandle = async () => {
+    try {
+      const response = await url(
+        `main/like/${id}/${home ? "home" : "car"}/set_like/`
+      );
+      console.log(response.data);
+      CustomAlert({
+        type: "success",
+        title: "Успешн!",
+        text: "Добавлено в изрбанные",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const remove = () => {};
 
   const goDetail = () => {
     if (home) {
