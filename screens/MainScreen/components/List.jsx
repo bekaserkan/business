@@ -11,18 +11,16 @@ import { useStateCar } from "../../../context/stateCarContext";
 
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 const fullWidth = Dimensions.get("window").width - 32;
-
 const List = ({ car }) => {
   const { reLoading, recomention, param } = car
     ? useStateCar()
     : useStateHouse();
   const navigation = useNavigation();
-
   const handleFunction = () => {
     if (car) {
       navigation.navigate("CarScreens", {
         screen: "CarDetail",
-      });
+      });  
     } else {
       navigation.navigate("HouseScreens", {
         screen: "HouseDetail",
@@ -33,6 +31,8 @@ const List = ({ car }) => {
   if (reLoading) {
     return <Loading color={car ? colors.blue : colors.house} />;
   }
+
+  return
 
   return (
     <View style={styles.map}>
@@ -94,7 +94,7 @@ const List = ({ car }) => {
               summSquare={el.prices[0].m2_price}
               dollarsSquare={el.prices[1].m2_price}
               volume={el.volume}
-              urgently={el.urgently}
+              urgently={el.urgently} 
               vip={el.vip}
               starVip={el.starVip}
               adress={el.street}

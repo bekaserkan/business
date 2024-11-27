@@ -8,10 +8,12 @@ import TextContent from "../../assets/styles/components/TextContent";
 import List from "./components/List";
 import LayoutTab from "../../layouts/tabs";
 import { ScrollView } from "react-native-gesture-handler";
+import ListCar from "./components/ListCar";
 
 const MainScreen = () => {
   const scrollRef = useRef(null);
   const scrollRefTwo = useRef(null);
+  
   return (
     <LayoutTab>
       <HeaderMain
@@ -42,7 +44,7 @@ const MainScreen = () => {
                 >
                   Рекомендации
                 </TextContent>
-                <List car={true} />
+                <List car={true}/>
               </ScrollView>
             </View>
           </View>

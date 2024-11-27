@@ -8,10 +8,9 @@ import Container from "../assets/styles/components/Container";
 import Column from "../assets/styles/components/Column";
 import { useStateHouse } from "../context/stateHouseContext";
 import RangeCustom from "./Range";
-import { useStateCar } from "../context/stateCarContext";
 import Arrow from "../assets/svg/arrowRight";
 
-const InputSelect = ({
+const InputSelectAdd = ({
   styleContainer,
   style,
   value,
@@ -22,16 +21,15 @@ const InputSelect = ({
   border,
   select,
   car,
-  handle,
   arrow,
 }) => {
   const [modal, setModal] = useState(false);
-  const { param, filter, setFilter } = car ? useStateCar() : useStateHouse();
+  const { param, addHouse, setAddHouse } = useStateHouse();
 
   const closeModal = () => {
     setModal(false);
   };
-
+  
   if (select) {
     return (
       <View>
@@ -48,10 +46,9 @@ const InputSelect = ({
               styleContainer,
             ]}
           >
-            {car ? (
-              ""
-            ) : (
-              <TextContent
+            {
+              car ? "" : (
+                <TextContent
                 top={2}
                 fontSize={12}
                 fontWeight={400}
@@ -59,16 +56,19 @@ const InputSelect = ({
               >
                 {label}
               </TextContent>
-            )}
+              )
+            }
             <TextContent
-              top={car ? 0 : 6}
-              fontSize={16}
-              fontWeight={400}
-              color={car ? colors.gray : colors.black}
+            top={car ? 0 : 6}
+            fontSize={16}
+            fontWeight={400}
+            color={car ? colors.gray : colors.black}
             >
               {filter[keys ? keys : value].name}
             </TextContent>
-            {arrow && <Arrow />}
+            {
+   arrow &&     <Arrow/>
+            }
           </View>
         </Wave>
         {modal && (
@@ -155,4 +155,4 @@ const stylesInput = StyleSheet.create({
   },
 });
 
-export default InputSelect;
+export default InputSelectAdd;

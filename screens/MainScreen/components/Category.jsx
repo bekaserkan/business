@@ -81,20 +81,67 @@ const Category = ({ house, car }) => {
     return (
       <Between center={"center"}>
         <Wave>
-          <View style={styles.box}></View>
+          <View style={styles.box}>
+          <Image
+              style={{
+                width: 74,
+                height: 74,
+              }}
+              source={require("../../../assets/images/1-8.png")}
+            />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+              Срочно
+            </TextContent>
+          </View>
         </Wave>
-        <Wave>
-          <View style={styles.box}></View>
+        <Wave     handle={() =>
+            navigation.navigate("CarScreens", { screen: "CarBusinessList" })
+          }>
+          <View style={styles.box}>
+            <Image
+              style={{
+                width: 74,
+                height: 74,
+              }}
+              source={require("../../../assets/images/car-1.png")}
+            />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+            Автобизнес
+            </TextContent>
+          </View>
         </Wave>
         <Wave
           handle={() =>
             navigation.navigate("CarScreens", { screen: "CarChek" })
           }
         >
-          <View style={styles.box}></View>
+          <View style={styles.box}>
+            <Image
+              style={{
+                width: 74,
+                height: 74, 
+              }}
+              source={require("../../../assets/images/number-car.png")}
+            />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+            Carcheck
+            </TextContent>
+          </View>
         </Wave>
-        <Wave>
-          <View style={styles.box}></View>
+        <Wave handle={() => navigation.navigate("Login")}>
+          <View style={styles.box}>
+            <Image
+              style={{
+                width: 74,
+                height: 74,
+                borderRadius:14
+              }}
+              source={require("../../../assets/images/reposts-1.png")}
+            />
+            <TextContent fontSize={12} fontWeight={500} color={colors.black}>
+            Отчеты
+            </TextContent>
+          </View>
         </Wave>
       </Between>
     );

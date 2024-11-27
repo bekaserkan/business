@@ -114,29 +114,34 @@ const Login = () => {
     }
   };
 
+  const formatPhoneNumberSend = (number) => {
+    return number.replace(/\s+/g, "");
+  };
+
   const handleSubmit = async () => {
     if (activeTab === 0 && phone.value.length !== 17) {
       setPhone({ ...phone, error: "Введите корректный телефонный номер" });
     } else {
       setLoading(true);
       const registerData = {
-        username: activeTab === 0 ? phone.value : email.value,
-        password: password,
-        confirm_password: passwordConfirm,
+        username:
+          activeTab === 0 ? formatPhoneNumberSend(phone.value) : email.value,
+        password: password.value,
+        confirm_password: passwordConfirm.value,
       };
-      console.log(password.value, passwordConfirm.value);
 
       const loginData = {
-        username: activeTab === 0 ? phone.value : email.value,
-        password: password,
+        username:
+          activeTab === 0 ? formatPhoneNumberSend(phone.value) : email.value,
+        password: password.value,
       };
+
       try {
         if (register) {
           const response = await url.post(
             "auth/accounts/register/",
             registerData
           );
-          console.log(response.data);
 
           if (response.data.response === true) {
             setPhone({ ...phone, error: "" });
@@ -144,7 +149,7 @@ const Login = () => {
             setName({ ...name, error: "" });
             setPassword({ ...password, error: "" });
             setPasswordConfirm({ ...passwordConfirm, error: "" });
-            navigation.navigate("Profile");
+            navigation.navigate("Activation");
             await AsyncStorage.setItem(
               "profileData",
               activeTab === 0 ? email.value : phone.value
@@ -175,7 +180,7 @@ const Login = () => {
             }
           }
         } else {
-          const response = await url.post("auth/accounts/login", loginData);
+          const response = await url.post("auth/accounts/login/", loginData);
           if (response.data.response === true) {
             setPhone({ ...phone, error: "" });
             setEmail({ ...email, error: "" });
@@ -185,6 +190,7 @@ const Login = () => {
               "profileData",
               activeTab === 0 ? email.value : phone.value
             );
+            await AsyncStorage.setItem("token", response.data.token);
           } else {
             setEmail({
               ...email,
@@ -315,6 +321,7 @@ const Login = () => {
                 setPassword({ ...password, value: text, error: "" })
               }
               placeholder="Введите пороль"
+              password={true}
             />
             {register && (
               <InputCustom
@@ -328,6 +335,7 @@ const Login = () => {
                   })
                 }
                 placeholder="Повторите пороль"
+                password={true}
               />
             )}
             <Button color={colors.blue} handle={handleSubmit} loading={loading}>
@@ -377,6 +385,7 @@ const Login = () => {
                 setPassword({ ...password, value: text, error: "" })
               }
               placeholder="Введите пороль"
+              password={true}
             />
             {register && (
               <InputCustom
@@ -390,6 +399,7 @@ const Login = () => {
                   })
                 }
                 placeholder="Повторите пороль"
+                password={true}
               />
             )}
             <Button color={colors.blue} handle={handleSubmit} loading={loading}>

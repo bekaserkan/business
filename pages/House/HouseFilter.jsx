@@ -16,8 +16,6 @@ const HouseFilter = ({ route }) => {
   const { id } = route.params || 0;
 
   const Sybmit = () => {
-    console.log(id);
-
     if (id) {
       navigation.navigate("HouseScreens", {
         screen: "HouseResult",

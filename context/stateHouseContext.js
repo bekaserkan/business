@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { api } from "../api/api";
+import { url } from "../api/api";
 import { Alert } from "react-native";
 
 const StateHouseContext = createContext();
@@ -56,16 +56,13 @@ export const StateHouseProvider = ({ children }) => {
   });
   const [filter, setFilter] = useState(initialFilterState);
   const [proLoading, setProLoading] = useState(false);
-
   console.log(param);
-
   useEffect(() => {
     getResult();
   }, [filter, getResult]);
 
   const getResult = useCallback(async () => {
     const queryParams = new URLSearchParams();
-
     Object.entries(filter).forEach(([key, value]) => {
       if (typeof value === "object" && value.name !== "Любой") {
         queryParams.append(key, value.id);
@@ -75,15 +72,10 @@ export const StateHouseProvider = ({ children }) => {
         queryParams.append(key, value);
       }
     });
-
     console.log(queryParams.toString());
-
     setLoading(true);
-
     try {
-      const response = await api.get(
-        `v1.0/house/ads/?${queryParams.toString()}`
-      );
+      const response = await url.get(`house/ads/?${queryParams.toString()}`);
       setResult(response.data.results);
     } catch (error) {
       console.error("Error fetching results:", error);
@@ -102,8 +94,9 @@ export const StateHouseProvider = ({ children }) => {
     const newData = {
       value: "",
     };
+
     try {
-      const response = await api.post("house/ads/set", newData);
+      const response = await url.post("house/ads/set", newData);
       Alert.alert("Successful", response.data);
     } catch (error) {
       console.log(error);
@@ -115,7 +108,7 @@ export const StateHouseProvider = ({ children }) => {
   const getRecomention = async () => {
     setReLoading(true);
     try {
-      const response = await api.get("v1.0/house/ads");
+      const response = await url.get("house/ads");
       setRecomention(response.data.results);
     } catch (error) {
       console.log(error);
@@ -127,7 +120,7 @@ export const StateHouseProvider = ({ children }) => {
   const getParam = async () => {
     setPaLoading(true);
     try {
-      const response = await api.get("v1.0/house/public/data/?region=3");
+      const response = await url.get("house/public/data/?region=3");
       setParam(response.data);
     } catch (error) {
       console.log(error);
@@ -139,9 +132,9 @@ export const StateHouseProvider = ({ children }) => {
   const getDetail = async ({ id, complex_id }) => {
     setDeLoading(true);
     try {
-      const response = await api.get(`v1.0/house/ads/${id}`);
+      const response = await url.get(`house/ads/${id}`);
       setDetail(response.data);
-      const responseTwo = await api.get(`v1.0/house/${complex_id}/buildings`);
+      const responseTwo = await url.get(`house/${complex_id}/buildings`);
       setResident(responseTwo.data);
     } catch (error) {
       console.log(error);

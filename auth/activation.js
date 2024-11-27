@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import { colors } from "../assets/styles/colors";
 import {
   Alert,
-  Linking,
   Platform,
   StyleSheet,
   Text,
@@ -34,7 +33,7 @@ const Form = ({ code, setCode }) => {
       }
     }
   };
-
+  
   const handleKeyPress = (e, index) => {
     if (e.nativeEvent.key === "Backspace") {
       const newCode = [...code];
@@ -80,32 +79,39 @@ const Activation = () => {
   const handleSubmit = async () => {
     const formattedCode = code.join("");
     if (formattedCode.length !== 6) {
-      Alert.alert("Введите шестизначный код");
+      Alert.alert("Ошибка", "Введите шестизначный код");
+      return;
     }
-    if (formattedCode.length == 6) {
-      setLoading(true);
-      const profileData = await AsyncStorage.getItem("profileData");
-      try {
-        const response = await url.post("/auth/verify-email", {
-          code: formattedCode,
-          profileData: profileData,
-        });
-        if (response.data.response === true) {
-          Alert.alert("Успешно", response.data.message);
-          await AsyncStorage.setItem("token", response.data.token);
-          navigation.navigate("Profile");
-        } else {
-          Alert.alert("Ошибка", response.data.message);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+    setLoading(true);
+    const profileData = await AsyncStorage.getItem("profileData"); 
+    console.log(profileData);
+    try {
+      const response = await url.post("auth/accounts/activate/", {
+        code: formattedCode,
+        username: profileData,
+      });
+  
+      if (response.data.response === true) {
+        Alert.alert("Успешно", response.data.message);
+        await AsyncStorage.setItem("token", response.data.token);
         navigation.navigate("Profile");
+      } else {
+        if (response.data.error === "user_already_exists") {
+          Alert.alert("Ошибка", "Такой номер уже существует"); 
+        } else if (response.data.error === "invalid_code") {
+          Alert.alert("Ошибка", "Неверный код");
+        } else {
+          Alert.alert("Ошибка", response.data.message || "Код или данные некорректны");
+        }
       }
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);
+      Alert.alert("Ошибка", "Пожалуйста, попробуйте ещё раз");
+    } finally {
+      setLoading(false);
     }
   };
-
+  
   const Again = async () => {
     const email = await AsyncStorage.getItem("email");
     try {
