@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../../components/Header";
-import { colors } from "../../assets/styles/colors";
 import ButtonLayouts from "../../layouts/buttonLayouts";
 import { ScrollView, StyleSheet, View } from "react-native";
 import Wrapper from "../../assets/styles/components/Wrapper";
@@ -9,6 +8,7 @@ import { useStateHouse } from "../../context/stateHouseContext";
 import Column from "../../assets/styles/components/Column";
 import CheckBoxCustom from "../../customs/CheckBox";
 import { useNavigation } from "@react-navigation/native";
+import { colors } from "../../assets/styles/colors";
 
 const CarFilter = ({ route }) => {
   const { filter, loading, result, setFilter } = useStateHouse();

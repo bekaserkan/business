@@ -1,23 +1,33 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../api/api";
+import { Alert } from "react-native";
 
 const StateCarContext = createContext();
 
 const initialFilterState = {
-  region: { id: 1, name: "Чуйская область / Бишкек" },
-  town: { id: 0, name: "Любой" },
+  registration_country: { id: 1, name: "Чуйская область / Бишкек" },
+  mark: { id: 0, name: "Любой" },
   category: { id: 0, name: "Любой" },
-  rooms: { id: 0, name: "Любой" },
-  currency: { id: 0, name: "Любой" },
-  floor: { id: 0, name: "Любой" },
-  floors: { id: 0, name: "Любой" },
-  floors_not_end: false,
-  floors_last: false,
-  serie: { id: 0, name: "Любой" },
-  condition: { id: 0, name: "Любой" },
-  heating: { id: 0, name: "Любой" },
-  furniture: { id: 0, name: "Любой" },
-  building_type: { id: 0, name: "Любой" },
+  car_condition: { id: 0, name: "Любой" }, // новое
+  currency: { id: 0, name: "Любой" }, // 
+  color: { id: 0, name: "Любой" },  // цвет
+  configuration: { id: 0, name: "Любой" },
+  gear_box: { id: 0, name: "Любой" }, // каропка передач
+  media: { id: 0, name: "Любой" },   // медиа
+  other_option: { id: 0, name: "Любой" }, // техосмотр пройден 
+  fuel: { id: 0, name: "Любой" },  // бензин
+  other_option: { id: 0, name: "Любой" },
+  featured_option: { id: 0, name: "Любой" }, // в наличии
+  transmission: { id: 0, name: "Любой" }, // передный задный
+  exchange: { id: 0, name: "Любой" },  // толко обмен 
+  steering_wheel: { id: 0, name: "Любой" }, // слева справа
+  interior: { id: 0, name: "Любой" },  // кожа 
+  exterior: { id: 0, name: "Любой" }, //   люк 
+  configuration: { id: 0, name: "Любой" }, // полный электро пакет 
+  comment_allowed: { id: 0, name: "Любой" }, // зарегистреванные ползователи никто все
+  car_type: { id: 0, name: "Любой" },  //  легковые
+  featured_option: { id: 0, name: "Любой" },
+  featured_option: { id: 0, name: "Любой" },
   ceiling_height: "",
   square: "",
   land_square: "",
@@ -29,8 +39,6 @@ const initialFilterState = {
   exchange: false,
   installment: false,
   mortgage: false,
-  owner_type: { id: 0, name: "Любой" },
-  document: { id: 0, name: "Любой" },
   price: "",
 };
 
