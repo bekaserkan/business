@@ -102,7 +102,6 @@ const Login = () => {
       Animated.timing(translateX, {
         toValue: activeTab * -widthd,
         duration: 200,
-        // +996 (220) 16-18-25
         easing: Easing.out(Easing.quad),
         useNativeDriver: true,
       }).start();
@@ -115,112 +114,124 @@ const Login = () => {
     }
   };
 
+  const formatPhoneNumberSend = (number) => {
+    return number.replace(/\s+/g, "");
+  };
+
   const handleSubmit = async () => {
     if (activeTab === 0 && phone.value.length !== 17) {
       setPhone({ ...phone, error: "Введите корректный телефонный номер" });
-      return;
-    }
-    if (activeTab === 1 && !email.value) {
-      setEmail({ ...email, error: "Введите корректный email" });
-      return;
-    }
-  
-    if (password.value !== passwordConfirm.value) {
-      setPasswordConfirm({
-        ...passwordConfirm,
-        error: "Пароль не совпадает с повтором",
-      });
-      return;
-    }
-  
-    setLoading(true);
-    const registerData = {
-      username: activeTab === 0 ? phone.value : email.value,
-      password: password.value,
-      confirm_password: passwordConfirm.value,
-    };
-  
-    const loginData = {
-      username: activeTab === 0 ? phone.value : email.value,
-      password: password.value,
-    };
-  
-    try {
-      console.log("Current Mode:", register ? "Registration" : "Login");
-      console.log("Request Data:", register ? registerData : loginData);
-  
-      if (register) {
-        const response = await url.post("auth/accounts/register/", registerData);
-        console.log("Response Data:", response.data);
-  
-        if (response.data.response === true) {
-          setPhone({ ...phone, error: "" });
-          setEmail({ ...email, error: "" });
-          setName({ ...name, error: "" });
-          setPassword({ ...password, error: "" });
-          setPasswordConfirm({ ...passwordConfirm, error: "" });
-          navigation.navigate("Activation");
-          await AsyncStorage.setItem(
-            "profileData",
-            activeTab === 0 ? phone.value : email.value
+    } else {
+      setLoading(true);
+      const registerData = {
+        username:
+          activeTab === 0 ? formatPhoneNumberSend(phone.value) : email.value,
+        password: password.value,
+        confirm_password: passwordConfirm.value,
+      };
+
+      const loginData = {
+        username:
+          activeTab === 0 ? formatPhoneNumberSend(phone.value) : email.value,
+        password: password.value,
+      };
+
+      try {
+        if (register) {
+          const response = await url.post(
+            "auth/accounts/register/",
+            registerData
           );
+
+          if (response.data.response === true) {
+            setPhone({ ...phone, error: "" });
+            setEmail({ ...email, error: "" });
+            setName({ ...name, error: "" });
+            setPassword({ ...password, error: "" });
+            setPasswordConfirm({ ...passwordConfirm, error: "" });
+            navigation.navigate("Profile");
+            await AsyncStorage.setItem(
+              "profileData",
+              activeTab === 0 ? email.value : phone.value
+            );
+          } else {
+            setName({
+              ...name,
+              error: response.data?.name,
+            });
+            setEmail({
+              ...email,
+              error: response.data?.email,
+            });
+            setPhone({
+              ...phone,
+              error: response.data?.phone,
+            });
+            setPassword({
+              ...password,
+              error: response.data?.password,
+            });
+            setPasswordConfirm({
+              ...passwordConfirm,
+              error: response.data.confirm_password,
+            });
+            if (response.data.message) {
+              Alert.alert("Ошибка", response.data.message);
+            }
+          }
         } else {
-          handleResponseErrors(response.data);
+          const response = await url.post("auth/accounts/login/", loginData);
+          if (response.data.response === true) {
+            setPhone({ ...phone, error: "" });
+            setEmail({ ...email, error: "" });
+            setPassword({ ...password, error: "" });
+            navigation.navigate("Profile");
+            await AsyncStorage.setItem(
+              "profileData",
+              activeTab === 0 ? email.value : phone.value
+            );
+          } else {
+            setEmail({
+              ...email,
+              error: response.data?.email,
+            });
+            setPhone({
+              ...phone,
+              error: response.data?.phone,
+            });
+            setPassword({
+              ...password,
+              error: response.data?.password,
+            });
+            if (response.data.message) {
+              Alert.alert("Ошибка", response.data.message);
+            }
+          }
         }
-      } else {
-        const response = await url.post("auth/accounts/login", loginData);
-        console.log("Response Data:", response.data);
-  
-        if (response.data.response === true) {
-          setPhone({ ...phone, error: "" });
-          setEmail({ ...email, error: "" });
-          setPassword({ ...password, error: "" });
-          navigation.navigate("Activation");
-          await AsyncStorage.setItem(
-            "profileData",
-            activeTab === 0 ? phone.value : email.value
-          );
-        } else {
-          handleResponseErrors(response.data);
-        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Request Error:", error);
-    } finally {
-      setLoading(false);
     }
   };
-  
-  const handleResponseErrors = (data) => {
-    setName({ ...name, error: data?.name });
-    setEmail({ ...email, error: data?.email });
-    setPhone({ ...phone, error: data?.phone });
-    setPassword({ ...password, error: data?.password });
-    setPasswordConfirm({ ...passwordConfirm, error: data?.confirm_password });
-    if (data.message) {
-      Alert.alert("Ошибка", data.message);
-    }
-  };
-  
 
   const formatPhoneNumber = (text) => {
-    let cleaned = text.replace(/\D/g, ""); 
-    if (cleaned.startsWith("996")) {
-      cleaned = cleaned.slice(3); 
+    let cleaned = text.replace(/\D/g, "").replace(/^996/, "");
+
+    if (cleaned.length > 9) {
+      cleaned = cleaned.slice(0, 9);
     }
-    
-    cleaned = cleaned.slice(0, 9);
+
     let formattedNumber = "+996 ";
-    if (cleaned.length > 0) formattedNumber += `(${cleaned.slice(0, 3)})`; 
-    if (cleaned.length > 3) formattedNumber += ` ${cleaned.slice(3, 5)}`; 
-    if (cleaned.length > 5) formattedNumber += `-${cleaned.slice(5, 7)}`; 
-    if (cleaned.length > 7) formattedNumber += `-${cleaned.slice(7, 9)}`; 
-    setPhone((prevState) => ({
-      ...prevState,
-      value: formattedNumber, 
-      error: "",
-    }));
+    if (cleaned.length > 0) formattedNumber += cleaned.slice(0, 3);
+    if (cleaned.length >= 4) formattedNumber += " " + cleaned.slice(3, 5);
+    if (cleaned.length >= 6) formattedNumber += " " + cleaned.slice(5, 7);
+    if (cleaned.length >= 8) formattedNumber += " " + cleaned.slice(7, 9);
+
+    setPhone({ ...phone, value: formattedNumber, error: "" });
   };
+
   return (
     <GestureHandlerRootView
       style={{
@@ -298,6 +309,7 @@ const Login = () => {
             <InputCustom
               error={phone.error}
               value={phone.value}
+              phone={true}
               numeric={true}
               onChangeText={formatPhoneNumber}
             />
@@ -308,6 +320,7 @@ const Login = () => {
                 setPassword({ ...password, value: text, error: "" })
               }
               placeholder="Введите пороль"
+              password={true}
             />
             {register && (
               <InputCustom
@@ -321,11 +334,12 @@ const Login = () => {
                   })
                 }
                 placeholder="Повторите пороль"
+                password={true}
               />
             )}
             <Button color={colors.blue} handle={handleSubmit} loading={loading}>
               Продолжить
-            </Button> 
+            </Button>
             <Flex
               top={12}
               style={{
@@ -370,6 +384,7 @@ const Login = () => {
                 setPassword({ ...password, value: text, error: "" })
               }
               placeholder="Введите пороль"
+              password={true}
             />
             {register && (
               <InputCustom
@@ -383,6 +398,7 @@ const Login = () => {
                   })
                 }
                 placeholder="Повторите пороль"
+                password={true}
               />
             )}
             <Button color={colors.blue} handle={handleSubmit} loading={loading}>

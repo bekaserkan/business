@@ -27,7 +27,9 @@ const Header = ({
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    AddFavorite({ id: id });
+    if (id) {
+      AddFavorite({ id: id });
+    }
   }, [isFavorite]);
 
   const route = () => {
