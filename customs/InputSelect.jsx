@@ -8,6 +8,7 @@ import Container from "../assets/styles/components/Container";
 import Column from "../assets/styles/components/Column";
 import { useStateHouse } from "../context/stateHouseContext";
 import RangeCustom from "./Range";
+import { useStateCar } from "../context/stateCarContext";
 
 const InputSelect = ({
   styleContainer,
@@ -19,10 +20,11 @@ const InputSelect = ({
   label,
   border,
   select,
+  car,
   handle,
 }) => {
   const [modal, setModal] = useState(false);
-  const { param, filter, setFilter } = useStateHouse();
+  const { param, filter, setFilter } = car ? useStateCar() : useStateHouse();
 
   const closeModal = () => {
     setModal(false);
