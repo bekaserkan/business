@@ -13,6 +13,7 @@ import ListCar from "./components/ListCar";
 const MainScreen = () => {
   const scrollRef = useRef(null);
   const scrollRefTwo = useRef(null);
+  
   return (
     <LayoutTab>
       <HeaderMain
@@ -43,7 +44,7 @@ const MainScreen = () => {
                 >
                   Рекомендации
                 </TextContent>
-                <ListCar/>
+                <List car={true}/>
               </ScrollView>
             </View>
           </View>
