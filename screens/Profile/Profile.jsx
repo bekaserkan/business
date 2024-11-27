@@ -104,6 +104,7 @@ const Profile = () => {
                         fontWeight={500}
                         color={colors.black}
                       >
+                        
                         Имя
                       </TextContent>
                       <TextContent
