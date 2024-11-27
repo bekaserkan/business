@@ -14,6 +14,7 @@ import Activation from "../auth/activation";
 
 const Stack = createStackNavigator();
 
+
 export default function MainScreens() {
   return (
     <View
