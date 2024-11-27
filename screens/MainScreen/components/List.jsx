@@ -32,6 +32,8 @@ const List = ({ car }) => {
     return <Loading color={car ? colors.blue : colors.house} />;
   }
 
+  return
+
   return (
     <View style={styles.map}>
       {Object.values(recomention)?.map((el, id) => {

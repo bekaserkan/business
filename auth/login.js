@@ -149,7 +149,7 @@ const Login = () => {
             setName({ ...name, error: "" });
             setPassword({ ...password, error: "" });
             setPasswordConfirm({ ...passwordConfirm, error: "" });
-            navigation.navigate("Profile");
+            navigation.navigate("Activation");
             await AsyncStorage.setItem(
               "profileData",
               activeTab === 0 ? email.value : phone.value
@@ -190,6 +190,7 @@ const Login = () => {
               "profileData",
               activeTab === 0 ? email.value : phone.value
             );
+            await AsyncStorage.setItem("token", response.data.token);
           } else {
             setEmail({
               ...email,
