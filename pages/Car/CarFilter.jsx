@@ -62,11 +62,10 @@ const CarFilter = ({ route }) => {
               <Wrapper top={true} bottom={true} style={styles.wrapper}>
                 <InputSelect
                   select={true}
+                  label='марка'
                   value="mark"
                   border={true}
-                  styleContainer={styles.input_center1}
                   car={true}
-                  arrow={true}
                 />
               </Wrapper>
               <Wrapper top={true} bottom={true} style={styles.wrapper}>
@@ -101,20 +100,20 @@ const CarFilter = ({ route }) => {
                     placeholder="Тип кузова"
                     car={true}
                   />
-                       <InputSelect
+                       {/* <InputSelect
                     select={true}
                     label='Объем двигателя'
                     value="registration_country"
                     placeholder="Объем двигателя"
                     car={true}
-                  />
-                       <InputSelect
+                  /> */}
+                       {/* <InputSelect
                     select={true}
                     label='Мощность, л.с. (от и до)'
                     value="registration_country"
                     placeholder="Мощность, л.с. (от и до)"
                     car={true}
-                  />
+                  /> */}
                        <InputSelect
                     select={true}
                     label='Руль'
@@ -157,7 +156,7 @@ const CarFilter = ({ route }) => {
                     placeholder="Цвет"
                     car={true}
                   /> 
-                             <InputSelect
+                  <InputSelect
                     select={true}
                     label='Пробег'
                     value="registration_country"
