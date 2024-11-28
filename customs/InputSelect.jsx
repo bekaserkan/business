@@ -48,23 +48,19 @@ const InputSelect = ({
               styleContainer,
             ]}
           >
-            {car ? (
-              ""
-            ) : (
-              <TextContent
-                top={2}
-                fontSize={12}
-                fontWeight={400}
-                color={colors.gray}
-              >
-                {label}
-              </TextContent>
-            )}
             <TextContent
-              top={car ? 0 : 6}
+              top={2}
+              fontSize={12}
+              fontWeight={400}
+              color={colors.gray}
+            >
+              {label}
+            </TextContent>
+            <TextContent
+              top={6}
               fontSize={16}
               fontWeight={400}
-              color={car ? colors.gray : colors.black}
+              color={colors.black}
             >
               {filter[keys ? keys : value].name}
             </TextContent>
@@ -100,24 +96,23 @@ const InputSelect = ({
                     active={filter[keys ? keys : value].name == "Любой"}
                     text="Любой"
                   />
-                  {param.region &&
-                    param[value].map((el, id) => (
-                      <RangeCustom
-                        key={id}
-                        handle={() => {
-                          closeModal();
-                          setFilter({
-                            ...filter,
-                            [keys ? keys : value]: {
-                              id: el.id,
-                              name: el.name,
-                            },
-                          });
-                        }}
-                        active={filter[keys ? keys : value].name == el.name}
-                        text={el.name}
-                      />
-                    ))}
+                  {param[value].map((el, id) => (
+                    <RangeCustom
+                      key={id}
+                      handle={() => {
+                        closeModal();
+                        setFilter({
+                          ...filter,
+                          [keys ? keys : value]: {
+                            id: el.id,
+                            name: el.name,
+                          },
+                        });
+                      }}
+                      active={filter[keys ? keys : value].name == el.name}
+                      text={el.name}
+                    />
+                  ))}
                 </Column>
               </ScrollView>
             </Container>
