@@ -45,7 +45,7 @@ const Favorites = () => {
     car: [],
     house: [],
   });
-  const [select, setSelect] = useState("Все");
+  const [select, setSelect] = useState("Машина");
 
   useEffect(() => {
     setData({
@@ -64,7 +64,7 @@ const Favorites = () => {
         data={
           <View style={{ flex: 1 }}>
             <View style={styles.buttonsContainer}>
-              {["Все", "Машина", "Дом"].map((item) => (
+              {["Машина", "Дом"].map((item) => (
                 <Wave
                   key={item}
                   style={select === item ? styles.btn_active : styles.btn}
@@ -77,12 +77,9 @@ const Favorites = () => {
                   >
                     {item}
                   </TextContent>
-                </Wave>
+                </Wave> 
               ))}
             </View>
-            {/* {select === "Все" && (
-              <List data={[...data.car, ...data.house]} love={true} />
-            )} */}
             {select === "Машина" &&
               (data.car.length > 0 ? (
                 <List data={data.car} love={true} car={true} />

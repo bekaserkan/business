@@ -241,7 +241,9 @@ const Login = () => {
       }}
     >
       <Container flex={true}>
-        <Header back={true}>Вход</Header>
+        <Header back={true} homeBack={true}>
+          Вход
+        </Header>
         <View
           style={{
             marginTop: 20,

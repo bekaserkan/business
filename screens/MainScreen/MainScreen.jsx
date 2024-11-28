@@ -57,7 +57,6 @@ const MainScreen = () => {
                 link={"HouseFilter"}
               />
             </View>
-
             <View style={styles.wrapper}>
               <ScrollView
                 ref={scrollRefTwo}

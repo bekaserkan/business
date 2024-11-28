@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     position: "static",
     left: -40,
-    marginTop: 20,
     flexDirection: "row",
     width: widthd * 2,
     flex: 1,

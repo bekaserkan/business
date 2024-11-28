@@ -10,8 +10,7 @@ import { useStateHouse } from "../context/stateHouseContext";
 import RangeCustom from "./Range";
 import { useStateCar } from "../context/stateCarContext";
 import Arrow from "../assets/svg/arrowRight";
-
-const InputSelect = ({
+const  InputSelect = ({
   styleContainer,
   style,
   value,

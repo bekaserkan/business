@@ -22,7 +22,7 @@ const Profile = () => {
   const state = true;
   const { loading, userData } = useСondition();
 
-  console.log(userData, "beka");
+  console.log(userData);
 
   if (loading) {
     return (
@@ -68,9 +68,7 @@ const Profile = () => {
                       }}
                     >
                       <ImageCustom
-                        uri={
-                          userData._avatar || "https://via.placeholder.com/60"
-                        }
+                        uri={`https://business.navisdevs.ru/${userData._avatar}`}
                         width={60}
                         height={60}
                         borderRadius={50}
@@ -82,14 +80,14 @@ const Profile = () => {
                         fontWeight={500}
                         color={colors.black}
                       >
-                        Имя
+                        Пользователь
                       </TextContent>
                       <TextContent
                         fontSize={14}
                         fontWeight={400}
                         color={colors.gray}
                       >
-                        {userData.name || "Имя не указано"}
+                        {userData.phone}
                       </TextContent>
                     </Column>
                   </Flex>

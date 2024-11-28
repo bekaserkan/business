@@ -18,17 +18,16 @@ const image = [
   {
     id: 1,
     image:
-      "https://www.properties.market/in/blog/wp-content/uploads/2024/01/5-Most-Lavish-And-Expensive-Celebrity-Owned-Houses-In-Hyderabad-1200x675.png",
+      "https://www.exoticcarhacks.com/wp-content/uploads/2024/04/C2vfbnVA.jpeg",
   },
   {
     id: 2,
     image:
-      "https://landmark.imgix.net/NGA-ROTO-3D-Render-High-res.jpg?w=1200&dpr=1.75&q=60&fm=webp",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpb_xCorsPdc7ouJG-PzNIw_Xv_esp2-yXHw&s",
   },
   {
     id: 3,
-    image:
-      "https://hips.hearstapps.com/hmg-prod/images/edc100123egan-002-6500742f5feb7.jpg?crop=0.688xw:1.00xh;0.157xw,0&resize=1120:*",
+    image: "https://i.redd.it/79hose2reto61.jpg",
   },
 ];
 

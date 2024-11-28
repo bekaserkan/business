@@ -80,7 +80,7 @@ export const StateHouseProvider = ({ children }) => {
   }, [filter, getResult]);
 
   const reset = () => {
-    setAddHouse();
+    setAddHouse(initialFilterStateAdd);
   };
 
   const getResult = useCallback(async () => {
@@ -120,15 +120,35 @@ export const StateHouseProvider = ({ children }) => {
 
   const postProduct = async () => {
     setProLoading(true);
-    const newData = {
-      value: "",
-    };
 
     try {
-      const response = await url.post("house/ads/set", newData);
-      Alert.alert("Successful", response.data);
+      // Получение токена
+      const token = await AsyncStorage.getItem("token");
+      const headers = token ? { Authorization: `Token ${token}` } : {};
+
+      // Формирование данных для отправки
+      const formData = {};
+      Object.entries(paramAdd).forEach(([key, value]) => {
+        if (typeof value === "object" && value.name !== "Любой") {
+          formData[key] = value.id;
+        } else if (typeof value === "boolean") {
+          formData[key] = value;
+        } else if (typeof value === "string" && value.trim() !== "") {
+          formData[key] = value;
+        }
+      });
+
+      console.log("Отправляемые данные:", formData);
+
+      // Отправка POST-запроса
+      const response = await url.post("house/ads/set", formData, { headers });
+
+      // Успешный ответ
+      Alert.alert("Успешно", response.data);
     } catch (error) {
-      console.log(error);
+      // Обработка ошибок
+      console.error("Ошибка при отправке данных:", error);
+      Alert.alert("Ошибка", error.message || "Что-то пошло не так");
     } finally {
       setProLoading(false);
     }
