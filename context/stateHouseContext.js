@@ -76,7 +76,7 @@ export const StateHouseProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await url.get(`house/ads/?${queryParams.toString()}`);
-      setResult(response.data.results);
+      setResult(response.data.data);
     } catch (error) {
       console.error("Error fetching results:", error);
     } finally {
