@@ -22,15 +22,21 @@ const InputSelect = ({
   border,
   select,
   car,
+  add,
   handle,
   arrow,
 }) => {
   const [modal, setModal] = useState(false);
-  const { param, filter, setFilter } = car ? useStateCar() : useStateHouse();
+  const { param, filter, addHouse, setFilter, setAddHouse } = car
+    ? useStateCar()
+    : useStateHouse();
 
   const closeModal = () => {
     setModal(false);
   };
+
+  const currentState = add ? addHouse : filter;
+  const setCurrentState = add ? setAddHouse : setFilter;
 
   if (select) {
     return (
@@ -62,7 +68,7 @@ const InputSelect = ({
               fontWeight={400}
               color={colors.black}
             >
-              {filter[keys ? keys : value].name}
+              {currentState[keys ? keys : value].name}
             </TextContent>
             {arrow && <Arrow />}
           </View>
@@ -88,28 +94,28 @@ const InputSelect = ({
                   <RangeCustom
                     handle={() => {
                       closeModal();
-                      setFilter({
-                        ...filter,
+                      setCurrentState({
+                        ...currentState,
                         [keys ? keys : value]: { id: 0, name: "Любой" },
                       });
                     }}
-                    active={filter[keys ? keys : value].name == "Любой"}
+                    active={currentState[keys ? keys : value].name == "Любой"}
                     text="Любой"
                   />
-                  {param[value].map((el, id) => (
+                  {param[value]?.map((el, id) => (
                     <RangeCustom
                       key={id}
                       handle={() => {
                         closeModal();
-                        setFilter({
-                          ...filter,
+                        setCurrentState({
+                          ...currentState,
                           [keys ? keys : value]: {
                             id: el.id,
                             name: el.name,
                           },
                         });
                       }}
-                      active={filter[keys ? keys : value].name == el.name}
+                      active={currentState[keys ? keys : value].name == el.name}
                       text={el.name}
                     />
                   ))}

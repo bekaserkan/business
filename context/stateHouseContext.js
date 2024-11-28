@@ -43,7 +43,22 @@ const initialFilterState = {
 };
 
 const initialFilterStateAdd = {
-  region: { id: 1, name: "Чуйская область / Бишкек" },
+  commercial_type: { id: 0, name: "Любой" },
+  building_id: { id: 0, name: "Любой" },
+  material: { id: 0, name: "Любой" },
+  floor: { id: 0, name: "Любой" },
+  floors: { id: 0, name: "Любой" },
+  condition: { id: 0, name: "Любой" },
+  heating: { id: 0, name: "Любой" },
+  phone_info: { id: 0, name: "Любой" },
+  internet: { id: 0, name: "Любой" },
+  safety: { id: 0, name: "Любой" },
+  documents: { id: 0, name: "Любой" },
+  year: "",
+  land_square: "",
+  square: "",
+  ceiling_height: "",
+  description: "",
 };
 
 export const StateHouseProvider = ({ children }) => {
@@ -60,7 +75,6 @@ export const StateHouseProvider = ({ children }) => {
   const [addHouse, setAddHouse] = useState(initialFilterStateAdd);
   const [filter, setFilter] = useState(initialFilterState);
   const [proLoading, setProLoading] = useState(false);
-  console.log(param);
   useEffect(() => {
     getResult();
   }, [filter, getResult]);
@@ -159,7 +173,7 @@ export const StateHouseProvider = ({ children }) => {
   const getParam = async () => {
     try {
       const response = await url.get("/house/param/?type_id=1&category=3");
-      setParamAdd(response.data);
+      setParamAdd(response.data.available_fields);
     } catch (error) {
       console.log(error);
     }
