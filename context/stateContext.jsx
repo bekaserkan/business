@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { url } from "../api/api";
-import { Alert } from "react-native";
 
 const СonditionContext = createContext();
 
@@ -9,6 +8,8 @@ export const СonditionProvider = ({ children }) => {
   const [condition, setСondition] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [myFavorite, setMyFavorite] = useState([]);
+  const [loadFavorite, setLoadFavorite] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -27,7 +28,25 @@ export const СonditionProvider = ({ children }) => {
     }
   };
 
+  const getFavoite = async () => {
+    try {
+      setLoadFavorite(true);
+      const token = await AsyncStorage.getItem("token");
+      const response = await url.get("main/like/my_favorites/", {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      setMyFavorite(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadFavorite(false);
+    }
+  };
+
   useEffect(() => {
+    getFavoite();
     fetchData();
   }, []);
 
@@ -47,6 +66,9 @@ export const СonditionProvider = ({ children }) => {
         HouseActive,
         userData,
         loading,
+        getFavoite,
+        myFavorite,
+        loadFavorite,
       }}
     >
       {children}

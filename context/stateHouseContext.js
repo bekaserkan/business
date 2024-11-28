@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { url } from "../api/api";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const StateHouseContext = createContext();
 
@@ -41,19 +42,22 @@ const initialFilterState = {
   price: "",
 };
 
+const initialFilterStateAdd = {
+  region: { id: 1, name: "Чуйская область / Бишкек" },
+};
+
 export const StateHouseProvider = ({ children }) => {
   const [recomention, setRecomention] = useState([]);
   const [reLoading, setReLoading] = useState(true);
   const [param, setParam] = useState([]);
+  const [paramAdd, setParamAdd] = useState([]);
   const [paLoading, setPaLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState([]);
   const [deLoading, setDeLoading] = useState(true);
   const [resident, setResident] = useState([]);
-  const [addHouse, setAddHouse] = useState({
-    value: "",
-  });
+  const [addHouse, setAddHouse] = useState(initialFilterStateAdd);
   const [filter, setFilter] = useState(initialFilterState);
   const [proLoading, setProLoading] = useState(false);
   console.log(param);
@@ -61,7 +65,14 @@ export const StateHouseProvider = ({ children }) => {
     getResult();
   }, [filter, getResult]);
 
+  const reset = () => {
+    setAddHouse();
+  };
+
   const getResult = useCallback(async () => {
+    const token = await AsyncStorage.getItem("token");
+    const headers = token ? { Authorization: `Token ${token}` } : {};
+
     const queryParams = new URLSearchParams();
     Object.entries(filter).forEach(([key, value]) => {
       if (typeof value === "object" && value.name !== "Любой") {
@@ -73,10 +84,13 @@ export const StateHouseProvider = ({ children }) => {
       }
     });
     console.log(queryParams.toString());
-    setLoading(true);
     try {
-      const response = await url.get(`house/ads/?${queryParams.toString()}`);
-      setResult(response.data.results);
+      setLoading(true);
+      const response = await url.get(`house/ads/?${queryParams.toString()}`, {
+        headers,
+      });
+
+      setResult(response.data.data);
     } catch (error) {
       console.error("Error fetching results:", error);
     } finally {
@@ -86,6 +100,7 @@ export const StateHouseProvider = ({ children }) => {
 
   useEffect(() => {
     getParam();
+    getParamAdd();
     getRecomention();
   }, []);
 
@@ -106,18 +121,30 @@ export const StateHouseProvider = ({ children }) => {
   };
 
   const getRecomention = async () => {
-    setReLoading(true);
+    const token = await AsyncStorage.getItem("token");
+
+    const header = {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
+
     try {
-      const response = await url.get("house/ads");
+      setReLoading(true);
+
+      const response = await url.get("house/ads/", header);
+
+      console.log(response.data.data);
+
       setRecomention(response.data.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setReLoading(false);
     }
   };
 
-  const getParam = async () => {
+  const getParamAdd = async () => {
     setPaLoading(true);
     try {
       const response = await url.get("house/public/data/?region=3");
@@ -126,6 +153,15 @@ export const StateHouseProvider = ({ children }) => {
       console.log(error);
     } finally {
       setPaLoading(false);
+    }
+  };
+
+  const getParam = async () => {
+    try {
+      const response = await url.get("/house/param/?type_id=1&category=3");
+      setParamAdd(response.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -170,6 +206,8 @@ export const StateHouseProvider = ({ children }) => {
         // StateForFilter
         setFilter,
         filter,
+        reset,
+        paramAdd,
       }}
     >
       {children}

@@ -43,7 +43,7 @@ const HouseFilter = ({ route }) => {
       <ButtonLayouts
         handle={SybmitFunc}
         loading={loading}
-        title={`Показать ${result.length} предложений`}
+        title={`Показать ${result?.length} предложений`}
         color={colors.black}
       >
         <ScrollView showsVerticalScrollIndicator={false}>

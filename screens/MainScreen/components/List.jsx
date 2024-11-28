@@ -12,7 +12,7 @@ import { useStateCar } from "../../../context/stateCarContext";
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 const fullWidth = Dimensions.get("window").width - 32;
 
-const List = ({ car }) => {
+const List = ({ car, data, love }) => {
   const { reLoading, recomention, param } = car
     ? useStateCar()
     : useStateHouse();
@@ -30,8 +30,6 @@ const List = ({ car }) => {
     }
   };
 
-  console.log(recomention);
-
   if (reLoading) {
     return <Loading color={car ? colors.blue : colors.house} />;
   }
@@ -39,7 +37,7 @@ const List = ({ car }) => {
   return (
     <View style={styles.map}>
       {recomention &&
-        Object.values(recomention)?.map((el, id) => {
+        Object.values(love ? data : recomention)?.map((el, id) => {
           const type = param?.type?.filter((obj) => {
             return obj.id == el.type_id;
           })[0];
@@ -86,6 +84,7 @@ const List = ({ car }) => {
               return (
                 <Card
                   width={containerWidth}
+                  likes={el.is_liked}
                   image={el?.pictures[0]?.pictures?.big}
                   id={el.id}
                   key={id}
@@ -99,6 +98,7 @@ const List = ({ car }) => {
               return (
                 <Card
                   width={containerWidth}
+                  likes={el.is_liked}
                   image={el?.properties_pictures[0]?.pictures?.big}
                   id={el.id}
                   complex_id={el.complex_id}

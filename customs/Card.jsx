@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 import TextContent from "../assets/styles/components/TextContent";
 import { colors } from "../assets/styles/colors";
 import Column from "../assets/styles/components/Column";
@@ -14,11 +14,14 @@ import { useNavigation } from "@react-navigation/native";
 import ImageCustom from "./Image.jsx";
 import { url } from "../api/api.jsx";
 import { CustomAlert } from "../ui/Alert.jsx";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useСondition } from "../context/stateContext.jsx";
 
 const Card = ({
   complex_id,
   id,
   image,
+  likes,
   width,
   title,
   background,
@@ -35,40 +38,50 @@ const Card = ({
   summSquare,
   adress,
 }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(likes);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const { getFavoite } = useСondition();
 
   const likeHandle = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const header = {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
     try {
-      const response = await url(
-        `main/like/${id}/${home ? "home" : "car"}/set_like/`
-      );
-      console.log(response.data);
-      setIsFavorite(true);
-      CustomAlert({
-        type: "success",
-        title: "Успешн!",
-        text: "Добавлено в изрбанные",
-      });
+      setLoading(true);
+      if (!isFavorite) {
+        const response = await url(
+          `main/like/${id}/${home ? "house" : "car"}/set_like/`,
+          header
+        );
+        setIsFavorite(true);
+        console.log(response.data);
+        CustomAlert({
+          type: "success",
+          title: "Успешно!",
+          text: "Добавлено в изрбанные",
+        });
+      } else {
+        const response = await url(
+          `main/like/${id}/${home ? "house" : "car"}/remove_like/`,
+          header
+        );
+        console.log(response.data);
+        setIsFavorite(false);
+        getFavoite();
+        CustomAlert({
+          type: "success",
+          title: "Успешно!",
+          text: "Удалено из изрбанные",
+        });
+      }
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const removHandle = async () => {
-    try {
-      const response = await url(
-        `main/like/${id}/${home ? "home" : "car"}/set_like/`
-      );
-      console.log(response.data);
-      setIsFavorite(false);
-      CustomAlert({
-        type: "success",
-        title: "Успешн!",
-        text: "Добавлено в изрбанные",
-      });
-    } catch (error) {
-      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -109,13 +122,25 @@ const Card = ({
               borderRadius={6}
             />
           </View>
-          <Pressable onPress={isFavorite ? likeHandle : removHandle}>
-            {isFavorite ? (
-              <Heard1
-                style={{ position: "absolute", top: 5, right: 5, zIndex: 1 }}
-              />
+          <Pressable
+            style={{
+              position: "absolute",
+              top: 5,
+              right: 5,
+              zIndex: 1,
+              width: 24,
+              height: 24,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => (loading ? "" : likeHandle())}
+          >
+            {loading ? (
+              <ActivityIndicator size={24} color={colors.white} />
+            ) : isFavorite ? (
+              <Heard1 />
             ) : (
-              <Heard style={{ position: "absolute", top: 5, right: 5 }} />
+              <Heard />
             )}
           </Pressable>
           {urgently && (
