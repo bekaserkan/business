@@ -14,6 +14,7 @@ import Activation from "../auth/activation";
 import Report from "../screens/Report/Report";
 import Notifications from "../screens/Notificationы/Notifications";
 import Balance from "../screens/Balance/Balance";
+import MyDetails from "../screens/MyDetails/MyDetails";
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,7 @@ export default function MainScreens() {
           <Stack.Screen name="Report" component={Report} />
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="Balance" component={Balance} />
+          <Stack.Screen name="MyDetails" component={MyDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
