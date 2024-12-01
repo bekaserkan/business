@@ -45,6 +45,9 @@ const Card = ({
 
   const likeHandle = async () => {
     const token = await AsyncStorage.getItem("token");
+    if (!token) {
+      navigation.navigate("Login");
+    }
     const header = {
       headers: {
         Authorization: `Token ${token}`,
@@ -244,7 +247,7 @@ const Card = ({
             </TextContent>
             <TextContent color={colors.gray}>/</TextContent>
             <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-              {volume} 
+              {volume}
             </TextContent>
           </Flex>
         )}

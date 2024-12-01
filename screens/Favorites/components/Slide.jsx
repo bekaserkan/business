@@ -88,7 +88,7 @@ const Slide = ({ data, searchData }) => {
       }}
     >
       <Container flex={true}>
-        <Header back={true}>Избранное</Header>
+        <Header back={true}>Избранные</Header>
         <Animated.View
           style={{
             marginTop: 20,

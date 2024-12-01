@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LayoutTab from "../../layouts/tabs";
 import { StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,8 +12,8 @@ import Loading from "../../ui/Loading";
 import Wave from "../../customs/Wave";
 import List from "../MainScreen/components/List";
 import { useСondition } from "../../context/stateContext";
+import { ScrollView } from "react-native-gesture-handler";
 
-// Компонент "Нет данных"
 const NotData = ({ title, description, SvgIcon }) => (
   <View style={styles.notDataContainer}>
     <SvgIcon />
@@ -45,7 +45,13 @@ const Favorites = () => {
     car: [],
     house: [],
   });
+  const [search, setSearch] = useState({
+    car: [],
+    house: [],
+  });
   const [select, setSelect] = useState("Машина");
+  const scrollRef = useRef(null);
+  const scrollRefTwo = useRef(null);
 
   useEffect(() => {
     setData({
@@ -61,6 +67,8 @@ const Favorites = () => {
   return (
     <LayoutTab>
       <Slide
+        scrollRef={scrollRef}
+        scrollRefTwo={scrollRefTwo}
         data={
           <View style={{ flex: 1 }}>
             <View style={styles.buttonsContainer}>
@@ -77,37 +85,82 @@ const Favorites = () => {
                   >
                     {item}
                   </TextContent>
-                </Wave> 
+                </Wave>
+              ))}
+            </View>
+            <ScrollView
+              ref={scrollRef}
+              style={{ flex: 1 }}
+              showsVerticalScrollIndicator={false}
+            >
+              {select === "Машина" &&
+                (data.car.length > 0 ? (
+                  <List data={data.car} love={true} car={true} />
+                ) : (
+                  <NotData
+                    title="Избранные машины"
+                    description="Добавьте машину в избранное"
+                    SvgIcon={NotLoveData}
+                  />
+                ))}
+              {select === "Дом" &&
+                (data.house.length > 0 ? (
+                  <List data={data.house} love={true} />
+                ) : (
+                  <NotData
+                    title="Избранные дома"
+                    description="Добавьте дом в избранное"
+                    SvgIcon={NotLoveData}
+                  />
+                ))}
+            </ScrollView>
+          </View>
+        }
+        searchData={
+          <View style={{ flex: 1 }}>
+            <View style={styles.buttonsContainer}>
+              {["Машина", "Дом"].map((item) => (
+                <Wave
+                  key={item}
+                  style={select === item ? styles.btn_active : styles.btn}
+                  handle={() => setSelect(item)}
+                >
+                  <TextContent
+                    fontSize={14}
+                    fontWeight={400}
+                    color={select === item ? colors.white : colors.gray}
+                  >
+                    {item}
+                  </TextContent>
+                </Wave>
               ))}
             </View>
             {select === "Машина" &&
               (data.car.length > 0 ? (
-                <List data={data.car} love={true} car={true} />
+                <View></View>
               ) : (
                 <NotData
-                  title="Избранные машины"
-                  description="Добавьте машину в избранное"
-                  SvgIcon={NotLoveData}
+                  title="Избранные поиски"
+                  description="Сохраняйте поиски в избранное, чтобы следить за ценой"
+                  SvgIcon={NotSearchData}
                 />
               ))}
             {select === "Дом" &&
               (data.house.length > 0 ? (
-                <List data={data.house} love={true} />
+                <View></View>
               ) : (
                 <NotData
-                  title="Избранные дома"
-                  description="Добавьте дом в избранное"
-                  SvgIcon={NotLoveData}
+                  title="Избранные поиски"
+                  description="Сохраняйте поиски в избранное, чтобы следить за ценой"
+                  SvgIcon={NotSearchData}
                 />
               ))}
+            <ScrollView
+              ref={scrollRef}
+              style={{ flex: 1 }}
+              showsVerticalScrollIndicator={false}
+            ></ScrollView>
           </View>
-        }
-        searchData={
-          <NotData
-            title="Избранные поиски"
-            description="Сохраняйте поиски в избранное, чтобы следить за ценой"
-            SvgIcon={NotSearchData}
-          />
         }
       />
     </LayoutTab>
@@ -139,7 +192,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   notDataContainer: {
+    marginTop: 150,
     flex: 1,
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: 200,

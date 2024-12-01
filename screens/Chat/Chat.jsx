@@ -7,7 +7,7 @@ const Chat = () => {
   return (
     <LayoutTab>
       <Container>
-        <Header back={true}>Chat</Header>
+        <Header back={true}>Чат</Header>
       </Container>
     </LayoutTab>
   );

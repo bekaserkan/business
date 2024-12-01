@@ -75,7 +75,10 @@ const LayoutTab = ({ fanc, scroll, children }) => {
         />
         <TabItem
           isActive={names === "Favorites"}
-          onPress={() => navigation.navigate("Favorites")}
+          onPress={async () => {
+            const token = await AsyncStorage.getItem("token");
+            navigation.navigate(token ? "Favorites" : "Login");
+          }}
           Icon={Catalog}
           label="Избранные"
         />
@@ -110,7 +113,10 @@ const LayoutTab = ({ fanc, scroll, children }) => {
         </View>
         <TabItem
           isActive={names === "Chat"}
-          onPress={() => navigation.navigate("Chat")}
+          onPress={async () => {
+            const token = await AsyncStorage.getItem("token");
+            navigation.navigate(token ? "Chat" : "Login");
+          }}
           Icon={Cart}
           label="Чат"
         />
@@ -118,7 +124,7 @@ const LayoutTab = ({ fanc, scroll, children }) => {
           isActive={names === "Profile"}
           onPress={async () => {
             const token = await AsyncStorage.getItem("token");
-            navigation.navigate(token ? "Profile" : "Profile");
+            navigation.navigate(token ? "Profile" : "Login");
           }}
           Icon={Person}
           label="Профиль"

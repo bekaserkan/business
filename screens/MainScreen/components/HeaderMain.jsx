@@ -17,6 +17,7 @@ import { colors } from "../../../assets/styles/colors";
 import Business from "../svg/business";
 import { useСondition } from "../../../context/stateContext";
 import Bell from "../../../assets/svg/bell";
+import { useNavigation } from "@react-navigation/native";
 
 const width = Dimensions.get("window").width - 32;
 const widthd = Dimensions.get("window").width + 80;
@@ -26,6 +27,7 @@ const HeaderMain = ({ carContent, houseContent }) => {
   const [activeTab, setActiveTab] = useState(condition ? 1 : 0);
   const translateX = useRef(new Animated.Value(-activeTab * width)).current;
   const indicatorPosition = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (activeTab === 0) {
@@ -107,7 +109,7 @@ const HeaderMain = ({ carContent, houseContent }) => {
       >
         <View style={{ width: 24, height: 24 }} />
         <Business />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
           <Bell />
         </TouchableOpacity>
       </View>

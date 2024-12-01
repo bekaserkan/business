@@ -25,7 +25,7 @@ const MainScreen = () => {
                 text={"Все регионы, марка"}
                 navLink={"CarScreens"}
                 link={"CarFilter"}
-              />
+              /> 
             </View>
             <View style={styles.wrapper}>
               <ScrollView

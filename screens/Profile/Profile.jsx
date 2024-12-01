@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
 import LayoutTab from "../../layouts/tabs";
@@ -17,31 +17,17 @@ import Reports from "../../assets/svg/reports";
 import Button from "../../customs/Button";
 import Adv from "../../assets/svg/adv";
 import { useСondition } from "../../context/stateContext";
+import Loading from "../../ui/Loading";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = () => {
   const state = true;
   const { loading, userData } = useСondition();
-
-  console.log(userData);
+  const navigation = useNavigation();
 
   if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <TextContent fontSize={16} color={colors.gray}>
-          Загрузка...
-        </TextContent>
-      </View>
-    );
-  }
-
-  if (!userData) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <TextContent fontSize={16} color={colors.gray}>
-          Не удалось загрузить данные.
-        </TextContent>
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
@@ -68,7 +54,7 @@ const Profile = () => {
                       }}
                     >
                       <ImageCustom
-                        uri={`https://business.navisdevs.ru/${userData._avatar}`}
+                        uri={userData?._avatar}
                         width={60}
                         height={60}
                         borderRadius={50}
@@ -80,14 +66,14 @@ const Profile = () => {
                         fontWeight={500}
                         color={colors.black}
                       >
-                        Пользователь
+                        {userData?.name}
                       </TextContent>
                       <TextContent
                         fontSize={14}
                         fontWeight={400}
                         color={colors.gray}
                       >
-                        {userData.phone}
+                        {userData?.phone}
                       </TextContent>
                     </Column>
                   </Flex>
@@ -133,14 +119,17 @@ const Profile = () => {
                         fontWeight={600}
                         color={colors.black}
                       >
-                        {userData.balance} сом
+                        {userData?.balance} сом
                       </TextContent>
                     </Between>
                     <Button color={colors.black}>Пополнить баланс</Button>
                   </Column>
                 </View>
                 <Flex gap={10}>
-                  <Wave style={{ flex: 1 }}>
+                  <Wave
+                    handle={() => navigation.navigate("Notifications")}
+                    style={{ flex: 1 }}
+                  >
                     <View style={styles.box}>
                       <Image
                         style={{
@@ -157,7 +146,7 @@ const Profile = () => {
                           fontWeight={500}
                           color={colors.black}
                         >
-                          500 сом
+                          Уведомления
                         </TextContent>
                         <More />
                       </Flex>
@@ -171,7 +160,10 @@ const Profile = () => {
                       </TextContent>
                     </View>
                   </Wave>
-                  <Wave style={{ flex: 1 }}>
+                  <Wave
+                    handle={() => navigation.navigate("Report")}
+                    style={{ flex: 1 }}
+                  >
                     <View style={styles.box}>
                       <Image
                         style={{
@@ -205,18 +197,14 @@ const Profile = () => {
                 </Flex>
                 <View style={styles.box}>
                   <Star />
-                  <Wave>
-                    <Flex top={10}>
-                      <TextContent
-                        fontSize={16}
-                        fontWeight={500}
-                        color={colors.black}
-                      >
-                        Мой бизнес-аккаунт
-                      </TextContent>
-                      <More />
-                    </Flex>
-                  </Wave>
+                  <TextContent
+                    top={10}
+                    fontSize={16}
+                    fontWeight={500}
+                    color={colors.black}
+                  >
+                    Мой бизнес-аккаунт
+                  </TextContent>
                   <TextContent
                     top={4}
                     fontSize={12}
