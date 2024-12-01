@@ -11,16 +11,11 @@ import Container from "../../assets/styles/components/Container";
 import Back from "../../assets/svg/back";
 import ChekMarked from "../../assets/svg/chekMark";
 import { useNavigation } from "@react-navigation/native";
+import { useStateCar } from "../../context/stateCarContext";
 
-// const ChekMarks = () => {
-//   return (
-//     <View style={styles.checkMark}>
-//       <ChekMarked/>
-//     </View>
-//   );
-// };
 
 const AddCar = () => {
+  const {paramAdd,  setProLoading, postProduct, carAdd, setCarAdd } = useStateCar();
   const [currentStep, setCurrentStep] = useState("brand");
   const navigation = useNavigation(); 
 
@@ -176,13 +171,10 @@ const AddCar = () => {
     const stepIndex = progressSteps.indexOf(step);
   
     if (stepIndex < currentIndex) {
-      // Завершенные шаги
       return { backgroundColor: "#1B4DFC", width: "100%" };
     } else if (stepIndex === currentIndex) {
-      // Текущий шаг
       return { backgroundColor: "#1B4DFC", width: "50%" };
     } else {
-      // Будущие шаги
       return { backgroundColor: "#ccc", width: "10%" };
     }
   };

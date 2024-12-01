@@ -22,7 +22,6 @@ const  InputSelect = ({
   select,
   car,
   add,
-  handle,
   arrow,
 }) => {
   const [modal, setModal] = useState(false);
