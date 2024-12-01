@@ -141,7 +141,7 @@ export const StateHouseProvider = ({ children }) => {
       console.log("Отправляемые данные:", formData);
 
       // Отправка POST-запроса
-      const response = await url.post("house/ads/set", formData, { headers });
+      const response = await url.post("house/ads/set/", formData, { headers });
 
       // Успешный ответ
       Alert.alert("Успешно", response.data);

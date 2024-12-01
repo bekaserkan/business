@@ -4,11 +4,12 @@ import Header from "../../components/Header";
 import car from "../../assets/images/car.png";
 import Column from "../../assets/styles/components/Column";
 import Wrapper from "../../assets/styles/components/Wrapper";
-import Between from "../../assets/styles/components/Between";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import Flex from "../../assets/styles/components/Flex";
 import TextContent from "../../assets/styles/components/TextContent";
 import { colors } from "../../assets/styles/colors";
+import Wave from "../../customs/Wave";
+import { useNavigation } from "@react-navigation/native";
 
 const data = [
   {
@@ -66,6 +67,7 @@ const data = [
 ];
 
 const CarBusinessList = () => {
+  const navigation = useNavigation();
   return (
     <Container none={true} phon={true}>
       <Header container={true} back={true}>
@@ -74,44 +76,57 @@ const CarBusinessList = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Column gap={6}>
           {data.map((category, index) => (
-            <Wrapper top={index === 0} key={category.key}  padding={[16, 16]}  style={index === 1 ? { paddingBottom: 200 } : null} >
+            <Wrapper
+              top={index === 0}
+              key={category.key}
+              padding={[16, 16]}
+              style={index === 1 ? { paddingBottom: 200 } : null}
+            >
               <TextContent fontSize={20} fontWeight={600} color={colors.black}>
                 {category.key}
               </TextContent>
               <Column gap={16} style={{ marginTop: 16 }}>
                 {category.items.map((item) => (
-                  <Flex
-                    key={item.id}
-                    gap={10}
-                    style={{ alignItems: "flex-start", height: 100 }}
+                  <Wave
+                    handle={() =>
+                      navigation.navigate("CarScreens", {
+                        screen:"CarBusinessProfile",
+                      })
+                    }
                   >
-                    <Image source={item.img} style={stylesList.img_list} />
-                    <View style={stylesList.box_text}>
-                      <Column gap={3}>
+                    <Flex
+                      key={item.id}
+                      gap={10}
+                      style={{ alignItems: "flex-start", height: 100 }}
+                    >
+                      <Image source={item.img} style={stylesList.img_list} />
+                      <View style={stylesList.box_text}>
+                        <Column gap={3}>
+                          <TextContent
+                            fontSize={16}
+                            fontWeight={600}
+                            color={colors.black}
+                          >
+                            {item.title}
+                          </TextContent>
+                          <TextContent
+                            fontSize={14}
+                            fontWeight={400}
+                            color={colors.gray}
+                          >
+                            {item.text}
+                          </TextContent>
+                        </Column>
                         <TextContent
-                          fontSize={16}
-                          fontWeight={600}
-                          color={colors.black}
-                        >
-                          {item.title}
-                        </TextContent>
-                        <TextContent
-                          fontSize={14}
+                          fontSize={12}
                           fontWeight={400}
                           color={colors.gray}
                         >
-                          {item.text}
+                          {item.announcements}
                         </TextContent>
-                      </Column>
-                      <TextContent
-                        fontSize={12}
-                        fontWeight={400}
-                        color={colors.gray}
-                      >
-                        {item.announcements}
-                      </TextContent>
-                    </View>
-                  </Flex>
+                      </View>
+                    </Flex>
+                  </Wave>
                 ))}
               </Column>
             </Wrapper>

@@ -24,7 +24,7 @@ const ImageCustom = ({ uri, width, height, borderRadius }) => {
       />
     );
   }
-
+  
   return (
     <Image
       style={[

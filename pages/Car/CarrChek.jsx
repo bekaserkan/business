@@ -6,14 +6,12 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  Pressable,
 } from "react-native";
 import Column from "../../assets/styles/components/Column";
 import { colors } from "../../assets/styles/colors";
 import TextContent from "../../assets/styles/components/TextContent";
 import Button from "../../customs/Button";
 import Photo from "../../assets/svg/photo.js";
-import Flex from "../../assets/styles/components/Flex";
 import Between from "../../assets/styles/components/Between";
 import Wave from "../../customs/Wave";
 

@@ -119,7 +119,6 @@ const Slider = ({ img, height, back, detail, fast }) => {
               <Love />
             </Wave>
           </View>
-
           <ImageViewer
             imageUrls={img.map((item) => ({ url: item.image }))}
             index={currentIndexTwo}

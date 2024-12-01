@@ -85,13 +85,17 @@ const List = ({ car, data, love }) => {
                 <Card
                   width={containerWidth}
                   likes={el.is_liked}
-                  image={el?.pictures[0]?.pictures?.big}
+                  image={el?.pictures[0]?.pictures?.small}
                   id={el.id}
                   key={id}
                   title={el.model_name}
                   price={el.prices[0]?.price}
                   priceDollars={el.prices[1]?.price}
                   year={el.year}
+                  volume={el.mileage}
+                  vip={el.is_premium}
+                  starVip={el.is_vip}
+                  urgently={el.is_urgent}
                 />
               );
             } else {

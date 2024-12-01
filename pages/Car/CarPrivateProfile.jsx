@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../components/Header";
 import Button from "../../customs/Button";
-import { Image, StyleSheet, View, ScrollView, Platform } from "react-native";
+import { Image, StyleSheet, View, ScrollView, Platform, Dimensions } from "react-native";
 import { colors } from "../../assets/styles/colors";
 import Between from "../../assets/styles/components/Between";
 import Column from "../../assets/styles/components/Column";
@@ -13,11 +13,12 @@ import Wave from "../../customs/Wave.jsx";
 import Back from "../../assets/svg/backWhite.js";
 import { useNavigation } from "@react-navigation/native";
 import ButtonLayouts from "../../layouts/buttonLayouts.js";
+const containerWidth = (Dimensions.get('window').width - 32) / 2 - 5;
 
 const profile = [
   {
     id: 1,
-    image: require("../../assets/images/car.png"),
+    image: require("../../assets/images/avatart.jpg"),
     name: "Нурзида",
     star: "4.8",
     recal: "23",
@@ -186,6 +187,7 @@ const CarPrivateProfile = () => {
                     vip={ad.vip}
                     starVip={ad.starVip}
                     home={true}
+                    width={containerWidth}
                   />
                 ))}
               </View>

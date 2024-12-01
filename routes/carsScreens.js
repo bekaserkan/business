@@ -8,6 +8,7 @@ import CarPrivateProfile from "../pages/Car/CarPrivateProfile";
 import CarBusinessProfile from "../pages/Car/CarBusinessProfile";
 import AddCar from "../pages/Car/AddCar";
 import CarrChek from "../pages/Car/CarrChek";
+import CarBusinessListDetails from "../pages/Car/CarBusinessListDetails";
 
 const Stack = createStackNavigator();
 
@@ -27,8 +28,12 @@ export default function CarScreens() {
       <Stack.Screen name="CarBusinessProfile" component={CarBusinessProfile} />
       <Stack.Screen name="AddCar" component={AddCar} />
       <Stack.Screen name="CarChek" component={CarrChek} />
+      <Stack.Screen name="CarBusinessLstDetails" component={CarBusinessListDetails} />
     </Stack.Navigator>
   );
 }
+
+
+
 
 

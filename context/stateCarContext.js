@@ -68,8 +68,6 @@ export const StateCarProvider = ({ children }) => {
         queryParams.append(key, value);
       }
     });
-
-    console.log(queryParams.toString());
     setLoading(true);
     try {
       const response = await api.get(
@@ -82,6 +80,7 @@ export const StateCarProvider = ({ children }) => {
       setLoading(false);
     }
   }, [filter]);
+
   const postProduct = async () => {
     setProLoading(true);
     try {
@@ -129,7 +128,6 @@ export const StateCarProvider = ({ children }) => {
       setDeLoading(false);
     }
   };
-
   useEffect(() => {
     getParam();
     getRecomention();

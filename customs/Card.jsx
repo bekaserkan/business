@@ -244,7 +244,7 @@ const Card = ({
             </TextContent>
             <TextContent color={colors.gray}>/</TextContent>
             <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-              {volume}
+              {volume} 
             </TextContent>
           </Flex>
         )}

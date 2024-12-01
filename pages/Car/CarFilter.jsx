@@ -62,7 +62,7 @@ const CarFilter = ({ route }) => {
               <Wrapper top={true} bottom={true} style={styles.wrapper}>
                 <InputSelect
                   select={true}
-                  label='марка'
+                  label="марка"
                   value="mark"
                   border={true}
                   car={true}
@@ -72,8 +72,8 @@ const CarFilter = ({ route }) => {
                 <Column gap={6}>
                   <InputSelect
                     select={true}
-                    value="other_option"
-                    label='Год выпуска (от и до)'
+                    value="years"
+                    label="Год выпуска (от и до)"
                     car={true}
                   />
                   <InputSelect
@@ -83,11 +83,11 @@ const CarFilter = ({ route }) => {
                     placeholder="Выберите валюту"
                   />
                   <InputSelect
-                    select={true}
-                    value="registration_country"
-                    label='Цена'
-                    border={true}
-                    car={true}
+                    value={filter.price}
+                    onChangeText={(text) =>
+                      setFilter({ ...filter, price: text })
+                    }
+                    placeholder="цена"
                   />
                 </Column>
               </Wrapper>
@@ -95,77 +95,63 @@ const CarFilter = ({ route }) => {
                 <Column gap={6}>
                   <InputSelect
                     select={true}
-                    label='Тип кузова'
-                    value="registration_country"
+                    label="Тип кузова"
+                    value="car_type"
                     placeholder="Тип кузова"
                     car={true}
                   />
-                       {/* <InputSelect
+                  <InputSelect
                     select={true}
-                    label='Объем двигателя'
-                    value="registration_country"
-                    placeholder="Объем двигателя"
-                    car={true}
-                  /> */}
-                       {/* <InputSelect
-                    select={true}
-                    label='Мощность, л.с. (от и до)'
-                    value="registration_country"
-                    placeholder="Мощность, л.с. (от и до)"
-                    car={true}
-                  /> */}
-                       <InputSelect
-                    select={true}
-                    label='Руль'
+                    label="Руль"
                     value="steering_wheel"
                     placeholder="Руль"
                     car={true}
                   />
-                       <InputSelect
+                  <InputSelect
                     select={true}
-                    label='Двигатель'
+                    label="Двигатель"
                     value="fuel"
                     placeholder="Двигатель"
                     car={true}
                   />
-                       <InputSelect
+                  <InputSelect
                     select={true}
-                    label='Коробка передач'
+                    label="Коробка передач"
                     value="gear_box"
                     placeholder="Коробка передач"
                     car={true}
                   />
-                       <InputSelect
+                  <InputSelect
                     select={true}
-                    label='Привод'
+                    label="Привод"
                     value="transmission"
                     placeholder="Привод"
                     car={true}
                   />
-                       <InputSelect
+                  <InputSelect
                     select={true}
-                    label='Состояние'
+                    label="Состояние"
                     value="car_condition"
                     placeholder="Состояние"
                     car={true}
                   />
-                    <InputSelect
+                  <InputSelect
                     select={true}
-                    label='Цвет'
+                    label="Цвет"
                     value="color"
                     placeholder="Цвет"
                     car={true}
-                  /> 
+                  />
                   <InputSelect
                     select={true}
-                    label='Пробег'
+                    label="Пробег"
                     value="registration_country"
                     placeholder="Пробег"
                     car={true}
                   />
-                                   <InputSelect
+                  <InputSelect
                     select={true}
-                    label='Комплектация'
+                    label="Комплектация"
                     value="configuration"
                     placeholder="Комплектация"
                     car={true}

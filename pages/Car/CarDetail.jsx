@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
 import { useNavigation } from "@react-navigation/native";
@@ -6,57 +6,60 @@ import Characteristic from "../components/Characteristic";
 import Column from "../../assets/styles/components/Column";
 import ProfileBlock from "../components/ProfileBlock";
 import Description from "../components/Description";
-import { ScrollView } from "react-native";
+import { ScrollView, Image } from "react-native";
 import CommentsBlock from "../components/CommentsBlock";
 import ButtonLayouts from "../../layouts/buttonLayouts";
 import ContactsBlock from "../components/ContactsBlock";
 import Additionally from "../components/Additionally";
 import Footer from "../components/Footer";
 import MainBlock from "../components/MainBlock";
+import Loading from "../../ui/Loading";
+import { useStateCar } from "../../context/stateCarContext";
 
-const image = [
-  {
-    id: 1,
-    image:
-      "https://www.exoticcarhacks.com/wp-content/uploads/2024/04/C2vfbnVA.jpeg",
-  },
-  {
-    id: 2,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpb_xCorsPdc7ouJG-PzNIw_Xv_esp2-yXHw&s",
-  },
-  {
-    id: 3,
-    image: "https://i.redd.it/79hose2reto61.jpg",
-  },
-];
-
-const CarDetail = () => {
+const CarDetail = ({ route }) => {
   const navigation = useNavigation();
   const routeTo = () => {
     navigation.navigate("CarScreens", {
       screen: "CarPrivateProfile",
     });
   };
+
+  const { deLoading, detail, getDetail, param } = useStateCar();
+  const { id } = route.params;
+  useEffect(() => {
+    getDetail({ id: id });
+  }, []);
+
+  if (deLoading) {
+    return <Loading />;
+  }
+  const dataImage =
+    !deLoading &&
+    detail.pictures.map((el) => {
+      return {
+        image: el.pictures.small,
+      };
+    });
   return (
     <ButtonLayouts>
       <Container none={true} phon={true}>
-        <Header back={true} container={true} />
+        <Header  id={detail.id} love={true} back={true} container={true} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Column gap={4}>
             <MainBlock
-              img={image}
-              title={"CHERY Tiggo 7 Pro Max, 2024"}
-              priceUSD={"$72 000"}
-              priceSom={"2 720 000 сом"}
+              img={dataImage}
+              title={detail.model_name}
+              priceUSD={detail.prices[1].price}
+              priceSom={detail.prices[0].price}
               car={true}
               address={"Бишкек"}
               time={"5 мин назад"}
               vip={true}
-              addHours={"Добавлено 2 часа назад"}
-              eye={"191"}
-              heart={"50"}
-              comment={"8"}
+              addHours={`Добавлено ${detail.added_at} назад`}
+              eye={detail.views}
+              heart={detail.likes}
+              comment={detail.count_comments}
+              
             />
             <Characteristic
               data={[
@@ -117,18 +120,15 @@ const CarDetail = () => {
                 },
               ]}
             />
-            <Description
-              text={
-                "Продается 3 комнатная квартира в спальном районе со свежим ремонтом. Кирпичный дом, центральное отопление и центральная горячая вода. Трехфазовое электричество. 2 просторных двора. Самые лучшие виды на горы и город благодаря лоджиям по периметру и высокому этажу. Рядом больницы, школа #62 (через забор), другие школы, детсады. Цена ниже чем на другие квартиры в этом комплексе. Унитаз подвесной (инсталляция). Утепленные лоджии. Пятикамерные окна. Быстрый бесшумный лифт от Hyundai. На первом этаже магазин «Азия»."
-              }
-            />
+            <Description text={detail.description} />
             <ProfileBlock
-              name="Нурзида"
-              stars={1}
-              rates="4.4"
-              reviews={23}
-              description="2 объявления"
-              ava="https://www.perunica.ru/uploads/posts/2019-09/1567597236_021.jpg"
+              key={detail.user.id}
+              name={detail.user.name}
+              stars={detail.user.avarage_rating}
+              rates={detail.user.avarage_rating.toFixed(1)}
+              reviews={detail.user.review_count}
+              description={`${detail.user.accommodation_count} объявления`}
+              ava={detail.user._avatar}
               handle={routeTo}
             />
             <CommentsBlock
@@ -153,16 +153,10 @@ const CarDetail = () => {
             <ContactsBlock
               data={[
                 {
-                  phone: "+996 (502) 80-02-02",
-                },
-                {
-                  phone: "+996 (502) 80-02-02",
-                },
-                {
-                  phone: "+996 (502) 80-02-02",
+                  phone: detail.user.phone, 
                 },
               ]}
-              keyValue={"phone"}
+              keyValue={"phone"} 
             />
             <Footer />
           </Column>

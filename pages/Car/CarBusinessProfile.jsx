@@ -1,13 +1,6 @@
 import React from "react";
 import Container from "../../assets/styles/components/Container";
-import {
-  Image,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Dimensions, Image, ScrollView, StyleSheet, View } from "react-native";
 import TextContent from "../../assets/styles/components/TextContent";
 import { colors } from "../../assets/styles/colors";
 import Card from "../../customs/Card";
@@ -19,21 +12,24 @@ import Button from "../../customs/Button";
 import { useNavigation } from "@react-navigation/native";
 import Slider from "../../components/Slider.jsx";
 import ButtonLayouts from "../../layouts/buttonLayouts.js";
+const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 
 const profile = [
   {
     id: 1,
-    image: require("../../assets/images/car.png"),
+    image: require("../../assets/images/avatart.jpg"),
     name: "Chery РОЛЬФ Магистральный",
     star: "4.8",
     recal: "23",
     img: [
-      { id: 1, image: require("../../assets/images/home_img.png") },
-      { id: 2, image: require("../../assets/images/car.png") },
-      { id: 3, image: require("../../assets/images/car.png") },
+      { id: 1, image: "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg" },
+      { id: 2, image: "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg" },
+      { id: 3, image: "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg" },
     ],
   },
 ];
+
+const imageData = profile[0].img.map((el) => el.image);
 const about = [
   {
     text: "ГК «СИМ» - один из старейших автомобильных дилеров в Москве",
@@ -48,6 +44,8 @@ const about = [
         volume: "1.8",
         vip: true,
         urgently: true,
+        image:
+          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
       },
       {
         id: 2,
@@ -59,6 +57,8 @@ const about = [
         volume: "1.8",
         vip: false,
         starVip: true,
+        image:
+          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
       },
       {
         id: 3,
@@ -70,6 +70,8 @@ const about = [
         volume: "1.8",
         vip: false,
         starVip: true,
+        image:
+          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
       },
       {
         id: 4,
@@ -82,6 +84,8 @@ const about = [
         vip: true,
         urgently: true,
         avto_user: true,
+        image:
+          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
       },
       {
         id: 5,
@@ -94,6 +98,8 @@ const about = [
         vip: true,
         urgently: true,
         avto_user: true,
+        image:
+          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
       },
     ],
   },
@@ -191,6 +197,8 @@ const CarBusinessProfile = () => {
                     vip={ad.vip}
                     starVip={ad.starVip}
                     avto_user={ad.avto_user}
+                    width={containerWidth}
+                    image={ad.image}
                   />
                 ))}
               </View>
