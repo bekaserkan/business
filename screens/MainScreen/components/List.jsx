@@ -96,6 +96,7 @@ const List = ({ car, data, love }) => {
                   vip={el.is_premium}
                   starVip={el.is_vip}
                   urgently={el.is_urgent}
+                  mark={el.mark_name}
                 />
               );
             } else {

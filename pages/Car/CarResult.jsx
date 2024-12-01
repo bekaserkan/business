@@ -5,6 +5,8 @@ import Button from "../../customs/Button";
 import { colors } from "../../assets/styles/colors";
 
 const CarResult = () => {
+  
+
   return (
     <Container>
       <Header homeBack={true} back={true}>

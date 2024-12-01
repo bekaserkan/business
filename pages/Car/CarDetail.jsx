@@ -37,17 +37,44 @@ const CarDetail = ({ route }) => {
     !deLoading &&
     detail.pictures.map((el) => {
       return {
-        image: el.pictures.small,
+        image: el.pictures.big,
       };
     });
+
+  const interor = detail.interior.map((item) => ({
+    text: item.name,
+  }));
+
+  const exterior = detail.exterior.map((item) => ({
+    text: item.name,
+  }));
+
+  const media = detail.media.map((item) => ({
+    text: item.name,
+  }));
+
+  const safety = detail.safety.map((item) => ({
+    text: item.name,
+  }));
+
+  const other_options = detail.other_options.map((item) => ({
+    text: item.name,
+  }));
+
+  const configuration = detail.configuration.map((item) => ({
+    text: item.name,
+  }));
+
   return (
     <ButtonLayouts>
       <Container none={true} phon={true}>
-        <Header  id={detail.id} love={true} back={true} container={true} />
+        <Header id={detail.id} love={true} back={true} container={true} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Column gap={4}>
             <MainBlock
               img={dataImage}
+              mark={detail.mark_name}
+              year={detail.year}
               title={detail.model_name}
               priceUSD={detail.prices[1].price}
               priceSom={detail.prices[0].price}
@@ -59,7 +86,6 @@ const CarDetail = ({ route }) => {
               eye={detail.views}
               heart={detail.likes}
               comment={detail.count_comments}
-              
             />
             <Characteristic
               data={[
@@ -95,28 +121,28 @@ const CarDetail = ({ route }) => {
               title={"Комплектация"}
               data={[
                 {
+                  name: "Комплектация",
+                  data: configuration,
+                },
+                {
                   name: "Интерьер",
-                  data: [
-                    { text: "Экстрерьер" },
-                    { text: "Экстрерьер" },
-                    { text: "Медиа" },
-                  ],
+                  data: interor,
                 },
                 {
                   name: "Экстрерьер",
-                  data: [{ text: "Android Auto" }, { text: "CarPlay" }],
+                  data: exterior,
                 },
                 {
                   name: "Медиа",
-                  data: [{ text: "CarPlay" }, { text: "Аудиоподготовка" }],
+                  data: media,
                 },
                 {
                   name: "Безопасность",
-                  data: [{ text: "CarPlay" }, { text: "Аудиоподготовка" }],
+                  data: safety,
                 },
                 {
                   name: "Опции",
-                  data: [{ text: "CarPlay" }, { text: "Аудиоподготовка" }],
+                  data: other_options,
                 },
               ]}
             />
@@ -153,10 +179,10 @@ const CarDetail = ({ route }) => {
             <ContactsBlock
               data={[
                 {
-                  phone: detail.user.phone, 
+                  phone: detail.user.phone,
                 },
               ]}
-              keyValue={"phone"} 
+              keyValue={"phone"}
             />
             <Footer />
           </Column>

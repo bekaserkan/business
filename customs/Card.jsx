@@ -37,6 +37,7 @@ const Card = ({
   dollarsSquare,
   summSquare,
   adress,
+  mark
 }) => {
   const [isFavorite, setIsFavorite] = useState(likes);
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ const Card = ({
     const token = await AsyncStorage.getItem("token");
     const header = {
       headers: {
-        Authorization: `Token ${token}`,
+        Authorization:`Token ${token}`,
       },
     };
     try {
@@ -166,7 +167,7 @@ const Card = ({
               fontSize={14}
               fontWeight={500}
             >
-              {title}
+              {mark} {title}, {year}
             </TextContent>
             <Column gap={2}>
               <TextContent color={colors.black} fontSize={18} fontWeight={600}>
@@ -244,7 +245,7 @@ const Card = ({
             </TextContent>
             <TextContent color={colors.gray}>/</TextContent>
             <TextContent fontSize={12} fontWeight={400} color={colors.gray}>
-              {volume} 
+              {volume} км
             </TextContent>
           </Flex>
         )}
