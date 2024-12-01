@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { url } from "../api/api";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const StateCarContext = createContext();
 
@@ -36,8 +37,27 @@ const initialFilterState = {
   // picture_exists: false,
   // video_exists: false,
   // exchange: false,
-  // installment: false,
+  // installment: false
   // mortgage: false,
+};
+
+const initialFilterStateAdd = {
+  mark: { id: 0, name: "Любой" },
+  car_models: { id: 0, name: "Любой" },
+  material: { id: 0, name: "Любой" },
+  floor: { id: 0, name: "Любой" },
+  floors: { id: 0, name: "Любой" },
+  condition: { id: 0, name: "Любой" },
+  heating: { id: 0, name: "Любой" },
+  phone_info: { id: 0, name: "Любой" },
+  internet: { id: 0, name: "Любой" },
+  safety: { id: 0, name: "Любой" },
+  documents: { id: 0, name: "Любой" },
+  year: "",
+  land_square: "",
+  square: "",
+  ceiling_height: "",
+  description: "",
 };
 
 export const StateCarProvider = ({ children }) => {
@@ -49,16 +69,18 @@ export const StateCarProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState([]);
   const [deLoading, setDeLoading] = useState(true);
-  const [addHouse, setAddHouse] = useState({
-    initialFilterState
-  });
+  const [paramAdd, setParamAdd] = useState([]);
   const [filter, setFilter] = useState(initialFilterState);
+  const [carAdd, setCarAdd] = useState(initialFilterStateAdd)
   const [proLoading, setProLoading] = useState(false);
   useEffect(() => {
     getResult();
   }, [filter, getResult]);
 
   const getResult = useCallback(async () => {
+    const token = await AsyncStorage.getItem("token");
+    const headers = token ? { Authorization: `Token ${token}` } : {};
+
     const queryParams = new URLSearchParams();
     Object.entries(filter).forEach(([key, value]) => {
       if (typeof value === "object" && value.name !== "Любой") {
@@ -72,9 +94,9 @@ export const StateCarProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await url.get(
-        `cars/cars-posts/?${queryParams.toString()}`
+        `cars/cars-posts/?${queryParams.toString()}`,
+        // headers,
       );
-      
       setResult(response.data.data);
     } catch (error) {
       console.error("Error fetching results:", error);
@@ -96,6 +118,12 @@ export const StateCarProvider = ({ children }) => {
   };  
 
   const getRecomention = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const header = {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    };
     setReLoading(true);
     try {
       const response = await url.get("cars/cars-posts/");
@@ -118,6 +146,17 @@ export const StateCarProvider = ({ children }) => {
       setPaLoading(false);
     }
   };
+  const getParamAdd = async () => {
+    setPaLoading(true);
+    try {
+      const response = await url.get("cars-data/public/data/");
+      setParamAdd(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPaLoading(false);
+    }
+  };
 
   const getDetail = async ({ id }) => {
     setDeLoading(true);
@@ -133,6 +172,7 @@ export const StateCarProvider = ({ children }) => {
   useEffect(() => {
     getParam();
     getRecomention();
+    getParamAdd()
   }, []);
 
   return (
@@ -156,11 +196,12 @@ export const StateCarProvider = ({ children }) => {
         detail,
         deLoading,
         // StateForAdd
-        setAddHouse,
-        addHouse,
-        // StateForFilter
         setFilter,
         filter,
+        deLoading, 
+        setCarAdd,
+        carAdd,
+        // GetParamAdd
       }}
     >
       {children}
