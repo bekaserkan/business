@@ -78,7 +78,7 @@ const List = ({ car, data, love }) => {
                   </TextContent>
                 </View>
               </Wave>
-            );
+            ); 
           } else {
             if (car) {
               return (

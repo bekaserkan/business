@@ -10,7 +10,7 @@ import ButtonLayouts from "../../layouts/buttonLayouts";
 import { colors } from "../../assets/styles/colors";
 
 const AddHouse = () => {
-  const { reset, paramAdd, setProLoading, postProduct } = useStateHouse();
+  const { reset, paramAdd, proLoading, postProduct } = useStateHouse();
 
   return (
     <Container none={true}>
@@ -19,7 +19,7 @@ const AddHouse = () => {
       </Header>
       <ButtonLayouts
         handle={postProduct}
-        loading={setProLoading}
+        loading={proLoading}
         title="Подать объявление"
         color={colors.green}
       >

@@ -28,6 +28,7 @@ import { handlePrivacyPress } from "../utils/handlePrivacyPress";
 import TextContent from "../assets/styles/components/TextContent";
 import Wave from "../customs/Wave";
 import Flex from "../assets/styles/components/Flex";
+import { useСondition } from "../context/stateContext";
 
 const width = Dimensions.get("window").width - 32;
 const widthd = Dimensions.get("window").width + 80;
@@ -59,6 +60,7 @@ const Login = () => {
   const [activeTab, setActiveTab] = useState(0);
   const translateX = useRef(new Animated.Value(-activeTab * width)).current;
   const indicatorPosition = useRef(new Animated.Value(0)).current;
+  const { fetchData } = useСondition();
 
   const handleTabPress = (index) => {
     if (activeTab === index) return;
@@ -191,6 +193,7 @@ const Login = () => {
               activeTab === 0 ? email.value : phone.value
             );
             await AsyncStorage.setItem("token", response.data.token);
+            fetchData();
           } else {
             setEmail({
               ...email,

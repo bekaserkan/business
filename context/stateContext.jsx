@@ -61,6 +61,7 @@ export const СonditionProvider = ({ children }) => {
   return (
     <СonditionContext.Provider
       value={{
+        fetchData,
         condition,
         CarActive,
         HouseActive,

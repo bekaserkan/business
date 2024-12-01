@@ -26,234 +26,255 @@ const Profile = () => {
   const { loading, userData } = useСondition();
   const navigation = useNavigation();
 
+  // useEffect(() => {
+  //   const removefun = async () => {
+  //     await AsyncStorage.removeItem("profileData");
+  //     await AsyncStorage.removeItem("token");
+  //   };
+  //   removefun();
+  // }, []);
+
+  console.log(userData);
+
   if (loading) {
     return <Loading />;
   }
 
-  return (
-    <LayoutTab>
-      <Container phon={true} none={true}>
-        <Header back={true} container={true}>
-          Профиль
-        </Header>
-        <ScrollView
-          style={{
-            flex: 1,
-          }}
-          showsVerticalScrollIndicator={false}
-        >
-          <Column gap={6}>
-            <Wrapper padding={[16, 0]} top={true}>
-              <Wave>
-                <Between center={"center"}>
-                  <Flex gap={10}>
-                    <View
-                      style={{
-                        width: 60,
-                        height: 60,
-                      }}
-                    >
-                      <ImageCustom
-                        uri={userData?._avatar}
-                        width={60}
-                        height={60}
-                        borderRadius={50}
-                      />
-                    </View>
-                    <Column gap={4}>
-                      <TextContent
-                        fontSize={18}
-                        fontWeight={500}
-                        color={colors.black}
-                      >
-                        {userData?.name}
-                      </TextContent>
-                      <TextContent
-                        fontSize={14}
-                        fontWeight={400}
-                        color={colors.gray}
-                      >
-                        {userData?.phone}
-                      </TextContent>
-                    </Column>
-                  </Flex>
-                  <Wave>
-                    <More />
-                  </Wave>
-                </Between>
-              </Wave>
-            </Wrapper>
-            <Wrapper padding={[16, 16]}>
-              <Column gap={10}>
-                <View style={styles.box}>
-                  <Column gap={10}>
+  if (userData) {
+    return (
+      <LayoutTab>
+        <Container phon={true} none={true}>
+          <Header back={true} container={true}>
+            Профиль
+          </Header>
+          <ScrollView
+            style={{
+              flex: 1,
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            <Column gap={6}>
+              <Wrapper padding={[16, 0]} top={true}>
+                <Wave>
+                  <Between center={"center"}>
                     <Flex gap={10}>
-                      <Reports />
+                      <View
+                        style={{
+                          width: 60,
+                          height: 60,
+                        }}
+                      >
+                        <ImageCustom
+                          uri={userData?._avatar}
+                          width={60}
+                          height={60}
+                          borderRadius={50}
+                        />
+                      </View>
                       <Column gap={4}>
+                        <TextContent
+                          fontSize={18}
+                          fontWeight={500}
+                          color={colors.black}
+                        >
+                          {userData?.name}
+                        </TextContent>
+                        <TextContent
+                          fontSize={14}
+                          fontWeight={400}
+                          color={colors.gray}
+                        >
+                          {userData?.phone}
+                        </TextContent>
+                      </Column>
+                    </Flex>
+                    <Wave>
+                      <More />
+                    </Wave>
+                  </Between>
+                </Wave>
+              </Wrapper>
+              <Wrapper padding={[16, 16]}>
+                <Column gap={10}>
+                  <View style={styles.box}>
+                    <Column gap={10}>
+                      <Flex gap={10}>
+                        <Reports />
+                        <Column gap={4}>
+                          <TextContent
+                            fontSize={12}
+                            fontWeight={400}
+                            color={colors.gray}
+                          >
+                            Лицевой счёт:
+                          </TextContent>
+                          <TextContent
+                            fontSize={16}
+                            fontWeight={500}
+                            color={colors.black}
+                          >
+                            {userData?.username}
+                          </TextContent>
+                        </Column>
+                      </Flex>
+                      <Between center={"center"}>
                         <TextContent
                           fontSize={12}
                           fontWeight={400}
                           color={colors.gray}
                         >
-                          Лицевой счёт:
+                          Баланс:
                         </TextContent>
                         <TextContent
-                          fontSize={16}
-                          fontWeight={500}
+                          fontSize={20}
+                          fontWeight={600}
                           color={colors.black}
                         >
-                          937505
+                          {userData?.balance} сом
                         </TextContent>
-                      </Column>
-                    </Flex>
-                    <Between center={"center"}>
-                      <TextContent
-                        fontSize={12}
-                        fontWeight={400}
-                        color={colors.gray}
-                      >
-                        Баланс:
-                      </TextContent>
-                      <TextContent
-                        fontSize={20}
-                        fontWeight={600}
+                      </Between>
+                      <Button
+                        handle={() => navigation.navigate("Balance")}
                         color={colors.black}
                       >
-                        {userData?.balance} сом
-                      </TextContent>
-                    </Between>
-                    <Button color={colors.black}>Пополнить баланс</Button>
-                  </Column>
-                </View>
-                <Flex gap={10}>
-                  <Wave
-                    handle={() => navigation.navigate("Notifications")}
-                    style={{ flex: 1 }}
-                  >
-                    <View style={styles.box}>
-                      <Image
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 8,
-                        }}
-                        source={require("../../assets/images/notif.png")}
-                        alt=""
-                      />
-                      <Flex top={10}>
+                        Пополнить баланс
+                      </Button>
+                    </Column>
+                  </View>
+                  <Flex gap={10}>
+                    <Wave
+                      handle={() => navigation.navigate("Notifications")}
+                      style={{ flex: 1 }}
+                    >
+                      <View style={styles.box}>
+                        <Image
+                          style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 8,
+                          }}
+                          source={require("../../assets/images/notif.png")}
+                          alt=""
+                        />
+                        <Flex top={10}>
+                          <TextContent
+                            fontSize={16}
+                            fontWeight={500}
+                            color={colors.black}
+                          >
+                            Уведомления
+                          </TextContent>
+                          <More />
+                        </Flex>
                         <TextContent
-                          fontSize={16}
-                          fontWeight={500}
-                          color={colors.black}
+                          top={4}
+                          fontSize={12}
+                          fontWeight={400}
+                          color={colors.gray}
                         >
-                          Уведомления
+                          Не пропускайте свежие новости
                         </TextContent>
-                        <More />
-                      </Flex>
-                      <TextContent
-                        top={4}
-                        fontSize={12}
-                        fontWeight={400}
-                        color={colors.gray}
-                      >
-                        Не пропускайте свежие новости
-                      </TextContent>
-                    </View>
-                  </Wave>
-                  <Wave
-                    handle={() => navigation.navigate("Report")}
-                    style={{ flex: 1 }}
-                  >
-                    <View style={styles.box}>
-                      <Image
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 8,
-                        }}
-                        source={require("../../assets/images/reo.png")}
-                        alt=""
-                      />
-                      <Flex top={10}>
+                      </View>
+                    </Wave>
+                    <Wave
+                      handle={() => navigation.navigate("Report")}
+                      style={{ flex: 1 }}
+                    >
+                      <View style={styles.box}>
+                        <Image
+                          style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 8,
+                          }}
+                          source={require("../../assets/images/reo.png")}
+                          alt=""
+                        />
+                        <Flex top={10}>
+                          <TextContent
+                            fontSize={16}
+                            fontWeight={500}
+                            color={colors.black}
+                          >
+                            Мои отчеты
+                          </TextContent>
+                          <More />
+                        </Flex>
                         <TextContent
-                          fontSize={16}
-                          fontWeight={500}
-                          color={colors.black}
+                          top={4}
+                          fontSize={12}
+                          fontWeight={400}
+                          color={colors.gray}
                         >
-                          Мои отчеты
+                          Тут хранятся все ваши купленные отчеты
                         </TextContent>
-                        <More />
-                      </Flex>
-                      <TextContent
-                        top={4}
-                        fontSize={12}
-                        fontWeight={400}
-                        color={colors.gray}
-                      >
-                        Тут хранятся все ваши купленные отчеты
-                      </TextContent>
-                    </View>
-                  </Wave>
-                </Flex>
-                <View style={styles.box}>
-                  <Star />
-                  <TextContent
-                    top={10}
-                    fontSize={16}
-                    fontWeight={500}
-                    color={colors.black}
-                  >
-                    Мой бизнес-аккаунт
-                  </TextContent>
-                  <TextContent
-                    top={4}
-                    fontSize={12}
-                    fontWeight={400}
-                    color={colors.gray}
-                  >
-                    Превратите свой профиль в бизнес-аккаунт с расширенными
-                    возможностями
-                  </TextContent>
-                  <Button top={10} color={colors.black}>
-                    Перейти на бизнес-аккаунт
-                  </Button>
-                </View>
-              </Column>
-            </Wrapper>
-            <Wrapper padding={[200, 16]}>
-              <TextContent fontSize={20} fontWeight={600} color={colors.black}>
-                Мои объявления
-              </TextContent>
-              {state && (
-                <Column top={50} gap={20}>
-                  <View
-                    style={{
-                      alignItems: "center",
-                    }}
-                  >
-                    <Adv />
+                      </View>
+                    </Wave>
+                  </Flex>
+                  {/* <View style={styles.box}>
+                    <Star />
                     <TextContent
-                      top={20}
-                      center={"center"}
+                      top={10}
                       fontSize={16}
+                      fontWeight={500}
+                      color={colors.black}
+                    >
+                      Мой бизнес-аккаунт
+                    </TextContent>
+                    <TextContent
+                      top={4}
+                      fontSize={12}
                       fontWeight={400}
                       color={colors.gray}
                     >
                       Превратите свой профиль в бизнес-аккаунт с расширенными
                       возможностями
                     </TextContent>
-                  </View>
-                  <Button top={10} color={colors.blue}>
-                    Добавить объявление
-                  </Button>
+                    <Button top={10} color={colors.black}>
+                      Перейти на бизнес-аккаунт
+                    </Button>
+                  </View> */}
                 </Column>
-              )}
-            </Wrapper>
-          </Column>
-        </ScrollView>
-      </Container>
-    </LayoutTab>
-  );
+              </Wrapper>
+              <Wrapper padding={[200, 16]}>
+                <TextContent
+                  fontSize={20}
+                  fontWeight={600}
+                  color={colors.black}
+                >
+                  Мои объявления
+                </TextContent>
+                {state && (
+                  <Column top={50} gap={20}>
+                    <View
+                      style={{
+                        alignItems: "center",
+                      }}
+                    >
+                      <Adv />
+                      <TextContent
+                        top={20}
+                        center={"center"}
+                        fontSize={16}
+                        fontWeight={400}
+                        color={colors.gray}
+                      >
+                        Превратите свой профиль в бизнес-аккаунт с расширенными
+                        возможностями
+                      </TextContent>
+                    </View>
+                    <Button top={10} color={colors.blue}>
+                      Добавить объявление
+                    </Button>
+                  </Column>
+                )}
+              </Wrapper>
+            </Column>
+          </ScrollView>
+        </Container>
+      </LayoutTab>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
