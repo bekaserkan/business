@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 const StateCarContext = createContext();
 
 const initialFilterState = {
-  registration_country: { id: 0, name: "Чуйская область / Бишкек" },
+  registration_country: { id: 1, name: "Кыргызстан" },
   mark: { id: 0, name: "Любой" },
   category: { id: 0, name: "Любой" },
   car_condition: { id: 0, name: "Любой" }, // новое
@@ -28,18 +28,16 @@ const initialFilterState = {
   car_type: { id: 0, name: "Любой" },  //  легковые
   fuel: { id: 0, name: "Любой" },
   featured_option: { id: 0, name: "Любой" },
+  year:"",
   ceiling_height: "",
-  square: "",
-  land_square: "",
-  living_square: "",
-  kitchen_square: "",
+  mileage: "",
   is_urgent: false,
-  picture_exists: false,
-  video_exists: false,
-  exchange: false,
-  installment: false,
-  mortgage: false,
   price: "",
+  // picture_exists: false,
+  // video_exists: false,
+  // exchange: false,
+  // installment: false,
+  // mortgage: false,
 };
 
 export const StateCarProvider = ({ children }) => {
@@ -56,6 +54,9 @@ export const StateCarProvider = ({ children }) => {
   });
   const [filter, setFilter] = useState(initialFilterState);
   const [proLoading, setProLoading] = useState(false);
+  useEffect(() => {
+    getResult();
+  }, [filter, getResult]);
 
   const getResult = useCallback(async () => {
     const queryParams = new URLSearchParams();
@@ -70,9 +71,10 @@ export const StateCarProvider = ({ children }) => {
     });
     setLoading(true);
     try {
-      const response = await api.get(
+      const response = await url.get(
         `cars/cars-posts/?${queryParams.toString()}`
       );
+      
       setResult(response.data.data);
     } catch (error) {
       console.error("Error fetching results:", error);

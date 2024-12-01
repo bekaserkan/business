@@ -30,7 +30,6 @@ const CarFilter = ({ route }) => {
       screen: "CarResult",
     });
   };
-
   return (
     <View
       style={{
@@ -72,7 +71,7 @@ const CarFilter = ({ route }) => {
                 <Column gap={6}>
                   <InputSelect
                     select={true}
-                    value="years"
+                    value="currency"
                     label="Год выпуска (от и до)"
                     car={true}
                   />
@@ -143,11 +142,11 @@ const CarFilter = ({ route }) => {
                     car={true}
                   />
                   <InputSelect
-                    select={true}
-                    label="Пробег"
-                    value="registration_country"
+                    value={filter.mileage}
+                    onChangeText={(text) =>
+                      setFilter({ ...filter, mileage: text })
+                    }
                     placeholder="Пробег"
-                    car={true}
                   />
                   <InputSelect
                     select={true}

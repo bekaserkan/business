@@ -14,6 +14,8 @@ import Comment from "../../assets/svg/commentSmall.js";
 import Slider from "../../components/Slider.jsx";
 
 const MainBlock = ({
+  mark,
+  year,
   title,
   priceUSD,
   miniPriceUSD,
@@ -45,7 +47,7 @@ const MainBlock = ({
             fontWeight={500}
             color={colors.black}
           >
-            {title}
+           {mark} {title}, {year}
           </TextContent>
           {house ? (
             <View>
@@ -82,7 +84,7 @@ const MainBlock = ({
                   fontWeight={600}
                   color={colors.black}
                 >
-                  {priceUSD}
+                  ${priceUSD}
                 </TextContent>
                 <Button
                   color={colors.phon}
@@ -93,7 +95,7 @@ const MainBlock = ({
                 </Button>
               </Between>
               <TextContent fontSize={14} fontWeight={400} color={colors.black}>
-                {priceSom}
+                {priceSom} сом
               </TextContent>
             </Column>
           )}
