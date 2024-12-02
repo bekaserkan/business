@@ -53,18 +53,55 @@ const initialFilterStateAdd = {
   phone_info: { id: 0, name: "Любой" },
   internet: { id: 0, name: "Любой" },
   safety: { id: 0, name: "Любой" },
-  documents: { id: 0, name: "Любой" },
+  document: { id: 0, name: "Любой" },
+  rooms: { id: 0, name: "Любой" },
+  serie: { id: 0, name: "Любой" },
+  building_type: { id: 0, name: "Любой" },
+  balkony: { id: 0, name: "Любой" },
+  door: { id: 0, name: "Любой" },
+  parking: { id: 0, name: "Любой" },
+  internet: { id: 0, name: "Любой" },
+  toilet: { id: 0, name: "Любой" },
+  canalization: { id: 0, name: "Любой" },
+  gas: { id: 0, name: "Любой" },
+  water: { id: 0, name: "Любой" },
+  furniture: { id: 0, name: "Любой" },
+  flooring: { id: 0, name: "Любой" },
+  safety: { id: 0, name: "Любой" },
+  flat_options: { id: 0, name: "Любой" },
   year: "",
-  land_square: "",
   square: "",
+  land_square: "",
+  living_square: "",
+  kitchen_square: "",
   ceiling_height: "",
   description: "",
+  phone_info: "",
+  ceiling_height: "",
+
+  region: { id: 1, name: "Чуйская область / Бишкек" },
+  town: { id: 0, name: "Любой" },
+  district: { id: 0, name: "Любой" },
+  currency: { id: 0, name: "Любой" },
+  installment: { id: 0, name: "Любой" },
+  mortgage: { id: 0, name: "Любой" },
+  exchange: { id: 0, name: "Любой" },
+  owner_type: { id: 0, name: "Любой" },
+  cadastre_number: "",
+  house_number: "",
+  street: "",
+  crossing: "",
+  youtube_url: "",
+  price: "",
+  type_id: "",
+  category: "",
 };
 
 export const StateHouseProvider = ({ children }) => {
   const [recomention, setRecomention] = useState([]);
   const [reLoading, setReLoading] = useState(true);
   const [param, setParam] = useState([]);
+  const [paramLoad, setParamLoad] = useState([]);
   const [paramAdd, setParamAdd] = useState([]);
   const [paLoading, setPaLoading] = useState(true);
   const [result, setResult] = useState([]);
@@ -75,9 +112,20 @@ export const StateHouseProvider = ({ children }) => {
   const [addHouse, setAddHouse] = useState(initialFilterStateAdd);
   const [filter, setFilter] = useState(initialFilterState);
   const [proLoading, setProLoading] = useState(false);
+  const [buildings, setBuildings] = useState([]);
+
   useEffect(() => {
     getResult();
   }, [filter, getResult]);
+
+  const getBuildings = async () => {
+    try {
+      const response = await url.get("house/buildings/");
+      setBuildings(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const reset = () => {
     setAddHouse(initialFilterStateAdd);
@@ -91,7 +139,7 @@ export const StateHouseProvider = ({ children }) => {
     Object.entries(filter).forEach(([key, value]) => {
       if (typeof value === "object" && value.name !== "Любой") {
         queryParams.append(key, value.id);
-      } else if (typeof value === "boolean") {
+      } else if (typeof value === "boolean" && value == true) {
         queryParams.append(key, value);
       } else if (typeof value === "string" && value !== "") {
         queryParams.append(key, value);
@@ -113,6 +161,7 @@ export const StateHouseProvider = ({ children }) => {
   }, [filter]);
 
   useEffect(() => {
+    getBuildings();
     getParam();
     getParamAdd();
     getRecomention();
@@ -122,33 +171,25 @@ export const StateHouseProvider = ({ children }) => {
     setProLoading(true);
 
     try {
-      // Получение токена
       const token = await AsyncStorage.getItem("token");
       const headers = token ? { Authorization: `Token ${token}` } : {};
 
-      // Формирование данных для отправки
       const formData = {};
-      Object.entries(paramAdd).forEach(([key, value]) => {
+
+      Object.entries(addHouse).forEach(([key, value]) => {
         if (typeof value === "object" && value.name !== "Любой") {
           formData[key] = value.id;
         } else if (typeof value === "boolean") {
           formData[key] = value;
         } else if (typeof value === "string" && value.trim() !== "") {
-          formData[key] = value;
+          formData[key] = value.trim();
         }
       });
-
       console.log("Отправляемые данные:", formData);
-
-      // Отправка POST-запроса
-      const response = await url.post("house/ads/set/", formData, { headers });
-
-      // Успешный ответ
+      const response = await url.post("house/ads/", formData, { headers });
       Alert.alert("Успешно", response.data);
     } catch (error) {
-      // Обработка ошибок
       console.error("Ошибка при отправке данных:", error);
-      Alert.alert("Ошибка", error.message || "Что-то пошло не так");
     } finally {
       setProLoading(false);
     }
@@ -190,12 +231,18 @@ export const StateHouseProvider = ({ children }) => {
     }
   };
 
-  const getParam = async () => {
+  const getParam = async ({ type_id, category }) => {
+    setParamLoad(true);
     try {
-      const response = await url.get("/house/param/?type_id=1&category=3");
+      const response = await url.get(
+        `/house/param/?type_id=${type_id}&category=${category}`
+      );
+      setAddHouse({ ...addHouse, type_id: type_id, category: category });
       setParamAdd(response.data.available_fields);
     } catch (error) {
       console.log(error);
+    } finally {
+      setParamLoad(false);
     }
   };
 
@@ -242,6 +289,11 @@ export const StateHouseProvider = ({ children }) => {
         filter,
         reset,
         paramAdd,
+        // getParam
+        getParam,
+        paramLoad,
+        // buildings
+        buildings,
       }}
     >
       {children}

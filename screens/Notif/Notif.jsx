@@ -3,7 +3,7 @@ import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
 import LayoutTab from "../../layouts/tabs";
 
-const Notifications = () => {
+const Notif = () => {
   return (
     <LayoutTab>
       <Container>
@@ -13,4 +13,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default Notif;

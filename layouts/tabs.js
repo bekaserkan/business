@@ -88,7 +88,9 @@ const LayoutTab = ({ fanc, scroll, children }) => {
               const token = await AsyncStorage.getItem("token");
               if (token) {
                 if (condition) {
-                  navigation.navigate("HouseScreens", { screen: "AddHouse" });
+                  navigation.navigate("AddCategory", {
+                    params: { name: "false" },
+                  });
                 } else {
                   navigation.navigate("CarScreens", { screen: "AddCar" });
                 }

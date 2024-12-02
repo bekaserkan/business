@@ -10,10 +10,11 @@ import { useStateHouse } from "../context/stateHouseContext";
 import RangeCustom from "./Range";
 import { useStateCar } from "../context/stateCarContext";
 import Arrow from "../assets/svg/arrowRight";
-const  InputSelect = ({
+const InputSelect = ({
   styleContainer,
   style,
   value,
+  data,
   onChangeText,
   placeholder,
   keys,
@@ -32,6 +33,8 @@ const  InputSelect = ({
   const closeModal = () => {
     setModal(false);
   };
+
+  const datas = data ? data : param[value];
 
   const currentState = add ? addHouse : filter;
   const setCurrentState = add ? setAddHouse : setFilter;
@@ -66,7 +69,7 @@ const  InputSelect = ({
               fontWeight={400}
               color={colors.black}
             >
-              {currentState[keys ? keys : value].name}
+              {currentState[keys ? keys : value]?.name}
             </TextContent>
             {arrow && <Arrow />}
           </View>
@@ -100,7 +103,7 @@ const  InputSelect = ({
                     active={currentState[keys ? keys : value].name == "Любой"}
                     text="Любой"
                   />
-                  {param[value]?.map((el, id) => (
+                  {datas?.map((el, id) => (
                     <RangeCustom
                       key={id}
                       handle={() => {
