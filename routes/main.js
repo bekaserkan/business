@@ -11,6 +11,7 @@ import { colors } from "../assets/styles/colors";
 import Profile from "../screens/Profile/Profile";
 import Login from "../auth/login";
 import Activation from "../auth/activation";
+import ChangePassword from "../auth/сhangePassword";
 import Report from "../screens/Report/Report";
 import Notifications from "../screens/Notificationы/Notifications";
 import Balance from "../screens/Balance/Balance";
@@ -42,6 +43,7 @@ export default function MainScreens() {
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Activation" component={Activation} />
+          <Stack.Screen name="ChangePassword" component={ChangePassword} />
           <Stack.Screen name="Report" component={Report} />
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="Balance" component={Balance} />

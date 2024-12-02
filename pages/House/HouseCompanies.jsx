@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
-import car from "../../assets/images/car.png";
 import Column from "../../assets/styles/components/Column";
 import Wrapper from "../../assets/styles/components/Wrapper";
 import { Image, ScrollView, StyleSheet, TextInput, View } from "react-native";
@@ -13,13 +12,13 @@ import { useNavigation } from "@react-navigation/native";
 import { url } from "../../api/api";
 import Loading from "../../ui/Loading";
 
-const CarBusinessList = () => {
+const HouseCompanies = () => {
   const [business, setBusiness] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const fetchData = async () => {
     try {
-      const response = await url.get("main/dealer/?type_dealer=car");
+      const response = await url.get("main/dealer/?type_dealer=house");
       setBusiness(response.data); 
     } catch (error) {
       console.error(error);
@@ -27,14 +26,13 @@ const CarBusinessList = () => {
       setLoading(false); 
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
   return (
     <Container none={true} phon={true}>
       <Header container={true} back={true}>
-        Автобизнес
+        Компании
       </Header>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Column gap={6}>
@@ -47,7 +45,7 @@ const CarBusinessList = () => {
           </Wrapper>
           <Wrapper padding={[16, 16]}>
             <TextContent fontSize={20} fontWeight={600} color={colors.black}>
-              Официальные дилеры
+            Проверенные компании
             </TextContent>
             {business.length === 0 ? (
               <Loading color={colors.blue} /> 
@@ -58,7 +56,7 @@ const CarBusinessList = () => {
                   .map((item) => (
                     <Wave
                       handle={() =>
-                        navigation.navigate("CarBusinessProfile", {
+                        navigation.navigate("HouseCompaniesDetail", {
                           id: item.id,
                         })
                       }
@@ -79,14 +77,14 @@ const CarBusinessList = () => {
                               fontWeight={600}
                               color={colors.black}
                             >
-                              {item?.name}
+                              {item.name}
                             </TextContent>
                             <TextContent
                               fontSize={14}
                               fontWeight={400}
                               color={colors.gray}
                             >
-                              {item?.address}
+                              {item.address}
                             </TextContent>
                           </Column>
                           <TextContent
@@ -94,7 +92,7 @@ const CarBusinessList = () => {
                             fontWeight={400}
                             color={colors.gray}
                           >
-                            {item?.ads_count} объявления
+                            {item.ads_count} объявления
                           </TextContent>
                         </View>
                       </Flex>
@@ -105,7 +103,7 @@ const CarBusinessList = () => {
           </Wrapper>
           <Wrapper padding={[16, 16]}>
             <TextContent fontSize={20} fontWeight={600} color={colors.black}>
-              Автобизнес
+            Компании
             </TextContent>
             {business.length === 0 ? (
               <Loading color={colors.blue} /> 
@@ -116,18 +114,18 @@ const CarBusinessList = () => {
                   .map((item) => (
                     <Wave
                       handle={() =>
-                        navigation.navigate("CarScreens", {
-                          screen: "CarBusinessProfile",
+                        navigation.navigate("HouseCompaniesDetail", {
+                          id: item.id,
                         })
                       }
-                      key={item?.id}
+                      key={item.id}
                     >
                       <Flex
                         gap={10}
                         style={{ alignItems: "flex-start", height: 100 }}
                       >
                         <Image
-                          source={{ uri: item?.logo_path }}
+                          source={{ uri: item.logo_path }}
                           style={stylesList.img_list}
                         />
                         <View style={stylesList.box_text}>
@@ -137,14 +135,14 @@ const CarBusinessList = () => {
                               fontWeight={600}
                               color={colors.black}
                             >
-                              {item?.name}
+                              {item.name}
                             </TextContent>
                             <TextContent
                               fontSize={14}
                               fontWeight={400}
                               color={colors.gray}
                             >
-                              {item?.address}
+                              {item.address}
                             </TextContent>
                           </Column>
                           <TextContent
@@ -152,7 +150,7 @@ const CarBusinessList = () => {
                             fontWeight={400}
                             color={colors.gray}
                           >
-                            {item?.ads_count} объявления
+                            {item.ads_count} объявления
                           </TextContent>
                         </View>
                       </Flex>
@@ -188,4 +186,4 @@ const stylesList = StyleSheet.create({
   },
 });
 
-export default CarBusinessList;
+export default HouseCompanies;

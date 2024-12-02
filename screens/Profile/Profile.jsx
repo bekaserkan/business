@@ -19,7 +19,6 @@ import Adv from "../../assets/svg/adv";
 import { useСondition } from "../../context/stateContext";
 import Loading from "../../ui/Loading";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import List from "../MainScreen/components/List";
 
 const Profile = () => {
@@ -31,7 +30,6 @@ const Profile = () => {
     house: [],
   });
   const [select, setSelect] = useState("Машина");
-
   useEffect(() => {
     setData({
       car: userData?.dates?.ads?.car || [],
@@ -42,7 +40,6 @@ const Profile = () => {
   if (loading) {
     return <Loading />;
   }
-
   if (userData) {
     return (
       <LayoutTab>
@@ -348,7 +345,7 @@ const Profile = () => {
       </LayoutTab>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
   box: {

@@ -14,7 +14,6 @@ const Category = ({ house, car }) => {
       screen: "HouseResult",
     });
   };
-
   if (house) {
     return (
       <Between center={"center"}>
@@ -32,7 +31,7 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave handle={Sybmit}>
+        <Wave handle={() => navigation.navigate("HouseScreens", {screen:"HouseCompanies"})}>
           <View style={styles.box}>
             <Image
               style={{
@@ -128,7 +127,7 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave handle={() => navigation.navigate("Login")}>
+        <Wave handle={() => navigation.navigate("Report")}>
           <View style={styles.box}>
             <Image
               style={{

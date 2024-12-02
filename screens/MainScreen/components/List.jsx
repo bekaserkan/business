@@ -29,11 +29,9 @@ const List = ({ car, data, love }) => {
       });
     }
   };
-
   if (reLoading) {
     return <Loading color={car ? colors.blue : colors.house} />;
   }
-
   return (
     <View style={styles.map}>
       {recomention &&

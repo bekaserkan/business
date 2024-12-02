@@ -106,15 +106,15 @@ const about = [
   },
 ];
 
-const CarBusinessProfile = () => {
+const HouseCompaniesDetail = () => {
   const {img } = profile[0];
-  const { text, advertisements } = about[0];
-  const navigate = useNavigation();
+  const {advertisements } = about[0];
   const route = useRoute();
   const { id } = route.params;
   const [businessId, setBusinessId] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -128,10 +128,12 @@ const CarBusinessProfile = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, [businessId]);
 
+  useEffect(() => {
+    if(id){
+        fetchData();
+    }
+  }, [id]);
   return (
     <ButtonLayouts>
       <View style={{ flex: 1, backgroundColor: colors.white }}>
@@ -282,4 +284,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarBusinessProfile;
+export default HouseCompaniesDetail;
