@@ -31,12 +31,10 @@ const Slider = ({ img, height, back, detail, fast }) => {
     const index = Math.round(scrollPosition / imageWidth);
     setCurrentIndex(index);
   };
-
   const openModal = (index) => {
     setCurrentIndexTwo(index);
     setModalVisible(true);
   };
-
   const closeModal = () => {
     setModalVisible(false);
   };
