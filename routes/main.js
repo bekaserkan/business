@@ -11,10 +11,12 @@ import { colors } from "../assets/styles/colors";
 import Profile from "../screens/Profile/Profile";
 import Login from "../auth/login";
 import Activation from "../auth/activation";
+import ChangePassword from "../auth/сhangePassword";
 import Report from "../screens/Report/Report";
 import Balance from "../screens/Balance/Balance";
 import AddCategory from "../pages/House/AddCategory";
 import Notif from "../screens/Notif/Notif";
+import MyDetails from "../screens/MyDetails/MyDetails";
 
 const Stack = createStackNavigator();
 
@@ -102,10 +104,12 @@ export default function MainScreens() {
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Activation" component={Activation} />
+          <Stack.Screen name="ChangePassword" component={ChangePassword} />
           <Stack.Screen name="Report" component={Report} />
           <Stack.Screen name="Notifications" component={Notif} />
           <Stack.Screen name="Balance" component={Balance} />
           <Stack.Screen name="AddCategory" component={AddCategory} />
+          <Stack.Screen name="MyDetails" component={MyDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

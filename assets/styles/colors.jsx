@@ -11,6 +11,7 @@ export const colors = {
   house: "#CB2905",
   green: "#0BBD47",
   green2: "#05FF0026",
+  dark_gray:'#767676',
   opacityRed: "",
   opacityBlue: "",
 };

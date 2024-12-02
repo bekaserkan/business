@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 import Container from "../../assets/styles/components/Container";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import Card from "../../customs/Card";
 import { colors } from "../../assets/styles/colors";
+import { useNavigation } from "@react-navigation/native";
 const containerWidth = (Dimensions.get('window').width - 32) / 2 - 5;
 
 const cars = [
@@ -43,7 +44,29 @@ const cars = [
   },
 ];
 
+
+
 const CarBusinessListDetails = () => {
+  const [businessId, setBusinessId] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await url.get(`main/dealer/${id}`);
+      console.log(response.data)
+      setBusinessId(response.data);
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [businessId]);
   return (
     <>
       <Header container={true} back={true}>
@@ -52,7 +75,7 @@ const CarBusinessListDetails = () => {
       <Container phon={true}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.map}>
-            {cars.map((car) => (
+            {/* {cars.map((car) => (
               <Card
                 key={car.id}
                 width={containerWidth}
@@ -68,7 +91,7 @@ const CarBusinessListDetails = () => {
                 starVip={car.starVip}
                 volume={car.volume}
               />
-            ))}
+            ))} */}
           </View>
         </ScrollView>
       </Container>

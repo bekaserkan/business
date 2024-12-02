@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
 import LayoutTab from "../../layouts/tabs";
@@ -19,27 +19,27 @@ import Adv from "../../assets/svg/adv";
 import { useСondition } from "../../context/stateContext";
 import Loading from "../../ui/Loading";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import List from "../MainScreen/components/List";
 
 const Profile = () => {
   const state = true;
   const { loading, userData } = useСondition();
   const navigation = useNavigation();
-
-  // useEffect(() => {
-  //   const removefun = async () => {
-  //     await AsyncStorage.removeItem("profileData");
-  //     await AsyncStorage.removeItem("token");
-  //   };
-  //   removefun();
-  // }, []);
-
-  console.log(userData);
+  const [data, setData] = useState({
+    car: [],
+    house: [],
+  });
+  const [select, setSelect] = useState("Машина");
+  useEffect(() => {
+    setData({
+      car: userData?.dates?.ads?.car || [],
+      house: userData?.dates?.ads?.house || [],
+    });
+  }, [userData]);
 
   if (loading) {
     return <Loading />;
   }
-
   if (userData) {
     return (
       <LayoutTab>
@@ -55,7 +55,7 @@ const Profile = () => {
           >
             <Column gap={6}>
               <Wrapper padding={[16, 0]} top={true}>
-                <Wave>
+                <Wave handle={() => navigation.navigate("MyDetails")}>
                   <Between center={"center"}>
                     <Flex gap={10}>
                       <View
@@ -244,30 +244,100 @@ const Profile = () => {
                 >
                   Мои объявления
                 </TextContent>
-                {state && (
-                  <Column top={50} gap={20}>
-                    <View
-                      style={{
-                        alignItems: "center",
-                      }}
-                    >
-                      <Adv />
-                      <TextContent
-                        top={20}
-                        center={"center"}
-                        fontSize={16}
-                        fontWeight={400}
-                        color={colors.gray}
+                <View style={{ flex: 1 }}>
+                  <View style={styles.buttonsContainer}>
+                    {["Машина", "Дом"].map((item) => (
+                      <Wave
+                        key={item}
+                        style={select === item ? styles.btn_active : styles.btn}
+                        handle={() => setSelect(item)}
                       >
-                        Превратите свой профиль в бизнес-аккаунт с расширенными
-                        возможностями
-                      </TextContent>
-                    </View>
-                    <Button top={10} color={colors.blue}>
-                      Добавить объявление
-                    </Button>
-                  </Column>
-                )}
+                        <TextContent
+                          fontSize={14}
+                          fontWeight={400}
+                          color={select === item ? colors.white : colors.gray}
+                        >
+                          {item}
+                        </TextContent>
+                      </Wave>
+                    ))}
+                  </View>
+                  <ScrollView
+                    style={{ flex: 1 }}
+                    showsVerticalScrollIndicator={false}
+                  >
+                    {select === "Машина" &&
+                      (data.car.length > 0 ? (
+                        <List data={data.car} love={true} car={true} />
+                      ) : (
+                        <Column top={50} gap={20}>
+                          <View
+                            style={{
+                              alignItems: "center",
+                            }}
+                          >
+                            <Adv />
+                            <TextContent
+                              top={20}
+                              center={"center"}
+                              fontSize={16}
+                              fontWeight={400}
+                              color={colors.gray}
+                            >
+                              Превратите свой профиль в бизнес-аккаунт с
+                              расширенными возможностями
+                            </TextContent>
+                          </View>
+                          <Button
+                            handle={() => {
+                              navigation.navigate("CarScreens", {
+                                screen: "AddCar",
+                              });
+                            }}
+                            top={10}
+                            color={colors.blue}
+                          >
+                            Добавить объявление
+                          </Button>
+                        </Column>
+                      ))}
+                    {select === "Дом" &&
+                      (data.house.length > 0 ? (
+                        <List data={data.house} love={true} />
+                      ) : (
+                        <Column top={50} gap={20}>
+                          <View
+                            style={{
+                              alignItems: "center",
+                            }}
+                          >
+                            <Adv />
+                            <TextContent
+                              top={20}
+                              center={"center"}
+                              fontSize={16}
+                              fontWeight={400}
+                              color={colors.gray}
+                            >
+                              Превратите свой профиль в бизнес-аккаунт с
+                              расширенными возможностями
+                            </TextContent>
+                          </View>
+                          <Button
+                            handle={() => {
+                              navigation.navigate("HouseScreens", {
+                                screen: "AddHouse",
+                              });
+                            }}
+                            top={10}
+                            color={colors.blue}
+                          >
+                            Добавить объявление
+                          </Button>
+                        </Column>
+                      ))}
+                  </ScrollView>
+                </View>
               </Wrapper>
             </Column>
           </ScrollView>
@@ -275,13 +345,47 @@ const Profile = () => {
       </LayoutTab>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
   box: {
     padding: 10,
     borderRadius: 10,
     backgroundColor: colors.phon,
+  },
+  btn: {
+    height: 36,
+    borderRadius: 50,
+    paddingHorizontal: 16,
+    backgroundColor: colors.phon,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btn_active: {
+    height: 36,
+    borderRadius: 50,
+    paddingHorizontal: 16,
+    backgroundColor: colors.black,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonsContainer: {
+    marginTop: 14,
+    flexDirection: "row",
+    gap: 10,
+  },
+  notDataContainer: {
+    marginTop: 150,
+    flex: 1,
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 200,
+  },
+  notDataText: {
+    maxWidth: 300,
   },
 });
 

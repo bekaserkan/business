@@ -12,13 +12,10 @@ import Back from "../../assets/svg/back";
 import ChekMarked from "../../assets/svg/chekMark";
 import { useNavigation } from "@react-navigation/native";
 import { useStateCar } from "../../context/stateCarContext";
-
-
 const AddCar = () => {
   const {paramAdd,  setProLoading, postProduct, carAdd, setCarAdd } = useStateCar();
   const [currentStep, setCurrentStep] = useState("brand");
   const navigation = useNavigation(); 
-
   const [selectedData, setSelectedData] = useState({
     brand: null,
     model: null,
@@ -32,7 +29,6 @@ const AddCar = () => {
     mileage: null,
     price: null,
   });
-
   const data = {
     brand: ["Audi", "BMW", "Chery", "Ford", "Hyundai"],
     model: ["Model X", "Model Y", "Model Z"],
@@ -78,7 +74,6 @@ const AddCar = () => {
       "2,000,000+",
     ],
   };
-
   const stepTitles = {
     brand: "Марка",
     model: "Модель",
