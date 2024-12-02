@@ -29,8 +29,6 @@ const profile = [
     ],
   },
 ];
-
-const imageData = profile[0].img.map((el) => el.image);
 const about = [
   {
     text: "ГК «СИМ» - один из старейших автомобильных дилеров в Москве",

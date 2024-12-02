@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../assets/styles/components/Container";
 import Header from "../../components/Header";
-import car from "../../assets/images/car.png";
 import Column from "../../assets/styles/components/Column";
 import Wrapper from "../../assets/styles/components/Wrapper";
 import { Image, ScrollView, StyleSheet, TextInput, View } from "react-native";
