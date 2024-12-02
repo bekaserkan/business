@@ -5,12 +5,10 @@ import InputSelect from "../../customs/InputSelect";
 import { useStateHouse } from "../../context/stateHouseContext";
 import Wrapper from "../../assets/styles/components/Wrapper";
 import Column from "../../assets/styles/components/Column";
-import { Image, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import ButtonLayouts from "../../layouts/buttonLayouts";
 import { colors } from "../../assets/styles/colors";
 import Loading from "../../ui/Loading";
-import * as ImagePicker from "expo-image-picker";
-import Button from "../../customs/Button";
 
 const AddHouse = () => {
   const {
@@ -25,26 +23,7 @@ const AddHouse = () => {
     buildings,
   } = useStateHouse();
 
-  const handleAddPhoto = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: true, // Enable multiple selection
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const selectedPhotos = result.assets.map((asset) => ({
-        pictures: asset.uri, // Transform the image into the required format
-      }));
-      setAddHouse((prevState) => ({
-        ...prevState,
-        properties_pictures: [
-          ...(prevState.properties_pictures || []),
-          ...selectedPhotos,
-        ],
-      }));
-    }
-  };
+  console.log(param, paramAdd);
 
   if (paramLoad) {
     return <Loading />;
@@ -198,22 +177,6 @@ const AddHouse = () => {
                 }
                 placeholder="Номер дома"
               />
-              <Button
-                style={colors.black}
-                title="Добавить фото"
-                handle={handleAddPhoto}
-              />
-              {addHouse.properties_pictures && (
-                <View>
-                  {addHouse.properties_pictures.map((photo, index) => (
-                    <Image
-                      key={index}
-                      source={{ uri: photo.pictures }}
-                      style={{ width: 100, height: 100, margin: 5 }}
-                    />
-                  ))}
-                </View>
-              )}
             </Column>
           </Wrapper>
         </ScrollView>
