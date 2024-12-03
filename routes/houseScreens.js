@@ -8,6 +8,7 @@ import HouseResult from "../pages/House/HouseResult";
 import HouseResidentialProfile from "../pages/House/HouseResidentialProfile";
 import HouseCompanies from "../pages/House/HouseCompanies";
 import HouseCompaniesDetail from "../pages/House/HouseCompaniesDetail";
+import HousePrivateProfile from "../pages/House/HousePrivateProfile";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ export default function HouseScreens() {
       <Stack.Screen name="AddHouse" component={AddHouse} />
       <Stack.Screen name="HouseCompanies" component={HouseCompanies} />
       <Stack.Screen name="HouseCompaniesDetail" component={HouseCompaniesDetail} />
+      <Stack.Screen name="HousePrivateProfile" component={HousePrivateProfile} />
     </Stack.Navigator>
   );
 }

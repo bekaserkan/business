@@ -19,8 +19,8 @@ import { useStateCar } from "../../context/stateCarContext";
 const CarDetail = ({ route }) => {
   const navigation = useNavigation();
   const routeTo = () => {
-    navigation.navigate("CarScreens", {
-      screen: "CarPrivateProfile",
+    navigation.navigate("CarPrivateProfile", {
+      id: item.id,
     });
   };
 
@@ -155,7 +155,9 @@ const CarDetail = ({ route }) => {
               reviews={detail.user.review_count}
               description={`${detail.user.accommodation_count} объявления`}
               ava={detail.user._avatar}
-              handle={routeTo}
+              handle={() =>  navigation.navigate("CarPrivateProfile", {
+                id: detail.user.id, 
+              })}
             />
             <CommentsBlock
               data={[

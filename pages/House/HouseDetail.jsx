@@ -30,7 +30,6 @@ const HouseDetail = ({ route }) => {
   if (deLoading) {
     return <Loading />;
   }
-
   const dataImage =
     !deLoading &&
     detail.properties_pictures.map((el) => {
@@ -107,11 +106,16 @@ const HouseDetail = ({ route }) => {
                 reviews="0000"
                 description={resident.address}
                 ava={resident.images[0].image_url}
-                handle={routeTo}
+                handle={() =>
+                  navigation.navigate("HousePrivateProfile", {
+                    id: detail.user.id,
+                  })
+                }
               />
             )}
             {detail.safety.length > 0 && (
               <Characteristic
+              
                 data={[
                   {
                     name: "one",
@@ -176,7 +180,9 @@ const HouseDetail = ({ route }) => {
               reviews={detail.user.review_count}
               description={`${detail.user.accommodation_count} объявления`}
               ava={detail.user._avatar}
-              handle={routeTo}
+              handle={() =>  navigation.navigate("CarPrivateProfile", {
+                id: detail.user.id, 
+              })}
             />
             <CommentsBlock
               data={[
