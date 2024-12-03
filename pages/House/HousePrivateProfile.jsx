@@ -91,7 +91,7 @@ const about = [
 
 
 
-const CarPrivateProfile = () => {
+const HousePrivateProfile = () => {
   const route = useRoute();
   const { id } = route.params;
   const [profile, setProfile] = useState([]);
@@ -285,4 +285,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarPrivateProfile;
+export default HousePrivateProfile;

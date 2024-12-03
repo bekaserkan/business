@@ -15,109 +15,29 @@ import ButtonLayouts from "../../layouts/buttonLayouts.js";
 import { url } from "../../api/api.jsx";
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 
-const profile = [
-  {
-    id: 1,
-    image: require("../../assets/images/avatart.jpg"),
-    name: "Chery РОЛЬФ Магистральный",
-    star: "4.8",
-    recal: "23",
-    img: [
-      { id: 1, image: "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg" },
-      { id: 2, image: "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg" },
-      { id: 3, image: "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg" },
-    ],
-  },
-];
-const about = [
-  {
-    text: "ГК «СИМ» - один из старейших автомобильных дилеров в Москве",
-    advertisements: [
-      {
-        id: 1,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.green2,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: true,
-        urgently: true,
-        image:
-          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
-      },
-      {
-        id: 2,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.white,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: false,
-        starVip: true,
-        image:
-          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
-      },
-      {
-        id: 3,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.white,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: false,
-        starVip: true,
-        image:
-          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
-      },
-      {
-        id: 4,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.green2,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: true,
-        urgently: true,
-        avto_user: true,
-        image:
-          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
-      },
-      {
-        id: 5,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.green2,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: true,
-        urgently: true,
-        avto_user: true,
-        image:
-          "https://pictures.dealer.com/k/kiaofwaldorf/1118/4726a55aa64cd366d7e28a2d1d9066fbx.jpg",
-      },
-    ],
-  },
-];
-
-const HouseCompaniesDetail = () => {
-  const {img } = profile[0];
-  const {advertisements } = about[0];
+const HouseCompaniesDetail = ({car}) => {
   const route = useRoute();
-  const { id } = route.params;
+  const { id, complex_id } = route.params;
   const [businessId, setBusinessId] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
+  const handleFunction = () => {
+    if (car) {
+      navigation.navigate("CarScreens", {
+        screen: "CarDetail",
+      });
+    } else {
+      navigation.navigate("HouseScreens", {
+        screen: "HouseDetail",
+      });
+    }
+  };
   const fetchData = async () => {
     try {
       setLoading(true);
       const response = await url.get(`main/dealer/${id}`);
-      console.log(response.data)
+      console.log(response.data);
       setBusinessId(response.data);
     } catch (error) {
       console.error(error);
@@ -128,10 +48,12 @@ const HouseCompaniesDetail = () => {
   };
 
   useEffect(() => {
-    if(id){
-        fetchData();
+    if (id) {
+      fetchData();
     }
   }, [id]);
+
+  
   return (
     <ButtonLayouts>
       <View style={{ flex: 1, backgroundColor: colors.white }}>
@@ -141,14 +63,26 @@ const HouseCompaniesDetail = () => {
           contentContainerStyle={{ paddingBottom: 150 }}
         >
           <Container none={true}>
-            <Slider img={img} />
+            <Slider
+              img={
+                Array.isArray(businessId?.dealer_images) &&
+                businessId?.dealer_images.length > 0
+                  ? businessId?.dealer_images.map((image) => ({
+                      image: image.image,
+                    }))
+                  : [0]
+              }
+            />
             <View style={styles.block}>
               <Between style={styles.profileContent} gap={0}>
                 <Flex
                   gap={10}
                   style={{ width: "70%", alignItems: "flex-start" }}
                 >
-                  <Image source={{uri:businessId.logo_path}} style={styles.profileImage} />
+                  <Image
+                    source={{ uri: businessId.logo_path }}
+                    style={styles.profileImage}
+                  />
                   <Column style={styles.profileDetails} gap={10}>
                     <TextContent
                       fontSize={20}
@@ -207,21 +141,26 @@ const HouseCompaniesDetail = () => {
                 {businessId?.ads_count} объявлений
               </TextContent>
               <View style={styles.list}>
-                {advertisements.map((ad) => (
+                {businessId?.dates?.ads.map((el) => (
                   <Card
-                    key={ad.id}
-                    title={ad.title}
-                    background={ad.background}
-                    priceDollars={ad.priceDollars}
-                    price={ad.price}
-                    year={ad.year}
-                    volume={ad.volume}
-                    urgently={ad.urgently}
-                    vip={ad.vip}
-                    starVip={ad.starVip}
-                    avto_user={ad.avto_user}
                     width={containerWidth}
-                    image={ad.image}
+                    likes={el.is_liked}
+                    image={el?.properties_pictures[0]?.pictures?.big}
+                    id={el.id}
+                    complex_id={el.complex_id}
+                    key={id}
+                    background={el.background}
+                    price={el.prices[0]?.price}
+                    priceDollars={el.prices[1]?.price}
+                    year={el.year}
+                    summSquare={el.prices[0]?.m2_price}
+                    dollarsSquare={el.prices[1]?.m2_price}
+                    volume={el.volume}
+                    urgently={el.urgently}
+                    vip={el.vip}
+                    starVip={el.starVip}
+                    adress={el.street}
+                    home={car ? false : true}
                   />
                 ))}
               </View>
