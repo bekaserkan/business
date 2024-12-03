@@ -115,6 +115,7 @@ const HouseDetail = ({ route }) => {
             )}
             {detail.safety.length > 0 && (
               <Characteristic
+              
                 data={[
                   {
                     name: "one",
