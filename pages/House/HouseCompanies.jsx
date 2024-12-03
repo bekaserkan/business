@@ -11,6 +11,7 @@ import Wave from "../../customs/Wave";
 import { useNavigation } from "@react-navigation/native";
 import { url } from "../../api/api";
 import Loading from "../../ui/Loading";
+import Search from '../../assets/svg/search'
 
 const HouseCompanies = () => {
   const [business, setBusiness] = useState([]);
@@ -37,11 +38,14 @@ const HouseCompanies = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Column gap={6}>
           <Wrapper top={true} bottom={true} padding={[16, 16]}>
-            <TextInput
+          <View style={stylesList.input_block}>
+         <Search/>
+         <TextInput
               style={stylesList.input_search}
               placeholder="Поиск"
               placeholderTextColor={colors.gray}
             />
+            </View>
           </Wrapper>
           <Wrapper padding={[16, 16]}>
             <TextContent fontSize={20} fontWeight={600} color={colors.black}>
@@ -177,13 +181,20 @@ const stylesList = StyleSheet.create({
     borderRadius: 8,
   },
   input_search: {
+    backgroundColor: colors.phon,
+    paddingHorizontal: 10,
+  },
+  input_block :{
     width: "100%",
     height: 50,
-    backgroundColor: colors.phon,
-    borderRadius: 50,
-    paddingHorizontal: 16,
     marginBottom: 16,
-  },
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    backgroundColor: colors.phon,
+    flexDirection:'row',
+    alignItems:'center',
+    borderRadius: 50,
+  }
 });
 
 export default HouseCompanies;

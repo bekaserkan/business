@@ -17,80 +17,6 @@ import { url } from "../../api/api.jsx";
 import Loading from "../../ui/Loading.jsx";
 const containerWidth = (Dimensions.get('window').width - 32) / 2 - 5;
 
-const profile = [
-  {
-    id: 1,
-    image: require("../../assets/images/avatart.jpg"),
-    name: "Нурзида",
-    star: "4.8",
-    recal: "23",
-  },
-];
-const about = [
-  {
-    text: "ГК «СИМ» - один из старейших автомобильных дилеров в Москве",
-    advertisements: [
-      {
-        id: 1,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.green2,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: true,
-        urgently: true,
-      },
-      {
-        id: 2,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.white,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: false,
-        starVip: true,
-      },
-      {
-        id: 3,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.white,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: false,
-        starVip: true,
-      },
-      {
-        id: 4,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.green2,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: true,
-        urgently: true,
-      },
-      {
-        id: 5,
-        title: "CHERY Tiggo 7 Pro Max, 2024",
-        background: colors.green2,
-        price: "100",
-        priceDollars: "1000 000",
-        year: "2020",
-        volume: "1.8",
-        vip: true,
-        urgently: true,
-      },
-    ],
-  },
-];
-
-
-
 const CarPrivateProfile = () => {
   const route = useRoute();
   const { id } = route.params;
@@ -207,7 +133,7 @@ const CarPrivateProfile = () => {
                     <Card
                      key={el.id}
                      likes={el.is_liked}
-                     image={el?.pictures[0]?.pictures?.big}
+                     image={el.pictures[0]?.pictures?.big}
                      id={el.id}
                      title={el.model_name}
                      price={el.prices[0]?.price}

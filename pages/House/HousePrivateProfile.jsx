@@ -91,7 +91,7 @@ const about = [
 
 
 
-const HousePrivateProfile = () => {
+const HousePrivateProfile = ({car}) => {
   const route = useRoute();
   const { id } = route.params;
   const [profile, setProfile] = useState([]);
@@ -203,23 +203,27 @@ const HousePrivateProfile = () => {
                   {profile.accommodation_count} объявления
                 </TextContent>
                 <View style={styles.list}>
-                  {profile?.ads?.car.map((el) => (
-                    <Card
-                     key={el.id}
-                     likes={el.is_liked}
-                     image={el?.pictures[0]?.pictures?.big}
-                     id={el.id}
-                     title={el.model_name}
-                     price={el.prices[0]?.price}
-                     priceDollars={el.prices[1]?.price}
-                     year={el.year}
-                     volume={el.mileage}
-                     vip={el.is_premium}
-                     starVip={el.is_vip}
-                     urgently={el.is_urgent}
-                     mark={el.mark_name}
-                     width={containerWidth}
-                   />
+                  {profile?.ads?.house.map((el) => (
+                <Card
+                width={containerWidth}
+                likes={el.is_liked}
+                image={el?.properties_pictures[0]?.pictures?.big}
+                id={el.id}
+                complex_id={el.complex_id}
+                key={id}
+                background={el.background}
+                price={el.prices[0]?.price}
+                priceDollars={el.prices[1]?.price}
+                year={el.year}
+                summSquare={el.prices[0]?.m2_price}
+                dollarsSquare={el.prices[1]?.m2_price}
+                volume={el.volume}
+                urgently={el.urgently}
+                vip={el.vip}
+                starVip={el.starVip}
+                adress={el.street}
+                home={car ? false : true}
+              />
                   ))}
                 </View>
               </View>

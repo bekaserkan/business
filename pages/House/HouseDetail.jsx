@@ -22,10 +22,12 @@ const HouseDetail = ({ route }) => {
   const { deLoading, param, resident, detail, getDetail } = useStateHouse();
   const { id, complex_id } = route.params;
   const navigation = useNavigation();
+console.log(resident)
 
   useEffect(() => {
     getDetail({ id: id, complex_id });
   }, []);
+  console.log(detail)
 
   if (deLoading) {
     return <Loading />;
@@ -106,16 +108,11 @@ const HouseDetail = ({ route }) => {
                 reviews="0000"
                 description={resident.address}
                 ava={resident.images[0].image_url}
-                handle={() =>
-                  navigation.navigate("HousePrivateProfile", {
-                    id: detail.user.id,
-                  })
-                }
+                handle={routeTo}
               />
             )}
             {detail.safety.length > 0 && (
               <Characteristic
-              
                 data={[
                   {
                     name: "one",
@@ -180,9 +177,11 @@ const HouseDetail = ({ route }) => {
               reviews={detail.user.review_count}
               description={`${detail.user.accommodation_count} объявления`}
               ava={detail.user._avatar}
-              handle={() =>  navigation.navigate("CarPrivateProfile", {
-                id: detail.user.id, 
-              })}
+              handle={() =>
+                navigation.navigate("HousePrivateProfile", {
+                  id: detail.user.id,
+                })
+              }
             />
             <CommentsBlock
               data={[
