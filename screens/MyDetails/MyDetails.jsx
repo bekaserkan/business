@@ -11,6 +11,7 @@ import { useСondition } from "../../context/stateContext";
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DashBoard from '../../assets/svg/dashboard'
 
 const MyDetails = () => {
   const { loading, userData } = useСondition();
@@ -42,14 +43,15 @@ const MyDetails = () => {
       <Column gap={6}>
         <Wrapper padding={[16, 16]} top={true}>
           <View style={{ alignItems: "center" }}>
-            <Column gap={6}>
+            <Column gap={6} style={{alignItems:'center'}}>
               <Wave>
-                <ImageCustom
+                {/* <ImageCustom
                   width={100}
                   height={100}
                   borderRadius={50}
-                  source={{ uri: userData?._avatar || "path_to_image" }}
-                />
+                  source={<DashBoard/>}
+                /> */}
+                <DashBoard/>
               </Wave>
               <TextContent fontSize={20} fontWeight={600}>
                 {userData?.name}

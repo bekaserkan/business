@@ -25,7 +25,7 @@ const CarDetail = ({ route }) => {
     });
   };
 
-  const { deLoading, detail, getDetail } = useStateCar();
+  const { deLoading, detail, getDetail, param } = useStateCar();
   const { userData } = useСondition();
   const { id } = route.params;
 
@@ -44,9 +44,9 @@ const CarDetail = ({ route }) => {
       };
     });
 
-  const interor = detail.interior.map((item) => ({
-    text: item.name,
-  }));
+  // const interor = detail.interior.map((item) => ({
+  //   text: item.name,
+  // }));
 
   const exterior = detail.exterior.map((item) => ({
     text: item.name,
@@ -60,13 +60,73 @@ const CarDetail = ({ route }) => {
     text: item.name,
   }));
 
-  const other_options = detail.other_options.map((item) => ({
+  const other_option = detail.other_options.map((item) => ({
     text: item.name,
   }));
 
   const configuration = detail.configuration.map((item) => ({
     text: item.name,
   }));
+
+  const selectedInterior = param?.interior?.map((obj) => {
+    if (detail.interior.includes(obj.id)) {
+      return {
+        id: obj.id,
+        text: obj.name, 
+      };
+    }
+    return null; 
+  }).filter(Boolean); 
+
+  const selectedExterior = param?.exterior?.map((obj) => {
+    if (detail.interior.includes(obj.id)) {
+      return {
+        id: obj.id,
+        text: obj?.name, 
+      };
+    }
+    return null; 
+  }).filter(Boolean); 
+
+  const selectedConfiguration = param?.configuration?.map((obj) => {
+    if (detail.interior.includes(obj.id)) {
+      return {
+        id: obj.id,
+        text: obj?.name, 
+      };
+    }
+    return null; 
+  }).filter(Boolean);
+  const selectedOther_option = param?.other_option?.map((obj) => {
+    if (detail.interior.includes(obj.id)) {
+      return {
+        id: obj.id,
+        text: obj?.name, 
+      };
+    }
+    return null; 
+  }).filter(Boolean);
+
+  const selectedSafety = param?.safety?.map((obj) => {
+    if (detail.interior.includes(obj.id)) {
+      return {
+        id: obj.id,
+        text: obj?.name, 
+      };
+    }
+    return null; 
+  }).filter(Boolean);
+
+  const selectedMedia = param?.media?.map((obj) => {
+    if (detail.interior.includes(obj.id)) {
+      return {
+        id: obj.id,
+        text: obj?.name, 
+      };
+    }
+    return null; 
+  }).filter(Boolean);
+
 
   return (
     <ButtonLayouts>
@@ -125,27 +185,27 @@ const CarDetail = ({ route }) => {
               data={[
                 {
                   name: "Комплектация",
-                  data: configuration,
+                  data: selectedConfiguration,
                 },
                 {
                   name: "Интерьер",
-                  data: interor,
+                  data: selectedInterior,
                 },
                 {
                   name: "Экстрерьер",
-                  data: exterior,
+                  data: selectedExterior,
                 },
                 {
                   name: "Медиа",
-                  data: media,
+                  data: selectedMedia,
                 },
                 {
                   name: "Безопасность",
-                  data: safety,
+                  data: selectedSafety,
                 },
                 {
                   name: "Опции",
-                  data: other_options,
+                  data: selectedOther_option,
                 },
               ]}
             />

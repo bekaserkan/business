@@ -94,7 +94,7 @@ export const StateCarProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await url.get(
-        `cars/cars-posts/?${queryParams.toString()}`,
+        `cars/cars-posts/?${queryParams.toString()}/`,
         // headers,
       );
       setResult(response.data.data);
@@ -157,7 +157,6 @@ export const StateCarProvider = ({ children }) => {
       setPaLoading(false);
     }
   };
-
   const getDetail = async ({ id }) => {
     setDeLoading(true);
     try {
