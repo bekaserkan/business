@@ -43,90 +43,104 @@ const CarDetail = ({ route }) => {
         image: el.pictures.big,
       };
     });
+  const selectedInterior = param?.interior
+    ?.map((obj) => {
+      if (detail.interior.includes(obj.id)) {
+        return {
+          id: obj.id,
+          text: obj.name,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+  const selectedExterior = param?.exterior
+    ?.map((obj) => {
+      if (detail.interior.includes(obj.id)) {
+        return {
+          id: obj.id,
+          text: obj?.name,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+  const selectedConfiguration = param?.configuration
+    ?.map((obj) => {
+      if (detail.interior.includes(obj.id)) {
+        return {
+          id: obj.id,
+          text: obj?.name,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+  const selectedOther_option = param?.other_option
+    ?.map((obj) => {
+      if (detail.interior.includes(obj.id)) {
+        return {
+          id: obj.id,
+          text: obj?.name,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+  const selectedSafety = param?.safety
+    ?.map((obj) => {
+      if (detail.interior.includes(obj.id)) {
+        return {
+          id: obj.id,
+          text: obj?.name,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+  const selectedMedia = param?.media
+    ?.map((obj) => {
+      if (detail.interior.includes(obj.id)) {
+        return {
+          id: obj.id,
+          text: obj?.name,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
 
-  // const interor = detail.interior.map((item) => ({
-  //   text: item.name,
-  // }));
+  const getAttributeName = (paramList, id) => {
+    return paramList
+      ?.map((obj) => (obj.id === id ? obj.name : null))
+      .filter(Boolean);
+  };
 
-  const exterior = detail.exterior.map((item) => ({
-    text: item.name,
-  }));
-
-  const media = detail.media.map((item) => ({
-    text: item.name,
-  }));
-
-  const safety = detail.safety.map((item) => ({
-    text: item.name,
-  }));
-
-  const other_option = detail.other_options.map((item) => ({
-    text: item.name,
-  }));
-
-  const configuration = detail.configuration.map((item) => ({
-    text: item.name,
-  }));
-
-  const selectedInterior = param?.interior?.map((obj) => {
-    if (detail.interior.includes(obj.id)) {
-      return {
-        id: obj.id,
-        text: obj.name, 
-      };
-    }
-    return null; 
-  }).filter(Boolean); 
-
-  const selectedExterior = param?.exterior?.map((obj) => {
-    if (detail.interior.includes(obj.id)) {
-      return {
-        id: obj.id,
-        text: obj?.name, 
-      };
-    }
-    return null; 
-  }).filter(Boolean); 
-
-  const selectedConfiguration = param?.configuration?.map((obj) => {
-    if (detail.interior.includes(obj.id)) {
-      return {
-        id: obj.id,
-        text: obj?.name, 
-      };
-    }
-    return null; 
-  }).filter(Boolean);
-  const selectedOther_option = param?.other_option?.map((obj) => {
-    if (detail.interior.includes(obj.id)) {
-      return {
-        id: obj.id,
-        text: obj?.name, 
-      };
-    }
-    return null; 
-  }).filter(Boolean);
-
-  const selectedSafety = param?.safety?.map((obj) => {
-    if (detail.interior.includes(obj.id)) {
-      return {
-        id: obj.id,
-        text: obj?.name, 
-      };
-    }
-    return null; 
-  }).filter(Boolean);
-
-  const selectedMedia = param?.media?.map((obj) => {
-    if (detail.interior.includes(obj.id)) {
-      return {
-        id: obj.id,
-        text: obj?.name, 
-      };
-    }
-    return null; 
-  }).filter(Boolean);
-
+  const fuel = getAttributeName(param?.fuel, detail.fuel);
+  const gearbox = getAttributeName(param?.gear_box, detail.gear_box);
+  const transmission = getAttributeName(
+    param?.transmission,
+    detail.transmission
+  );
+  const steering_wheel = getAttributeName(
+    param?.steering_wheel,
+    detail.steering_wheel
+  );
+  const color = getAttributeName(param?.color, detail.color);
+  const car_condition = getAttributeName(
+    param?.car_condition,
+    detail.car_condition
+  );
+  const featured_option = getAttributeName(
+    param?.featured_option,
+    detail.featured_option
+  );
+  const exchange = getAttributeName(param?.exchange, detail.exchange);
+  const region = getAttributeName(param?.region, detail.region);
+  const registration_country = getAttributeName(
+    param?.registration_country,
+    detail.registration_country
+  );
 
   return (
     <ButtonLayouts>
@@ -152,33 +166,29 @@ const CarDetail = ({ route }) => {
             />
             <Characteristic
               data={[
+                { name: "Год выпуска", value: detail.year },
                 {
-                  name: "one",
-                  value: "two",
+                  name: "Пробег",
+                  value: `${detail.mileage} ${detail.mileage_unit}`,
                 },
+                { name: "Двигатель", value: `${detail.engine_volume} ${fuel}` },
+                { name: "Коробка передач", value: gearbox },
+                { name: "Привод", value: transmission },
+                { name: "Руль", value: steering_wheel },
+                { name: "Цвет", value: color },
+                { name: "Состояние", value: car_condition },
+                { name: "Наличие", value: featured_option },
                 {
-                  name: "one",
-                  value: "two",
+                  name: "Растоможен",
+                  value: detail.customs === 1 ? "да" : "нет",
                 },
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
-                {
-                  name: "one",
-                  value: "two",
-                },
+                { name: "Возможность обмена", value: exchange },
+                { name: "Прочее", value: "" },
+                { name: "Регион продажи", value: region },
+                { name: "Учёт", value: registration_country },
               ]}
-              keyOne={"name"}
-              keyTwo={"value"}
+              keyOne="name"
+              keyTwo="value"
             />
             <Additionally
               title={"Комплектация"}

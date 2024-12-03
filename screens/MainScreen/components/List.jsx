@@ -95,6 +95,7 @@ const List = ({ car, data, love }) => {
                   starVip={el.is_vip}
                   urgently={el.is_urgent}
                   mark={el.mark_name}
+                  background={el.ad_color}
                 />
               );
             } else {
@@ -107,7 +108,7 @@ const List = ({ car, data, love }) => {
                   complex_id={el.complex_id}
                   key={id}
                   title={title}
-                  background={el.background}
+                  background={el.ad_color}
                   price={el.prices[0]?.price}
                   priceDollars={el.prices[1]?.price}
                   year={el.year}

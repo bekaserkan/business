@@ -9,5 +9,5 @@ import axios from "axios";
 // });
 
 export const url = axios.create({
-  baseURL: "https://business.navisdevs.ru/",
+  baseURL: "http://192.168.0.102/",
 });

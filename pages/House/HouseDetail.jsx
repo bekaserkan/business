@@ -73,6 +73,25 @@ console.log(resident)
       : ""
   }`;
 
+  const getAttributeName = (paramList, id) => {
+    return paramList
+      ?.map((obj) => (obj.id === id ? obj.name : null))
+      .filter(Boolean);
+  };
+  const owner_type = getAttributeName(param?.owner_type, detail.owner_type);
+  const room_count = getAttributeName(param?.rooms, detail.rooms);
+  const building_type = getAttributeName(param?.building_type, detail.building_type);
+  const condition = getAttributeName(param?.condition, detail.condition);
+  const heating = getAttributeName(param?.heating, detail.heating);
+  const internet = getAttributeName(param?.internet, detail.internet);
+  const toilet = getAttributeName(param?.toilet, detail.toilet);
+  const gas = getAttributeName(param?.gas, detail.gas);
+  const door = getAttributeName(param?.door, detail.door);
+  const parking = getAttributeName(param?.parking, detail.parking);
+  const furniture = getAttributeName(param?.furniture, detail.furniture);
+  const flooring = getAttributeName(param?.flooring, detail.flooring);
+  const ceiling_height = getAttributeName(param?.ceiling_height, detail.ceiling_height);
+
   return (
     <ButtonLayouts>
       <Container none={true} phon={true}>
@@ -95,8 +114,8 @@ console.log(resident)
               vip={true}
               addHours={`Добавлено ${detail.added_at} назад`}
               eye={detail.views}
-              heart={"0000"}
-              comment={"0000"}
+              heart={detail.likes}
+              comment={detail.count_comments}
             />
             {!resident.length == 0 && (
               <AccountBlock
@@ -111,38 +130,80 @@ console.log(resident)
                 handle={routeTo}
               />
             )}
-            {detail.safety.length > 0 && (
               <Characteristic
                 data={[
                   {
-                    name: "one",
-                    value: "two",
+                    name: "Тип предложения",
+                    value: owner_type,
                   },
                   {
-                    name: "one",
-                    value: "two",
+                    name: "Количество комнат",
+                    value: room_count,
                   },
                   {
-                    name: "one",
-                    value: "two",
+                    name: "Год постройки",
+                    value: detail.year,
                   },
                   {
-                    name: "one",
-                    value: "two",
+                    name: "Тип строения",
+                    value: building_type,
                   },
                   {
-                    name: "one",
-                    value: "two",
+                    name: "Этаж",
+                    value: detail.floor,
                   },
                   {
-                    name: "one",
-                    value: "two",
+                    name: "Площадь",
+                    value: detail.square,
+                  },
+                  {
+                    name: "Состояние",
+                    value: condition,
+                  },
+                  {
+                    name: "Отопление",
+                    value: heating,
+                  },
+                  {
+                    name: "Телефон",
+                    value: detail.user.phone,
+                  },
+                  {
+                    name: "Интернет",
+                    value: internet,
+                  },
+                  {
+                    name: "Санузел",
+                    value: toilet,
+                  },
+                  {
+                    name: "Газ",
+                    value: gas,
+                  },
+                  {
+                    name: "Входная дверь",
+                    value: door,
+                  },
+                  {
+                    name: "Парковка",
+                    value: parking,
+                  },
+                  {
+                    name: "Мебель",
+                    value: furniture,
+                  },
+                  {
+                    name: "Пол",
+                    value: flooring,
+                  },
+                  {
+                    name: "Высота потолков",
+                    value: ceiling_height,
                   },
                 ]}
                 keyOne={"name"}
                 keyTwo={"value"}
               />
-            )}
             {detail.safety.length > 0 && (
               <Additionally
                 title={"Дополнительно"}
