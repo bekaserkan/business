@@ -95,7 +95,7 @@ export default function MainScreens() {
             headerShown: false,
             animationEnabled: false,
           }}
-          initialRouteName="Tariffs"
+          initialRouteName="MainScreen"
         >
           <Stack.Screen name="MainScreen" component={MainScreen} />
           <Stack.Screen name="HouseScreens" component={HouseScreens} />
