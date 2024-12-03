@@ -71,8 +71,8 @@ const Tariffs = () => {
           {tariffs.map((el, id) => {
             if (el.plans.length > 0) {
               return (
-                <Wave handle={() => setSelectDetail(el)}>
-                  <Wrapper key={id} top={id == 0} padding={[16, 16]}>
+                <Wave key={id} handle={() => setSelectDetail(el)}>
+                  <Wrapper top={id == 0} padding={[16, 16]}>
                     <View style={style.box}>
                       <Flex gap={10}>
                         <Image
@@ -80,7 +80,7 @@ const Tariffs = () => {
                             width: 24,
                             height: 24,
                           }}
-                          source={el.img}
+                          source={{ uri: el.img }}
                         />
                         <TextContent
                           fontSize={20}
