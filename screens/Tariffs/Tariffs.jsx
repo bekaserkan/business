@@ -15,6 +15,8 @@ import { useNavigation } from "@react-navigation/native";
 import Button from "../../customs/Button";
 import ButtonLayouts from "../../layouts/buttonLayouts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Reports from "../../assets/svg/reports";
+import { useСondition } from "../../context/stateContext";
 
 const Tariffs = () => {
   const [tariffs, setTariffs] = useState([]);
@@ -23,6 +25,7 @@ const Tariffs = () => {
   const [selectDetail, setSelectDetail] = useState([]);
   const [plan, setPlan] = useState("");
   const navigation = useNavigation();
+  const { userData } = useСondition();
 
   const getTeriff = async () => {
     try {
@@ -61,6 +64,23 @@ const Tariffs = () => {
   useEffect(() => {
     getTeriff();
   }, []);
+
+  const formatDuration = (duration) => {
+    const forms = ["день", "дня", "дней"]; // Формы слова "день"
+    const number = Math.abs(duration) % 100;
+    const n1 = number % 10;
+
+    if (number > 10 && number < 20) {
+      return `${duration} ${forms[2]}`; // Родительный падеж множественного числа
+    }
+    if (n1 > 1 && n1 < 5) {
+      return `${duration} ${forms[1]}`; // Родительный падеж единственного числа
+    }
+    if (n1 === 1) {
+      return `${duration} ${forms[0]}`; // Именительный падеж единственного числа
+    }
+    return `${duration} ${forms[2]}`; // Родительный падеж множественного числа
+  };
 
   if (loading) {
     return <Loading />;
@@ -149,7 +169,8 @@ const Tariffs = () => {
                             fontWeight={500}
                             color={colors.black}
                           >
-                            {el.description}
+                            {formatDuration(el.duration)}{" "}
+                            {el.description && `- ${el.description}`}
                           </TextContent>
                           <TextContent
                             fontSize={20}
@@ -199,14 +220,36 @@ const Tariffs = () => {
                           {userData?.balance} сом
                         </TextContent>
                       </Between>
-                      <Button
-                        handle={() => navigation.navigate("Balance")}
+                      <TextContent
+                        fontSize={12}
+                        fontWeight={500}
+                        color={colors.red}
+                      >
+                        Недостаточно средств на балансе
+                      </TextContent>
+                    </Column>
+                  </View>
+                  <Wave handle={() => navigation.navigate("Balance")}>
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 50,
+                        borderRadius: 10,
+                        borderWidth: 1,
+                        borderColor: colors.black,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <TextContent
+                        fontSize={16}
+                        fontWeight={500}
                         color={colors.black}
                       >
                         Пополнить баланс
-                      </Button>
-                    </Column>
-                  </View>
+                      </TextContent>
+                    </View>
+                  </Wave>
                 </Column>
               </Wrapper>
             </Column>
