@@ -67,20 +67,20 @@ const Tariffs = () => {
   }, []);
 
   const formatDuration = (duration) => {
-    const forms = ["день", "дня", "дней"]; // Формы слова "день"
+    const forms = ["день", "дня", "дней"];
     const number = Math.abs(duration) % 100;
     const n1 = number % 10;
 
     if (number > 10 && number < 20) {
-      return `${duration} ${forms[2]}`; // Родительный падеж множественного числа
+      return `${duration} ${forms[2]}`;
     }
     if (n1 > 1 && n1 < 5) {
-      return `${duration} ${forms[1]}`; // Родительный падеж единственного числа
+      return `${duration} ${forms[1]}`;
     }
     if (n1 === 1) {
-      return `${duration} ${forms[0]}`; // Именительный падеж единственного числа
+      return `${duration} ${forms[0]}`;
     }
-    return `${duration} ${forms[2]}`; // Родительный падеж множественного числа
+    return `${duration} ${forms[2]}`;
   };
 
   if (loading) {
@@ -102,7 +102,7 @@ const Tariffs = () => {
                 setSelectDetail([]);
                 setPlan("");
               } else {
-                navigation.goBack();
+                navigation.navigate("MainScreen");
               }
             }}
             back={true}
