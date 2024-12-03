@@ -10,23 +10,28 @@ import ImageCustom from "../../customs/Image";
 import { useСondition } from "../../context/stateContext";
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MyDetails = () => {
   const { loading, userData } = useСondition();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState("");
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const toggleModal = (type) => {
     setModalType(type);
     setIsModalVisible(!isModalVisible);
   };
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (modalType === "logout") {
-      console.log("User logged out");
+      navigation.navigate("Login");
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("Profile");
     } else if (modalType === "delete") {
-      console.log("Account deleted"); 
-    }
+      navigation.navigate("Login");
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("Profile");
+    } 
     setIsModalVisible(false);
   };
   return (
@@ -57,7 +62,7 @@ const MyDetails = () => {
             </Column>
           </View>
         </Wrapper>
-        <Wrapper padding={['100%', 16]} bottom={true}>
+        <Wrapper padding={["100%", 16]} bottom={true}>
           <Column gap={16}>
             <Column gap={4}>
               <TextContent fontSize={14} fontWeight={400} color={colors.black}>
@@ -107,7 +112,9 @@ const MyDetails = () => {
         <View style={styles.modalContent}>
           <Column gap={16}>
             <TextContent fontSize={20} fontWeight={600} color={colors.black}>
-              {modalType === "logout" ? "Выйти с аккаунта?" : "Удалить аккаунт?"}
+              {modalType === "logout"
+                ? "Выйти с аккаунта?"
+                : "Удалить аккаунт?"}
             </TextContent>
             <TextContent fontSize={14} fontWeight={400} color={colors.gray}>
               {modalType === "logout"
@@ -119,7 +126,11 @@ const MyDetails = () => {
                 handle={() => setIsModalVisible(false)}
                 style={[styles.button, styles.cancelButton]}
               >
-                <TextContent fontSize={16} fontWeight={500} color={colors.dark_gray}>
+                <TextContent
+                  fontSize={16}
+                  fontWeight={500}
+                  color={colors.dark_gray}
+                >
                   Отмена
                 </TextContent>
               </Wave>
@@ -127,7 +138,11 @@ const MyDetails = () => {
                 handle={handleConfirm}
                 style={[styles.button, styles.confirmButton]}
               >
-                <TextContent fontSize={16} fontWeight={500} color={colors.white}>
+                <TextContent
+                  fontSize={16}
+                  fontWeight={500}
+                  color={colors.white}
+                >
                   {modalType === "logout" ? "Выйти" : "Удалить"}
                 </TextContent>
               </Wave>

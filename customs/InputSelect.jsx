@@ -30,6 +30,8 @@ const InputSelect = ({
     ? useStateCar()
     : useStateHouse();
 
+  console.log(param);
+
   const closeModal = () => {
     setModal(false);
   };

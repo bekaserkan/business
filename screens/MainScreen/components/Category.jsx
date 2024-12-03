@@ -5,11 +5,22 @@ import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../../assets/styles/colors";
 import Wave from "../../../customs/Wave";
 import TextContent from "../../../assets/styles/components/TextContent";
+import { useStateHouse } from "../../../context/stateHouseContext";
 
 const Category = ({ house, car }) => {
   const navigation = useNavigation();
+  const { filter, setFilter } = useStateHouse();
 
-  const Sybmit = () => {
+  const Sybmit = ({ type_id, is_urgent }) => {
+    if (is_urgent) {
+      setFilter({ ...filter, is_urgent: is_urgent });
+    }
+    if (type_id) {
+      setFilter({
+        ...filter,
+        type_id: { id: type_id, name: type_id == 1 ? "Продажа" : "Аренда" },
+      });
+    }
     navigation.navigate("HouseScreens", {
       screen: "HouseResult",
     });
@@ -17,7 +28,7 @@ const Category = ({ house, car }) => {
   if (house) {
     return (
       <Between center={"center"}>
-        <Wave handle={Sybmit}>
+        <Wave handle={() => Sybmit({ is_urgent: true })}>
           <View style={styles.box}>
             <Image
               style={{
@@ -31,7 +42,11 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave handle={() => navigation.navigate("HouseScreens", {screen:"HouseCompanies"})}>
+        <Wave
+          handle={() =>
+            navigation.navigate("HouseScreens", { screen: "HouseCompanies" })
+          }
+        >
           <View style={styles.box}>
             <Image
               style={{
@@ -45,7 +60,7 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave handle={Sybmit}>
+        <Wave handle={() => Sybmit({ type_id: 1 })}>
           <View style={styles.box}>
             <Image
               style={{
@@ -59,7 +74,7 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave handle={Sybmit}>
+        <Wave handle={() => Sybmit({ type_id: 2 })}>
           <View style={styles.box}>
             <Image
               style={{
@@ -81,7 +96,7 @@ const Category = ({ house, car }) => {
       <Between center={"center"}>
         <Wave>
           <View style={styles.box}>
-          <Image
+            <Image
               style={{
                 width: 74,
                 height: 74,
@@ -93,9 +108,11 @@ const Category = ({ house, car }) => {
             </TextContent>
           </View>
         </Wave>
-        <Wave     handle={() =>
+        <Wave
+          handle={() =>
             navigation.navigate("CarScreens", { screen: "CarBusinessList" })
-          }>
+          }
+        >
           <View style={styles.box}>
             <Image
               style={{
@@ -105,7 +122,7 @@ const Category = ({ house, car }) => {
               source={require("../../../assets/images/car-1.png")}
             />
             <TextContent fontSize={12} fontWeight={500} color={colors.black}>
-            Автобизнес
+              Автобизнес
             </TextContent>
           </View>
         </Wave>
@@ -118,12 +135,12 @@ const Category = ({ house, car }) => {
             <Image
               style={{
                 width: 74,
-                height: 74, 
+                height: 74,
               }}
               source={require("../../../assets/images/number-car.png")}
             />
             <TextContent fontSize={12} fontWeight={500} color={colors.black}>
-            Carcheck
+              Carcheck
             </TextContent>
           </View>
         </Wave>
@@ -133,12 +150,12 @@ const Category = ({ house, car }) => {
               style={{
                 width: 74,
                 height: 74,
-                borderRadius:14
+                borderRadius: 14,
               }}
               source={require("../../../assets/images/reposts-1.png")}
             />
             <TextContent fontSize={12} fontWeight={500} color={colors.black}>
-            Отчеты
+              Отчеты
             </TextContent>
           </View>
         </Wave>

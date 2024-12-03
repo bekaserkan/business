@@ -39,6 +39,7 @@ const initialFilterState = {
   mortgage: false,
   owner_type: { id: 0, name: "Любой" },
   document: { id: 0, name: "Любой" },
+  type_id: { id: 0, name: "Любой" },
   price: "",
 };
 
@@ -145,7 +146,7 @@ export const StateHouseProvider = ({ children }) => {
         queryParams.append(key, value);
       }
     });
-    console.log(queryParams.toString());
+    console.log(queryParams.toString(), "datas");
     try {
       setLoading(true);
       const response = await url.get(`house/ads/?${queryParams.toString()}`, {

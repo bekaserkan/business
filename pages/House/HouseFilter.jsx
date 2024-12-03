@@ -57,6 +57,12 @@ const HouseFilter = ({ route }) => {
               />
               <InputSelect
                 select={true}
+                label="Выберите тип"
+                value="type_id"
+                placeholder="Выберите тип"
+              />
+              <InputSelect
+                select={true}
                 label="Город"
                 value="town"
                 placeholder="Выберите город"

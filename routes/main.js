@@ -17,6 +17,7 @@ import Balance from "../screens/Balance/Balance";
 import AddCategory from "../pages/House/AddCategory";
 import Notif from "../screens/Notif/Notif";
 import MyDetails from "../screens/MyDetails/MyDetails";
+import Tariffs from "../screens/Tariffs/Tariffs";
 
 const Stack = createStackNavigator();
 
@@ -94,7 +95,7 @@ export default function MainScreens() {
             headerShown: false,
             animationEnabled: false,
           }}
-          initialRouteName="MainScreen"
+          initialRouteName="Tariffs"
         >
           <Stack.Screen name="MainScreen" component={MainScreen} />
           <Stack.Screen name="HouseScreens" component={HouseScreens} />
@@ -110,6 +111,7 @@ export default function MainScreens() {
           <Stack.Screen name="Balance" component={Balance} />
           <Stack.Screen name="AddCategory" component={AddCategory} />
           <Stack.Screen name="MyDetails" component={MyDetails} />
+          <Stack.Screen name="Tariffs" component={Tariffs} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

@@ -1,221 +1,149 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  Platform,
+  ActivityIndicator,
 } from "react-native";
 import Container from "../../assets/styles/components/Container";
 import Back from "../../assets/svg/back";
 import ChekMarked from "../../assets/svg/chekMark";
 import { useNavigation } from "@react-navigation/native";
-import { useStateCar } from "../../context/stateCarContext";
+import { url } from "../../api/api";
+
 const AddCar = () => {
-  const {paramAdd,  setProLoading, postProduct, carAdd, setCarAdd } = useStateCar();
-  const [currentStep, setCurrentStep] = useState("brand");
-  const navigation = useNavigation(); 
+  const [currentStep, setCurrentStep] = useState("mark");
   const [selectedData, setSelectedData] = useState({
-    brand: null,
+    mark: null,
     model: null,
     year: null,
-    bodyType: null,
-    typeKuzov: null,
-    color: null,
-    engineType: null,
+    serie: null,
+    generation: null,
+    fuel: null,
     transmission: null,
-    fuelType: null,
-    mileage: null,
-    price: null,
+    gear_box: null,
+    modification: null,
+    steering_wheel: null,
   });
-  const data = {
-    brand: ["Audi", "BMW", "Chery", "Ford", "Hyundai"],
-    model: ["Model X", "Model Y", "Model Z"],
-    year: ["2024", "2023", "2022"],
-    bodyType: ["Седан", "Кроссовер", "Хэтчбек"],
-    typeKuzov: [
-      "Седан",
-      "Хэтчбек",
-      "Кроссовер",
-      "Купе",
-      "Универсал",
-      "Пикап",
-      "Минивэн",
-      "Родстер",
-      "Спортивный автомобиль",
-      "Кабриолет",
-    ],
-    color: [
-      "Черный",
-      "Белый",
-      "Серый",
-      "Синий",
-      "Красный",
-      "Зеленый",
-      "Желтый",
-      "Фиолетовый",
-      "Оранжевый",
-      "Серебристый",
-    ],
-    engineType: ["Бензин", "Дизель", "Электрический", "Гибрид"],
-    transmission: ["Робот", "Механика", "Автомат", "Вариатор"],
-    fuelType: ["Бензин", "Дизель", "Электричество", "Газ"],
-    mileage: [
-      "0-50000 км",
-      "50001-100000 км",
-      "100001-150000 км",
-      "150001+ км",
-    ],
-    price: [
-      "До 500,000",
-      "500,000 - 1,000,000",
-      "1,000,000 - 2,000,000",
-      "2,000,000+",
-    ],
-  };
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+
   const stepTitles = {
-    brand: "Марка",
+    mark: "Марка",
     model: "Модель",
     year: "Год выпуска",
-    bodyType: "Тип кузова",
-    typeKuzov: "Тип кузова (доп.)",
-    color: "Цвет",
-    engineType: "Тип двигателя",
-    transmission: "Тип трансмиссии",
-    fuelType: "Тип топлива",
-    mileage: "Пробег",
-    price: "",
+    serie: "Серия",
+    generation: "Поколение",
+    fuel: "Тип топлива",
+    transmission: "Трансмиссия",
+    gear_box: "Коробка передач",
+    modification: "Модификация",
+    steering_wheel: "Руль",
   };
 
+  // Функция загрузки данных для текущего шага
+  const fetchStepData = async () => {
+    if (!selectedData[currentStep]) {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams(selectedData);
+        const response = await url.get(
+          `http://217.18.62.110/cars-data/parameters/?${params}`
+        );
+        const result = response.data;
+        setOptions(result[currentStep] || []);
+      } catch (error) {
+        console.error("Ошибка при загрузке данных:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchStepData();
+  }, [currentStep]);
+
   const handleSelect = (key, value) => {
-    setSelectedData({ ...selectedData, [key]: value });
-    const steps = Object.keys(selectedData);
+    setSelectedData((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+
+    const steps = Object.keys(stepTitles);
     const currentStepIndex = steps.indexOf(key);
     if (currentStepIndex < steps.length - 1) {
       setCurrentStep(steps[currentStepIndex + 1]);
+    } else {
+      alert("Все параметры выбраны!");
+      console.log("Выбранные данные:", selectedData);
     }
   };
 
   const handleBack = () => {
-    const steps = Object.keys(data);
+    const steps = Object.keys(stepTitles);
     const currentStepIndex = steps.indexOf(currentStep);
 
     if (currentStepIndex === 0) {
-      navigation.navigate("MainScreen"); 
+      navigation.navigate("MainScreen");
     } else {
       setCurrentStep(steps[currentStepIndex - 1]);
     }
-  
   };
 
   const handleReset = () => {
     setSelectedData({
-      brand: null,
+      mark: null,
       model: null,
       year: null,
-      bodyType: null,
-      typeKuzov: null,
-      color: null,
-      engineType: null,
+      serie: null,
+      generation: null,
+      fuel: null,
       transmission: null,
-      fuelType: null,
-      mileage: null,
-      price: null,
+      gear_box: null,
+      modification: null,
+      steering_wheel: null,
     });
-    setCurrentStep("brand");
+    setCurrentStep("mark");
   };
 
-  const renderStep = () => {
-    const currentData = data[currentStep];
-    const selectedKey = selectedData[currentStep];
-    return (
-      <View style={styles.stepContainer}>
+  const renderStep = () => (
+    <View style={styles.stepContainer}>
+      {loading ? (
+        <ActivityIndicator size="large" color="#1B4DFC" />
+      ) : (
         <FlatList
-          data={currentData}
-          keyExtractor={(item) => item}
+          data={options}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[
-                styles.item,
-                selectedKey === item && { backgroundColor: "#fff" },
-              ]}
-              onPress={() => handleSelect(currentStep, item)}
+              style={styles.item}
+              onPress={() => handleSelect(currentStep, item.id)}
             >
-              <View style={styles.itemContent}>
-                <Text
-                  style={[
-                    styles.itemText,
-                    selectedKey === item && styles.itemTextSelected,
-                  ]}
-                >
-                  {item}
-                </Text>
-                {selectedKey === item && <ChekMarked />}
-              </View>
+              <Text style={styles.itemText}>{item.name}</Text>
+              {selectedData[currentStep] === item.id && <ChekMarked />}
             </TouchableOpacity>
           )}
         />
-      </View>
-    );
-  };
+      )}
+    </View>
+  );
 
-  const progressSteps = Object.keys(data);
-  const getProgressStyle = (step) => {
-    const currentIndex = progressSteps.indexOf(currentStep);
-    const stepIndex = progressSteps.indexOf(step);
-  
-    if (stepIndex < currentIndex) {
-      return { backgroundColor: "#1B4DFC", width: "100%" };
-    } else if (stepIndex === currentIndex) {
-      return { backgroundColor: "#1B4DFC", width: "50%" };
-    } else {
-      return { backgroundColor: "#ccc", width: "10%" };
-    }
-  };
-  
   return (
     <Container>
-      <View style={styles.progressContainer}>
-        {progressSteps.map((step, index) => (
-          <View
-            key={index}
-            style={[styles.progressStep, getProgressStyle(step)]}
-          />
-        ))}
-      </View>
       <View style={styles.header}>
-        <View style={styles.back_box}>
-          <TouchableOpacity onPress={handleBack}>
-            <Back />
-          </TouchableOpacity>
-          <Text style={styles.currentStepTitle}>{stepTitles[currentStep]}</Text>
-        </View>
+        <TouchableOpacity onPress={handleBack}>
+          <Back />
+        </TouchableOpacity>
+        <Text style={styles.currentStepTitle}>{stepTitles[currentStep]}</Text>
         <TouchableOpacity onPress={handleReset}>
           <Text style={styles.resetText}>Сбросить</Text>
         </TouchableOpacity>
       </View>
-      {currentStep === "price" ? (
-        <View style={styles.summary}>
-          <Text style={styles.title}>Вы выбрали:</Text>
-          {Object.entries(selectedData).map(
-            ([key, value]) =>
-              value && (
-                <Text key={key}>
-                  {stepTitles[key]}: {value}
-                </Text>
-              )
-          )}
-          <TouchableOpacity
-            style={styles.submitButton}
-            onPress={() => alert("Автомобиль добавлен!") || navigation.navigate("MainScreen")}
-          >
-            <Text style={styles.submitText}>Подтвердить</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        renderStep()
-      )}
+      {renderStep()}
     </Container>
   );
 };
@@ -225,7 +153,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
     height: 60,
   },
   currentStepTitle: {
@@ -239,62 +166,15 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     flex: 1,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 16,
+    padding: 16,
   },
   item: {
     padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
-  itemContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  checkMarkText: {
-    color: "#000",
-    fontWeight: "bold",
-  },
-  summary: {
-    flex: 1,
-    padding: 16,
-    justifyContent: "center",
-  },
-  submitButton: {
-    marginTop: 20,
-    padding: 16,
-    backgroundColor: "#1B4DFC",
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  submitText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize:16
-  },
-  progressContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: Platform.OS === "ios" ? 60 : 42,
-  },
-  progressStep: {
-    height: 5,
-    borderRadius: 2,
-    flex: 1,
-    marginHorizontal: 2,
-  },
-  back_box: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-    gap: 20,
+  itemText: {
+    fontSize: 16,
   },
 });
 
