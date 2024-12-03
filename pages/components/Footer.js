@@ -4,9 +4,13 @@ import Column from "../../assets/styles/components/Column";
 import Button from "../../customs/Button";
 import Copy from "../../assets/svg/copy";
 import { colors } from "../../assets/styles/colors";
+import GradientBackground from "../../customs/grad";
+import Wave from "../../customs/Wave";
+import { useNavigation } from "@react-navigation/native";
 
-const Footer = () => {
-    
+const Footer = ({ my }) => {
+  const navigation = useNavigation();
+
   const copyLink = () => {};
 
   const report = () => {};
@@ -22,13 +26,19 @@ const Footer = () => {
         >
           Скопировать ссылку
         </Button>
-        <Button
-          handle={() => report()}
-          color={colors.phon}
-          textColor={colors.red}
-        >
-          Пожаловаться
-        </Button>
+        {my ? (
+          <Wave handle={() => navigation.navigate("Tariffs")}>
+            <GradientBackground>Продать быстрее</GradientBackground>
+          </Wave>
+        ) : (
+          <Button
+            handle={() => report()}
+            color={colors.phon}
+            textColor={colors.red}
+          >
+            Пожаловаться
+          </Button>
+        )}
       </Column>
     </Wrapper>
   );

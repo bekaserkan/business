@@ -15,6 +15,7 @@ import Footer from "../components/Footer";
 import MainBlock from "../components/MainBlock";
 import Loading from "../../ui/Loading";
 import { useStateCar } from "../../context/stateCarContext";
+import { useСondition } from "../../context/stateContext";
 
 const CarDetail = ({ route }) => {
   const navigation = useNavigation();
@@ -24,8 +25,10 @@ const CarDetail = ({ route }) => {
     });
   };
 
-  const { deLoading, detail, getDetail, param } = useStateCar();
+  const { deLoading, detail, getDetail } = useStateCar();
+  const { userData } = useСondition();
   const { id } = route.params;
+
   useEffect(() => {
     getDetail({ id: id });
   }, []);
@@ -155,9 +158,11 @@ const CarDetail = ({ route }) => {
               reviews={detail.user.review_count}
               description={`${detail.user.accommodation_count} объявления`}
               ava={detail.user._avatar}
-              handle={() =>  navigation.navigate("CarPrivateProfile", {
-                id: detail.user.id, 
-              })}
+              handle={() =>
+                navigation.navigate("CarPrivateProfile", {
+                  id: detail.user.id,
+                })
+              }
             />
             <CommentsBlock
               data={[
@@ -186,7 +191,7 @@ const CarDetail = ({ route }) => {
               ]}
               keyValue={"phone"}
             />
-            <Footer />
+            <Footer my={detail.user.id == userData.id} />
           </Column>
         </ScrollView>
       </Container>
