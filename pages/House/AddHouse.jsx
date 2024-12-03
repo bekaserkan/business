@@ -175,7 +175,7 @@ const AddHouse = () => {
                 onChangeText={(text) =>
                   setAddHouse({ ...addHouse, price: text })
                 }
-                placeholder="Номер дома"
+                placeholder="Цена дома"
               />
             </Column>
           </Wrapper>

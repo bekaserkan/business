@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import Container from "../../assets/styles/components/Container";
 import Back from "../../assets/svg/back";
@@ -44,22 +45,23 @@ const AddCar = () => {
     steering_wheel: "Руль",
   };
 
-  // Функция загрузки данных для текущего шага
   const fetchStepData = async () => {
-    if (!selectedData[currentStep]) {
-      setLoading(true);
-      try {
-        const params = new URLSearchParams(selectedData);
-        const response = await url.get(
-          `http://217.18.62.110/cars-data/parameters/?${params}`
-        );
-        const result = response.data;
-        setOptions(result[currentStep] || []);
-      } catch (error) {
-        console.error("Ошибка при загрузке данных:", error);
-      } finally {
-        setLoading(false);
-      }
+    setLoading(true);
+    try {
+      const params = new URLSearchParams(
+        Object.fromEntries(
+          Object.entries(selectedData).filter(([key, value]) => value !== null)
+        )
+      );
+      const response = await url.get(`/cars-data/parameters/?${params}`);
+      setOptions(response.data.data || []);
+    } catch (error) {
+      console.error("Ошибка при загрузке данных:", error);
+      alert(
+        "Произошла ошибка при загрузке данных. Пожалуйста, попробуйте снова."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,17 +72,8 @@ const AddCar = () => {
   const handleSelect = (key, value) => {
     setSelectedData((prevState) => ({
       ...prevState,
-      [key]: value,
+      [key]: Number(value),
     }));
-
-    const steps = Object.keys(stepTitles);
-    const currentStepIndex = steps.indexOf(key);
-    if (currentStepIndex < steps.length - 1) {
-      setCurrentStep(steps[currentStepIndex + 1]);
-    } else {
-      alert("Все параметры выбраны!");
-      console.log("Выбранные данные:", selectedData);
-    }
   };
 
   const handleBack = () => {
@@ -117,7 +110,7 @@ const AddCar = () => {
       ) : (
         <FlatList
           data={options}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => `${item.id}_${index}`}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.item}
@@ -150,6 +143,7 @@ const AddCar = () => {
 
 const styles = StyleSheet.create({
   header: {
+    paddingTop: Platform.OS === "ios" ? 60 : 42,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

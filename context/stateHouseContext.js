@@ -8,6 +8,7 @@ import React, {
 import { url } from "../api/api";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CustomAlert } from "../ui/Alert";
 
 const StateHouseContext = createContext();
 
@@ -184,11 +185,19 @@ export const StateHouseProvider = ({ children }) => {
           formData[key] = value;
         } else if (typeof value === "string" && value.trim() !== "") {
           formData[key] = value.trim();
+        } else if (typeof value === "number") {
+          formData[key] = value;
         }
       });
       console.log("Отправляемые данные:", formData);
       const response = await url.post("house/ads/", formData, { headers });
-      Alert.alert("Успешно", response.data);
+      if (response.status == 201) {
+        CustomAlert({
+          type: "success",
+          title: "Успешно",
+          text: "обьявление успешно добавлено",
+        });
+      }
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
     } finally {
