@@ -24,6 +24,7 @@ const Tariffs = () => {
   const [postLoading, setPostLoading] = useState(false);
   const [selectDetail, setSelectDetail] = useState([]);
   const [plan, setPlan] = useState("");
+  const [color, setColor] = useState("");
   const navigation = useNavigation();
   const { userData } = useСondition();
 
@@ -144,7 +145,7 @@ const Tariffs = () => {
                   </TextContent>
                 </View>
               </Wrapper>
-              <Wrapper padding={[200, 16]}>
+              <Wrapper padding={[16, 16]}>
                 <TextContent
                   fontSize={20}
                   fontWeight={500}
@@ -154,13 +155,20 @@ const Tariffs = () => {
                 </TextContent>
                 <Column top={16} gap={10}>
                   {selectDetail?.plans?.map((el, id) => (
-                    <Wave handle={() => setPlan(`${el.price} сом`)}>
+                    <Wave key={id} handle={() => setPlan(`${el.price} сом`)}>
                       <View
-                        key={id}
                         style={{
                           padding: 10,
                           borderRadius: 10,
-                          backgroundColor: colors.phon,
+                          backgroundColor:
+                            plan == `${el.price} сом`
+                              ? "#1B4DFC26"
+                              : colors.phon,
+                          borderWidth: 1,
+                          borderColor:
+                            plan == `${el.price} сом`
+                              ? colors.blue
+                              : colors.phon,
                         }}
                       >
                         <Between center="center">
@@ -183,74 +191,130 @@ const Tariffs = () => {
                       </View>
                     </Wave>
                   ))}
-                  <View style={style.box}>
-                    <Column gap={10}>
-                      <Flex gap={10}>
-                        <Reports />
-                        <Column gap={4}>
-                          <TextContent
-                            fontSize={12}
-                            fontWeight={400}
-                            color={colors.gray}
-                          >
-                            Лицевой счёт:
-                          </TextContent>
-                          <TextContent
-                            fontSize={16}
-                            fontWeight={500}
-                            color={colors.black}
-                          >
-                            {userData?.username}
-                          </TextContent>
-                        </Column>
-                      </Flex>
-                      <Between center={"center"}>
+                </Column>
+              </Wrapper>
+              <Wrapper padding={[16, 16]}>
+                <TextContent
+                  fontSize={20}
+                  fontWeight={500}
+                  color={colors.black}
+                >
+                  Выберите цвет
+                </TextContent>
+                <ScrollView
+                  style={{
+                    marginTop: 16,
+                  }}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 10,
+                    }}
+                  >
+                    {selectDetail?.colors?.map((el, id) => (
+                      <Wave key={id} handle={() => setColor(el)}>
+                        <View
+                          style={{
+                            width: 60,
+                            height: 60,
+                            borderRadius: 6,
+                            backgroundColor: el.color ? el.color : colors.phon,
+                            borderWidth: 1,
+                            borderColor:
+                              color == el ? colors.blue : colors.phon,
+                          }}
+                        ></View>
+                      </Wave>
+                    ))}
+                  </View>
+                </ScrollView>
+              </Wrapper>
+
+              <Wrapper padding={[200, 16]}>
+                <TextContent
+                  bottom={16}
+                  fontSize={20}
+                  fontWeight={500}
+                  color={colors.black}
+                >
+                  Текущий баланс
+                </TextContent>
+                <View style={style.box}>
+                  <Column gap={10}>
+                    <Flex gap={10}>
+                      <Reports />
+                      <Column gap={4}>
                         <TextContent
                           fontSize={12}
                           fontWeight={400}
                           color={colors.gray}
                         >
-                          Баланс:
+                          Лицевой счёт:
                         </TextContent>
                         <TextContent
-                          fontSize={20}
-                          fontWeight={600}
+                          fontSize={16}
+                          fontWeight={500}
                           color={colors.black}
                         >
-                          {userData?.balance} сом
+                          {userData?.username}
                         </TextContent>
-                      </Between>
+                      </Column>
+                    </Flex>
+                    <Between center={"center"}>
                       <TextContent
                         fontSize={12}
-                        fontWeight={500}
-                        color={colors.red}
+                        fontWeight={400}
+                        color={colors.gray}
                       >
-                        Недостаточно средств на балансе
+                        Баланс:
                       </TextContent>
-                    </Column>
-                  </View>
-                  <Wave handle={() => navigation.navigate("Balance")}>
-                    <View
-                      style={{
-                        width: "100%",
-                        height: 50,
-                        borderRadius: 10,
-                        borderWidth: 1,
-                        borderColor: colors.black,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
                       <TextContent
-                        fontSize={16}
-                        fontWeight={500}
+                        fontSize={20}
+                        fontWeight={600}
                         color={colors.black}
                       >
-                        Пополнить баланс
+                        {userData?.balance} сом
                       </TextContent>
-                    </View>
-                  </Wave>
-                </Column>
+                    </Between>
+                    <TextContent
+                      fontSize={12}
+                      fontWeight={500}
+                      color={colors.red}
+                    >
+                      Недостаточно средств на балансе
+                    </TextContent>
+                  </Column>
+                </View>
+                <Wave
+                  style={{
+                    marginTop: 10,
+                  }}
+                  handle={() => navigation.navigate("Balance")}
+                >
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 50,
+                      borderRadius: 10,
+                      borderWidth: 1,
+                      borderColor: colors.blue,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <TextContent
+                      fontSize={16}
+                      fontWeight={500}
+                      color={colors.blue}
+                    >
+                      Пополнить баланс
+                    </TextContent>
+                  </View>
+                </Wave>
               </Wrapper>
             </Column>
           </ScrollView>

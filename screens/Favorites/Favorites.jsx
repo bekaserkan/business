@@ -136,7 +136,7 @@ const Favorites = () => {
               ))}
             </View>
             {select === "Машина" &&
-              (data.car.length > 0 ? (
+              (search.car.length > 0 ? (
                 <View></View>
               ) : (
                 <NotData
@@ -146,7 +146,7 @@ const Favorites = () => {
                 />
               ))}
             {select === "Дом" &&
-              (data.house.length > 0 ? (
+              (search.house.length > 0 ? (
                 <View></View>
               ) : (
                 <NotData

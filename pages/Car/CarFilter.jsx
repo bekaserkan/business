@@ -5,13 +5,20 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import Wrapper from "../../assets/styles/components/Wrapper";
 import InputSelect from "../../customs/InputSelect";
 import Column from "../../assets/styles/components/Column";
-import CheckBoxCustom from "../../customs/CheckBox";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../assets/styles/colors";
 import { useStateCar } from "../../context/stateCarContext";
 
 const CarFilter = ({ route }) => {
-  const { filter, loading, result, setFilter } = useStateCar();
+  const {
+    markData,
+    modelData,
+    generationData,
+    filter,
+    loading,
+    result,
+    setFilter,
+  } = useStateCar();
   const navigation = useNavigation();
   const { id } = route.params || 0;
 
@@ -46,7 +53,7 @@ const CarFilter = ({ route }) => {
         color={colors.black}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ flex: "1" }}>
+          <View style={{ flex: 1 }}>
             <Column gap={6}>
               <Wrapper top={true} bottom={true} style={styles.wrapper}>
                 <InputSelect
@@ -59,22 +66,35 @@ const CarFilter = ({ route }) => {
                 />
               </Wrapper>
               <Wrapper top={true} bottom={true} style={styles.wrapper}>
-                <InputSelect
-                  select={true}
-                  label="марка"
-                  value="mark"
-                  border={true}
-                  car={true}
-                />
-              </Wrapper>
-              <Wrapper top={true} bottom={true} style={styles.wrapper}>
                 <Column gap={6}>
                   <InputSelect
                     select={true}
-                    value="currency"
-                    label="Год выпуска (от и до)"
+                    data={markData}
+                    label="Марка"
+                    value="mark"
+                    placeholder="Марка"
                     car={true}
                   />
+                  <InputSelect
+                    select={true}
+                    data={modelData}
+                    label="Модель"
+                    value="model"
+                    placeholder="Модель"
+                    car={true}
+                  />
+                  <InputSelect
+                    select={true}
+                    data={generationData}
+                    label="Поколение"
+                    value="generation"
+                    placeholder="Поколение"
+                    car={true}
+                  />
+                </Column>
+              </Wrapper>
+              <Wrapper top={true} bottom={true} style={styles.wrapper}>
+                <Column gap={6}>
                   <InputSelect
                     select={true}
                     label="Валюта"
@@ -92,6 +112,13 @@ const CarFilter = ({ route }) => {
               </Wrapper>
               <Wrapper top={true} bottom={true} style={styles.wrapper}>
                 <Column gap={6}>
+                  <InputSelect
+                    select={true}
+                    label="Год выпуска"
+                    value="year"
+                    placeholder="Год выпуска"
+                    car={true}
+                  />
                   <InputSelect
                     select={true}
                     label="Тип кузова"

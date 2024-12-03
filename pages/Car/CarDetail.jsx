@@ -261,7 +261,7 @@ const CarDetail = ({ route }) => {
               ]}
               keyValue={"phone"}
             />
-            <Footer my={detail.user.id == userData.id} />
+            <Footer my={detail?.user?.id == userData?.id} />
           </Column>
         </ScrollView>
       </Container>

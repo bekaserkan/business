@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { url } from "../api/api";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,28 +14,30 @@ const StateCarContext = createContext();
 const initialFilterState = {
   registration_country: { id: 1, name: "Кыргызстан" },
   mark: { id: 0, name: "Любой" },
+  model: { id: 0, name: "Любой" },
+  generation: { id: 0, name: "Любой" },
   category: { id: 0, name: "Любой" },
-  car_condition: { id: 0, name: "Любой" }, // новое
-  currency: { id: 0, name: "Любой" }, // 
-  color: { id: 0, name: "Любой" },  // цвет
+  car_condition: { id: 0, name: "Любой" },
+  currency: { id: 0, name: "Любой" },
+  color: { id: 0, name: "Любой" },
   configuration: { id: 0, name: "Любой" },
-  gear_box: { id: 0, name: "Любой" }, // каропка передач
-  media: { id: 0, name: "Любой" },   // медиа
-  other_option: { id: 0, name: "Любой" }, // техосмотр пройден 
-  fuel: { id: 0, name: "Любой" },  // бензин
+  gear_box: { id: 0, name: "Любой" },
+  media: { id: 0, name: "Любой" },
   other_option: { id: 0, name: "Любой" },
-  featured_option: { id: 0, name: "Любой" }, // в наличии
-  transmission: { id: 0, name: "Любой" }, // передный задный
-  exchange: { id: 0, name: "Любой" },  // толко обмен 
-  steering_wheel: { id: 0, name: "Любой" }, // слева справа
-  interior: { id: 0, name: "Любой" },  // кожа 
-  exterior: { id: 0, name: "Любой" }, //   люк 
-  configuration: { id: 0, name: "Любой" }, // полный электро пакет 
-  comment_allowed: { id: 0, name: "Любой" }, // зарегистреванные ползователи никто все
-  car_type: { id: 0, name: "Любой" },  //  легковые
+  fuel: { id: 0, name: "Любой" },
+  other_option: { id: 0, name: "Любой" },
+  featured_option: { id: 0, name: "Любой" },
+  transmission: { id: 0, name: "Любой" },
+  exchange: { id: 0, name: "Любой" },
+  steering_wheel: { id: 0, name: "Любой" },
+  interior: { id: 0, name: "Любой" },
+  exterior: { id: 0, name: "Любой" },
+  configuration: { id: 0, name: "Любой" },
+  comment_allowed: { id: 0, name: "Любой" },
+  car_type: { id: 0, name: "Любой" },
   fuel: { id: 0, name: "Любой" },
   featured_option: { id: 0, name: "Любой" },
-  year:"",
+  year: "",
   ceiling_height: "",
   mileage: "",
   is_urgent: false,
@@ -71,11 +79,67 @@ export const StateCarProvider = ({ children }) => {
   const [deLoading, setDeLoading] = useState(true);
   const [paramAdd, setParamAdd] = useState([]);
   const [filter, setFilter] = useState(initialFilterState);
-  const [carAdd, setCarAdd] = useState(initialFilterStateAdd)
+  const [carAdd, setCarAdd] = useState(initialFilterStateAdd);
   const [proLoading, setProLoading] = useState(false);
   useEffect(() => {
     getResult();
   }, [filter, getResult]);
+  const [markData, setMarkData] = useState([]);
+  const [modelData, setModelData] = useState([]);
+  const [generationData, setGenerationData] = useState([]);
+
+  console.log(param);
+
+  const fetchmark = async () => {
+    try {
+      const response = await url.get(`/cars-data/parameters/`);
+
+      setMarkData(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchmark();
+  }, []);
+
+  const fetchmodel = async () => {
+    try {
+      const response = await url.get(
+        `/cars-data/parameters/?mark=${filter.mark.id}`
+      );
+
+      setModelData(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (filter.mark.id > 0) {
+      fetchmodel();
+    }
+  }, [filter.mark]);
+
+  const fetchgeneration = async () => {
+    try {
+      const response = await url.get(
+        `/cars-data/parameters/?mark=${filter.mark.id}&model=${filter.model.id}`
+      );
+      console.log(response.data, "beks");
+
+      setGenerationData(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (filter.model.id > 0) {
+      fetchgeneration();
+    }
+  }, [filter.model]);
 
   const getResult = useCallback(async () => {
     const token = await AsyncStorage.getItem("token");
@@ -94,7 +158,7 @@ export const StateCarProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await url.get(
-        `cars/cars-posts/?${queryParams.toString()}/`,
+        `cars/cars-posts/?${queryParams.toString()}/`
         // headers,
       );
       setResult(response.data.data);
@@ -115,7 +179,7 @@ export const StateCarProvider = ({ children }) => {
     } finally {
       setProLoading(false);
     }
-  };  
+  };
 
   const getRecomention = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -146,6 +210,9 @@ export const StateCarProvider = ({ children }) => {
       setPaLoading(false);
     }
   };
+
+  console.log(param);
+
   const getParamAdd = async () => {
     setPaLoading(true);
     try {
@@ -171,7 +238,7 @@ export const StateCarProvider = ({ children }) => {
   useEffect(() => {
     getParam();
     getRecomention();
-    getParamAdd()
+    getParamAdd();
   }, []);
 
   return (
@@ -197,10 +264,13 @@ export const StateCarProvider = ({ children }) => {
         // StateForAdd
         setFilter,
         filter,
-        deLoading, 
+        deLoading,
         setCarAdd,
         carAdd,
         // GetParamAdd
+        markData,
+        modelData,
+        generationData,
       }}
     >
       {children}

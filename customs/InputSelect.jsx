@@ -10,6 +10,7 @@ import { useStateHouse } from "../context/stateHouseContext";
 import RangeCustom from "./Range";
 import { useStateCar } from "../context/stateCarContext";
 import Arrow from "../assets/svg/arrowRight";
+
 const InputSelect = ({
   styleContainer,
   style,
@@ -29,8 +30,6 @@ const InputSelect = ({
   const { param, filter, addHouse, setFilter, setAddHouse } = car
     ? useStateCar()
     : useStateHouse();
-
-  console.log(param);
 
   const closeModal = () => {
     setModal(false);
