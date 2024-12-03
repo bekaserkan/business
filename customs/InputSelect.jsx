@@ -106,6 +106,7 @@ const InputSelect = ({
                   />
                   {datas?.map((el, id) => (
                     <RangeCustom
+                      color={value == "color" ? el.color : false}
                       key={id}
                       handle={() => {
                         closeModal();
