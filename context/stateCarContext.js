@@ -42,22 +42,10 @@ const initialFilterState = {
 };
 
 const initialFilterStateAdd = {
-  mark: { id: 0, name: "Любой" },
-  car_models: { id: 0, name: "Любой" },
-  material: { id: 0, name: "Любой" },
-  floor: { id: 0, name: "Любой" },
-  floors: { id: 0, name: "Любой" },
-  condition: { id: 0, name: "Любой" },
-  heating: { id: 0, name: "Любой" },
-  phone_info: { id: 0, name: "Любой" },
-  internet: { id: 0, name: "Любой" },
-  safety: { id: 0, name: "Любой" },
-  documents: { id: 0, name: "Любой" },
-  year: "",
-  land_square: "",
-  square: "",
-  ceiling_height: "",
-  description: "",
+  color: {id: 0, name: ""},
+  registration_country: {id: 0, name: ""},
+  car_condition: {id: 0, name: ""},
+  featured_option: {id: 0, name: ""},
 };
 
 export const StateCarProvider = ({ children }) => {
@@ -76,6 +64,9 @@ export const StateCarProvider = ({ children }) => {
   useEffect(() => {
     getResult();
   }, [filter, getResult]);
+
+  console.log(carAdd, "Added beka");
+  
 
   const getResult = useCallback(async () => {
     const token = await AsyncStorage.getItem("token");
