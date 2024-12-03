@@ -6,7 +6,6 @@ import { colors } from "../../assets/styles/colors";
 import Wrapper from "../../assets/styles/components/Wrapper";
 import TextContent from "../../assets/styles/components/TextContent";
 import Column from "../../assets/styles/components/Column";
-import Characteristic from "../components/Characteristic";
 import { useNavigation } from "@react-navigation/native";
 import AccountBlock from "../components/AccountBlock";
 import { ScrollView, View } from "react-native";
@@ -23,11 +22,9 @@ const HouseResidentialProfile = () => {
       screen: "HouseCompanyProfile",
     });
   };
-
   const data = resident.images.map((el) => {
     return { image: el.image_url };
   });
-
   return (
     <Container none={true} phon={true}>
       <Header back={true} container={true} />
